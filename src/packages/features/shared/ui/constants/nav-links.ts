@@ -28,9 +28,4 @@ export const MAIN_NAV_ITEMS: NavItem[] = [
     icon: BarChart,
     href: "/nutrition-tracking",
   },
-  {
-    name: "",
-    icon: <Avatar></Avatar>,
-    href: "profile",
-  },
 ];
