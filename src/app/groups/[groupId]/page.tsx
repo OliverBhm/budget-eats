@@ -18,7 +18,7 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle
+  CardTitle,
 } from "@/components/ui/card";
 import {
   Collapsible,
@@ -47,14 +47,19 @@ import {
   ItemTitle,
 } from "@/components/ui/item";
 import {
-  NativeSelect,
-  NativeSelectOption
-} from "@/components/ui/native-select";
-import {
   PageHeader,
   PageHeaderDescription,
   PageHeaderTitle,
 } from "@/components/ui/page-header";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { AvatarImage } from "@radix-ui/react-avatar";
@@ -68,13 +73,17 @@ import {
   Plus,
   Save,
   Trash,
-  X
+  X,
 } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { GROUPS_MOCK } from "../page";
+import {
+  ButtonGroup,
+  ButtonGroupSeparator,
+} from "@/components/ui/button-group";
 
 interface GroupeAddress {
   street: string;
@@ -84,7 +93,7 @@ interface GroupeAddress {
   city: string;
 }
 
-function GroupAddressForm({address}: {address?: GroupeAddress}) {
+function GroupAddressForm({ address }: { address?: GroupeAddress }) {
   return (
     <form className="space-y-4">
       <div className="grid grid-cols-4 gap-4">
@@ -115,17 +124,38 @@ function GroupAddressForm({address}: {address?: GroupeAddress}) {
   );
 }
 
-function GroupMemberSelect({userId}: {userId?: string}) {
-  const [memberType, setMemberType] = useState("viewer")
+function GroupMemberStatusSelect({ userId }: { userId?: string }) {
+  const [memberStatus, setMemberStatusType] = useState("member");
+  const memberStatusTypes = [
+    {
+      value: "admin",
+      text: "Admin",
+    },
+    {
+      value: "member",
+      text: "Member",
+    },
+    {
+      value: "viewer",
+      text: "viewer",
+    },
+  ];
   return (
-    <NativeSelect
-      onChange={(e) => {setMemberType(e.target.value); toast('Member status changed')}}
-      value={memberType}
-    >
-      <NativeSelectOption>Admin</NativeSelectOption>
-      <NativeSelectOption>Member</NativeSelectOption>
-      <NativeSelectOption>Viewer</NativeSelectOption>
-    </NativeSelect>
+    <Select value={memberStatus} onValueChange={setMemberStatusType}>
+      <SelectTrigger>
+        <SelectValue placeholder={memberStatus} />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          <SelectLabel>Member status</SelectLabel>
+          {memberStatusTypes.map(({ text, value }) => (
+            <SelectItem key={value} value={value}>
+              {text}
+            </SelectItem>
+          ))}
+        </SelectGroup>
+      </SelectContent>
+    </Select>
   );
 }
 
@@ -139,121 +169,126 @@ function GroupName({ name }: { name: string }) {
         <Input
           onChange={(e) => setGroupName(e.target.value)}
           className="mb-1"
-          value={name}
+          value={groupName}
         />
-        <menu className="flex">
+        <ButtonGroup className="flex">
           <Button
-            onClick={() => {setIsEditing(false); toast('Name changed')}}
+            onClick={() => {
+              setIsEditing(false);
+              toast(`Name changed to ${groupName} successfully!`);
+            }}
             size={"sm"}
-            variant={"ghost"}
+            variant={"outline"}
           >
             <Check />
           </Button>
           <Button
             onClick={() => setIsEditing(false)}
             size={"sm"}
-            variant={"ghost"}
+            variant={"outline"}
           >
             <X />
           </Button>
-        </menu>
+        </ButtonGroup>
       </div>
     );
   }
 
   return (
-    <PageHeaderTitle>
-      {name}
-      <Button onClick={() => setIsEditing(true)} variant={"ghost"}>
+    <div className="flex gap-1 items-center">
+      <h3>{groupName}</h3>
+      <Button onClick={() => setIsEditing(true)} variant={"outline"}>
         <Edit2 />
       </Button>
-    </PageHeaderTitle>
+    </div>
   );
 }
 
-function GroupDescription({
-  description,
-  address,
-}: {
-  description: string;
-  address: GroupeAddress;
-}) {
+function GroupAddress({ address }: { address: GroupeAddress }) {
+  return (
+    <span className="flex gap-1 items-center text-primary/70">
+      {address && (
+        <>
+          <MapPin />
+          {address.street} {address.houseNo}, {address.zipCode} {address.city},{" "}
+          {address.country}
+        </>
+      )}
+      <Dialog>
+        <DialogTrigger>
+          <Button variant={"outline"}>
+            {!address && "Add a group address"} <Edit2 />
+          </Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Group Address</DialogTitle>
+            <DialogDescription>
+              Get up to date special offers and discounts from your area.
+            </DialogDescription>
+          </DialogHeader>
+          <GroupAddressForm {...{ address }}></GroupAddressForm>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant={"secondary"}>Cancel</Button>
+            </DialogClose>
+            <Button>
+              {address ? "Update" : "Save"} <Save />
+              <Spinner />
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </span>
+  );
+}
+
+function GroupDescription({ description }: { description: string }) {
   const [isEditing, setIsEditing] = useState(false);
   const [groupDescription, setGroupDescription] = useState(description);
 
   if (isEditing) {
     return (
-      <div className="flex">
-        <Textarea onChange={({target: {value}}) => setGroupDescription(value)} value={groupDescription} />
-        <menu className="flex">
+      <div className="flex gap-2">
+        <Textarea
+          onChange={({ target: { value } }) => setGroupDescription(value)}
+          value={groupDescription}
+        />
+        <ButtonGroup aria-label="Button group">
           <Button
+            variant={"outline"}
             onClick={() => setIsEditing(false)}
             size={"sm"}
-            variant={"ghost"}
           >
             <Check />
           </Button>
           <Button
+            variant={"outline"}
             onClick={() => setIsEditing(false)}
             size={"sm"}
-            variant={"ghost"}
           >
             <X />
           </Button>
-        </menu>
+        </ButtonGroup>
       </div>
     );
   }
 
   return (
-    <PageHeaderDescription className="space-y-1">
-      <p>
-        <span>{description}</span>
-        <Button onClick={() => setIsEditing(true)} variant={"ghost"}>
-          <Edit2 />
-        </Button>
-      </p>
-
-      {!address && <Button variant={"secondary"}>Add an Address <Edit2 /></Button>}
-      <span className="flex gap-1 items-center text-primary/70">
-        <MapPin />
-        {address.street} {address.houseNo}, {address.zipCode} {address.city},{" "}
-        {address.country}
-        <Dialog>
-          <DialogTrigger>
-            <Button variant={"ghost"}>
-              <Edit2 />
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Group Address</DialogTitle>
-              <DialogDescription>
-                Get up to date special offers and discounts from your area.
-              </DialogDescription>
-            </DialogHeader>
-            <GroupAddressForm {...{ address }}></GroupAddressForm>
-            <DialogFooter>
-              <DialogClose asChild>
-                <Button>Cancel</Button>
-              </DialogClose>
-              <Button>
-                {address ? "Update" : "Save"} <Save />
-                <Spinner />
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      </span>
-    </PageHeaderDescription>
+    <div className="flex gap-2 items-center">
+      <span>{description}</span>
+      <Button onClick={() => setIsEditing(true)} variant={"outline"}>
+        <Edit2 />
+      </Button>
+    </div>
   );
 }
 
 export default function MangeGroup() {
-  const params = useParams()
-  const group = GROUPS_MOCK.find(({id}) => id === params.groupId);
-  
-  if(!group) {
+  const params = useParams();
+  const group = GROUPS_MOCK.find(({ id }) => id === params.groupId);
+
+  if (!group) {
     return null;
   }
 
@@ -261,8 +296,13 @@ export default function MangeGroup() {
   return (
     <section className="space-y-4">
       <PageHeader>
-        <GroupName name={name} />
-        <GroupDescription {...{ description, address }} />
+        <PageHeaderTitle>
+          <GroupName name={name} />
+        </PageHeaderTitle>
+        <PageHeaderDescription className="space-y-1">
+          <GroupDescription {...{ description }} />
+          <GroupAddress {...{ address }} />
+        </PageHeaderDescription>
       </PageHeader>
       <Card>
         <Collapsible>
@@ -278,7 +318,7 @@ export default function MangeGroup() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <CollapsibleContent>
+            <CollapsibleContent className="space-y-2">
               <ItemGroup variant={"muted"}>
                 {members.map(({ userId, firstname, lastname, imgUrl }) => (
                   <Item key={userId}>
@@ -286,18 +326,21 @@ export default function MangeGroup() {
                       <Avatar>
                         <AvatarImage src={imgUrl} />
                         <AvatarFallback>
-                          {firstname[0]}{lastname[0]}
+                          {firstname[0]}
+                          {lastname[0]}
                         </AvatarFallback>
                       </Avatar>
                       <div className="flex-col">
                         <ItemTitle>
                           {firstname} {lastname}
                         </ItemTitle>
-                        <ItemDescription>Added on: 20.3.2025</ItemDescription>
+                        <ItemDescription>
+                          Since: <strong>20.3.2025</strong>
+                        </ItemDescription>
                       </div>
                     </ItemContent>
                     <ItemActions>
-                      <GroupMemberSelect {...{userId}}/>
+                      <GroupMemberStatusSelect {...{ userId }} />
                       <AlertDialog>
                         <AlertDialogTrigger>
                           <Button size={"sm"} variant={"outline"}>
@@ -320,7 +363,9 @@ export default function MangeGroup() {
                               Leave in group
                             </AlertDialogCancel>
                             <AlertDialogAction>
-                              <Button>I'm sure <Spinner /></Button>
+                              <Button>
+                                I'm sure <Spinner />
+                              </Button>
                             </AlertDialogAction>
                           </AlertDialogFooter>
                         </AlertDialogContent>
@@ -329,16 +374,12 @@ export default function MangeGroup() {
                     <ItemSeparator />
                   </Item>
                 ))}
-                <Item>
-                  <ItemContent>
-                    <Link href={"./search"}>
-                      <Button>
-                        Find and add new user <Plus />
-                      </Button>
-                    </Link>
-                  </ItemContent>
-                </Item>
               </ItemGroup>
+              <Link href={"./search"}>
+                <Button>
+                  Add new user <Plus />
+                </Button>
+              </Link>
             </CollapsibleContent>
           </CardContent>
         </Collapsible>
@@ -363,7 +404,7 @@ export default function MangeGroup() {
                 <span className="hidden md:block">Copy to clipboard</span>
                 <Copy />
               </Button>
-              <GroupMemberSelect />
+              <GroupMemberStatusSelect />
             </menu>
           </div>
           <CardFooter></CardFooter>
