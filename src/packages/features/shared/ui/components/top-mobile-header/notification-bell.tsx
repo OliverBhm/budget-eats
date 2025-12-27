@@ -20,6 +20,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Fragment } from "react/jsx-runtime";
+import { UserAvatar } from "@/packages/features/user/ui/components/user-avatar";
 
 function NotificationsList({
   notifications,
@@ -33,16 +34,7 @@ function NotificationsList({
           <Fragment key={id}>
             <Item>
               <ItemMedia>
-                <Avatar>
-                  {actor.avatar_url ? (
-                    <AvatarImage src={actor.avatar_url} />
-                  ) : (
-                    <AvatarFallback>
-                      {actor.name[0]}
-                      {actor.name[1]}
-                    </AvatarFallback>
-                  )}
-                </Avatar>
+                <UserAvatar {...actor} />
               </ItemMedia>
 
               <ItemContent className="flex flex-col">

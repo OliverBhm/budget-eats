@@ -27,8 +27,11 @@ import {
   ListCheck,
   MoreHorizontal,
 } from "lucide-react";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Router } from "next/router";
 
 interface IngredientItemsProps {
   ingredients?: RecipeIngredient[];
@@ -40,22 +43,24 @@ const ingredientMoreActions = [
   {
     title: "Show details",
     icon: <Info />,
-    action: () => {},
+    action: (id: string, router: AppRouterInstance) =>
+      router.push("/ingredients/" + id),
   },
   {
     title: "Add to shopping list",
     icon: <ListCheck />,
-    action: () => {},
+    action: (id: string) => {},
   },
   {
     title: "Add to pantry",
     icon: <List />,
-    action: () => {},
+    action: (id: string) => {},
   },
 ];
 
 function IngredientItems({ ingredients, servings }: IngredientItemsProps) {
   servings ||= 1;
+  const router = useRouter();
 
   return (
     <>
@@ -106,7 +111,7 @@ function IngredientItems({ ingredients, servings }: IngredientItemsProps) {
                         <Button
                           key={title}
                           variant="secondary"
-                          onClick={action}
+                          onClick={() => action(id, router)}
                         >
                           <span>{title}</span>
                           {icon}

@@ -13,8 +13,9 @@ export const mockNotificationsResponse: NotificationsResponse = {
       created_at: "2025-12-24T18:42:11.321Z",
       actor: {
         id: "0d4bcb6c-6d4a-4a91-bf7a-ccf6f1d4c10a",
-        name: "Olivia Becker",
-        avatar_url: null,
+        firstname: "Olivia",
+        lastname: "Becker",
+        imgUrl: null,
       },
     },
     {
@@ -27,8 +28,9 @@ export const mockNotificationsResponse: NotificationsResponse = {
       created_at: "2025-12-24T16:05:44.112Z",
       actor: {
         id: "7c91c2e1-1d9f-4e3c-a9b1-0f7a8a91d222",
-        name: "Noah Müller",
-        avatar_url: null,
+        firstname: "Noah",
+        lastname: "Müller",
+        imgUrl: null,
       },
     },
     {
@@ -41,8 +43,9 @@ export const mockNotificationsResponse: NotificationsResponse = {
       created_at: "2025-12-24T14:22:01.902Z",
       actor: {
         id: "system",
-        name: "System",
-        avatar_url: null,
+        firstname: "Budget",
+        lastname: "Eats",
+        imgUrl: null,
       },
     },
     {
@@ -55,8 +58,9 @@ export const mockNotificationsResponse: NotificationsResponse = {
       created_at: "2025-12-23T21:55:12.111Z",
       actor: {
         id: "system",
-        name: "System",
-        avatar_url: null,
+        firstname: "Budget",
+        lastname: "Eats",
+        imgUrl: null,
       },
     },
     {
@@ -69,8 +73,9 @@ export const mockNotificationsResponse: NotificationsResponse = {
       created_at: "2025-12-23T18:11:33.551Z",
       actor: {
         id: "0d4bcb6c-6d4a-4a91-bf7a-ccf6f1d4c10a",
-        name: "Olivia Becker",
-        avatar_url: null,
+        firstname: "Olivia",
+        lastname: "Becker",
+        imgUrl: null,
       },
     },
     {
@@ -83,8 +88,9 @@ export const mockNotificationsResponse: NotificationsResponse = {
       created_at: "2025-12-23T08:00:00.000Z",
       actor: {
         id: "system",
-        name: "System",
-        avatar_url: null,
+        firstname: "Budget",
+        lastname: "Eats",
+        imgUrl: null,
       },
     },
     {
@@ -97,8 +103,9 @@ export const mockNotificationsResponse: NotificationsResponse = {
       created_at: "2025-12-22T19:45:10.441Z",
       actor: {
         id: "7c91c2e1-1d9f-4e3c-a9b1-0f7a8a91d222",
-        name: "Noah Müller",
-        avatar_url: null,
+        firstname: "Noah",
+        lastname: "Müller",
+        imgUrl: null,
       },
     },
     {
@@ -111,8 +118,9 @@ export const mockNotificationsResponse: NotificationsResponse = {
       created_at: "2025-12-21T12:34:55.231Z",
       actor: {
         id: "system",
-        name: "System",
-        avatar_url: null,
+        firstname: "Budget",
+        lastname: "Eats",
+        imgUrl: null,
       },
     },
     {
@@ -125,8 +133,9 @@ export const mockNotificationsResponse: NotificationsResponse = {
       created_at: "2025-12-20T09:18:42.888Z",
       actor: {
         id: "7c91c2e1-1d9f-4e3c-a9b1-0f7a8a91d222",
-        name: "Noah Müller",
-        avatar_url: null,
+        firstname: "Noah",
+        lastname: "Müller",
+        imgUrl: null,
       },
     },
     {
@@ -139,8 +148,9 @@ export const mockNotificationsResponse: NotificationsResponse = {
       created_at: "2025-12-19T07:00:00.000Z",
       actor: {
         id: "system",
-        name: "System",
-        avatar_url: null,
+        firstname: "Budget",
+        lastname: "Eats",
+        imgUrl: null,
       },
     },
   ],

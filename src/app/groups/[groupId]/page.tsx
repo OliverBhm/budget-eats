@@ -10,8 +10,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 import {
   Card,
   CardContent,
@@ -62,7 +62,7 @@ import {
 } from "@/components/ui/select";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
-import { AvatarImage } from "@radix-ui/react-avatar";
+import { UserAvatar } from "@/packages/features/user/ui/components/user-avatar";
 import {
   ArrowRight,
   Check,
@@ -80,10 +80,6 @@ import { useParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { GROUPS_MOCK } from "../page";
-import {
-  ButtonGroup,
-  ButtonGroupSeparator,
-} from "@/components/ui/button-group";
 
 interface GroupeAddress {
   street: string;
@@ -323,13 +319,7 @@ export default function MangeGroup() {
                 {members.map(({ userId, firstname, lastname, imgUrl }) => (
                   <Item key={userId}>
                     <ItemContent className="gap-2">
-                      <Avatar>
-                        <AvatarImage src={imgUrl} />
-                        <AvatarFallback>
-                          {firstname[0]}
-                          {lastname[0]}
-                        </AvatarFallback>
-                      </Avatar>
+                      <UserAvatar {...{ firstname, lastname, imgUrl }} />
                       <div className="flex-col">
                         <ItemTitle>
                           {firstname} {lastname}

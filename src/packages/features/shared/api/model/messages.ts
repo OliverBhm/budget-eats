@@ -11,8 +11,9 @@ type NotificationType =
 
 type NotificationActor = {
   id: string;
-  name: string;
-  avatar_url: string | null;
+  firstname: string;
+  lastname: string;
+  imgUrl: string | null;
 };
 
 type NotificationMessage = {
