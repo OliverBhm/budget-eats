@@ -1,25 +1,36 @@
 import { cn } from "@/lib/utils";
 
-const SHARED_TRANSITION = "transition-all duration-300 ease-in-out";
+const TRANSITION = "transition-all duration-300 ease-in-out";
+
+const HIDDEN = "opacity-0 invisible";
+const VISIBLE_ON_SEARCH =
+  "group-focus-within/search:opacity-100 group-focus-within/search:visible";
+
+const POINTER_EVENTS_ON_SEARCH =
+  "group-focus-within/search:pointer-events-auto";
+
+const COLLAPSE_ON_SEARCH =
+  "group-focus-within/search:max-w-0 group-focus-within/search:opacity-0";
 
 const BUTTON_STYLES = cn(
-  SHARED_TRANSITION,
+  TRANSITION,
   "max-w-[50px] opacity-100",
-  "group-focus-within/search:max-w-0 group-focus-within/search:opacity-0"
+  COLLAPSE_ON_SEARCH
 );
 
 const POPOVER_STYLES = cn(
-  "bg-secondary p-4 rounded-b-lg shadow-lg w-full absolute left-0 z-50 top-9",
-  SHARED_TRANSITION,
-  "invisible opacity-0",
-  "group-focus-within/search:visible group-focus-within/search:opacity-100"
+  TRANSITION,
+  HIDDEN,
+  VISIBLE_ON_SEARCH,
+  "bg-secondary p-4 rounded-b-lg shadow-lg w-full absolute left-0 top-9 z-50"
 );
 
 const BACKDROP_STYLES = cn(
-  "fixed inset-0 z-40 backdrop-blur-xs",
-  SHARED_TRANSITION,
-  "opacity-0 invisible pointer-events-none",
-  "group-focus-within/search:opacity-100 group-focus-within/search:visible group-focus-within/search:pointer-events-auto"
+  TRANSITION,
+  HIDDEN,
+  VISIBLE_ON_SEARCH,
+  "fixed inset-0 z-30 backdrop-blur-xs pointer-events-none",
+  POINTER_EVENTS_ON_SEARCH
 );
 
 export { BUTTON_STYLES, POPOVER_STYLES, BACKDROP_STYLES };

@@ -41,7 +41,7 @@ function Search() {
       {query.length > 0 ? (
         <Button
           type="button"
-          className="absolute right-0 mr-3 z-20"
+          className="absolute right-0 mr-3 z-50"
           onClick={() => setQuery("")}
           variant="ghost"
           size="sm"
@@ -51,7 +51,7 @@ function Search() {
       ) : (
         <Button
           type="submit"
-          className="absolute right-0 mr-3 z-20"
+          className="absolute right-0 mr-3 z-50"
           variant="ghost"
           size="sm"
         >
@@ -63,7 +63,7 @@ function Search() {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Find recipes, products or discounts"
-        className="w-full bg-background relative z-10"
+        className="w-full bg-background relative z-50"
       />
 
       <div className={POPOVER_STYLES}>
