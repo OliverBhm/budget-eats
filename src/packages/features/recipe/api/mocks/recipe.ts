@@ -28,7 +28,7 @@ export const mockFriedRiceRecipeResponse: SupabaseResponse<RecipeData> = {
                 unit: "g",
             },
         },
-        difficulty: "easy",
+        difficulty: "medium",
         created_at: "2023-10-25T12:00:00Z",
         tags: [
             { id: "t1", label: "Fast & Cheap", variant: "secondary" },
@@ -173,3 +173,165 @@ export const mockFriedRiceRecipeResponse: SupabaseResponse<RecipeData> = {
         ],
     },
 };
+
+export const mockOvernightOatsRecipeResponse: SupabaseResponse<RecipeData> = {
+    error: null,
+    data: {
+        id: "223e4567-e89b-12d3-a456-426614174001",
+        title: "Overnight Oats",
+        description: "A simple, healthy breakfast prepared the night before.",
+        image_url: "/overnight-oats.jpeg",
+        default_servings: 1,
+        time: {
+            prep_minutes: 5,
+            cook_minutes: 0,
+            total_minutes: 5,
+        },
+        nutrition: {
+            calories: 420,
+            protein: { amount: 18, unit: "g" },
+            carbs: { amount: 52, unit: "g" },
+            fat: { amount: 14, unit: "g" },
+        },
+        difficulty: "easy",
+        created_at: "2023-10-26T08:00:00Z",
+        tags: [
+            { id: "t1", label: "Meal Prep", variant: "secondary" },
+            { id: "t2", label: "Vegetarian", variant: "default" },
+            { id: "t3", label: "Healthy", variant: "secondary" },
+        ],
+        steps: [
+            {
+                id: "s1",
+                text: "Add {i1_amount}{i1_unit} {i1} to a jar or bowl.",
+                highlights: ["rolled oats"],
+            },
+            {
+                id: "s2",
+                text: "Pour in {i2_amount}{i2_unit} {i2} and stir until well combined.",
+                highlights: ["milk", "stir"],
+            },
+            {
+                id: "s3",
+                text: "Mix in {i3_amount}{i3_unit} {i3} for sweetness.",
+                highlights: ["honey"],
+            },
+            {
+                id: "s4",
+                text: "Cover and refrigerate overnight or for at least 4 hours.",
+                highlights: ["refrigerate overnight"],
+            },
+            {
+                id: "s5",
+                text: "Before serving, top with sliced {i4}.",
+                highlights: ["banana", "serve"],
+            },
+        ],
+        ingredients: [
+            {
+                id: "i1",
+                name: "Rolled Oats",
+                displayName: { singular: "rolled oats", plural: "rolled oats" },
+                image_url: "/ingredient.png",
+                base_amount: 50,
+                unit: "g",
+                price_per_unit: 0.02,
+                is_primary: true,
+            },
+            {
+                id: "i2",
+                name: "Milk",
+                displayName: { singular: "milk", plural: "milk" },
+                image_url: "/ingredient.png",
+                base_amount: 150,
+                unit: "ml",
+                price_per_unit: 0.01,
+                is_primary: true,
+            },
+            {
+                id: "i3",
+                name: "Honey",
+                displayName: { singular: "honey", plural: "honey" },
+                image_url: "/ingredient.png",
+                base_amount: 1,
+                unit: "tbsp",
+                price_per_unit: 0.2,
+                is_primary: false,
+            },
+            {
+                id: "i4",
+                name: "Banana",
+                displayName: { singular: "banana", plural: "bananas" },
+                image_url: "/ingredient.png",
+                base_amount: 0.5,
+                unit: "pcs",
+                price_per_unit: 0.3,
+                is_primary: false,
+            },
+        ],
+    },
+};
+
+export const mockApplePeanutButterSnackResponse: SupabaseResponse<RecipeData> = {
+    error: null,
+    data: {
+        id: "323e4567-e89b-12d3-a456-426614174002",
+        title: "Apple with Peanut Butter",
+        description: "A quick, filling snack with natural sweetness and protein.",
+        image_url: "/apple-peanut-butter.jpeg",
+        default_servings: 1,
+        time: {
+            prep_minutes: 3,
+            cook_minutes: 0,
+            total_minutes: 3,
+        },
+        nutrition: {
+            calories: 250,
+            protein: { amount: 7, unit: "g" },
+            carbs: { amount: 28, unit: "g" },
+            fat: { amount: 14, unit: "g" },
+        },
+        difficulty: "easy",
+        created_at: "2023-10-26T12:00:00Z",
+        tags: [
+            { id: "t1", label: "Snack", variant: "secondary" },
+            { id: "t2", label: "Fast & Cheap", variant: "secondary" },
+            { id: "t3", label: "Vegetarian", variant: "default" },
+        ],
+        steps: [
+            {
+                id: "s1",
+                text: "Wash and slice the {i1} into wedges.",
+                highlights: ["slice apple"],
+            },
+            {
+                id: "s2",
+                text: "Serve with {i2_amount}{i2_unit} {i2} for dipping.",
+                highlights: ["peanut butter", "dip"],
+            },
+        ],
+        ingredients: [
+            {
+                id: "i1",
+                name: "Apple",
+                displayName: { singular: "apple", plural: "apples" },
+                image_url: "/ingredient.png",
+                base_amount: 1,
+                unit: "pcs",
+                price_per_unit: 0.4,
+                is_primary: true,
+            },
+            {
+                id: "i2",
+                name: "Peanut Butter",
+                displayName: { singular: "peanut butter", plural: "peanut butter" },
+                image_url: "/ingredient.png",
+                base_amount: 1,
+                unit: "tbsp",
+                price_per_unit: 0.25,
+                is_primary: true,
+            },
+        ],
+    },
+};
+
