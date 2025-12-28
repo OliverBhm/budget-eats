@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Drawer,
   DrawerContent,
@@ -10,6 +11,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import { Input } from "@/components/ui/input";
 import {
   Item,
   ItemActions,
@@ -25,6 +27,7 @@ import {
   Info,
   List,
   ListCheck,
+  ListChecks,
   MoreHorizontal,
 } from "lucide-react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
@@ -41,6 +44,11 @@ interface IngredientItemsProps {
 
 const ingredientMoreActions = [
   {
+    title: "Switch ingredient",
+    icon: <ArrowLeftRight />,
+    action: (id: string) => {},
+  },
+  {
     title: "Show details",
     icon: <Info />,
     action: (id: string, router: AppRouterInstance) =>
@@ -53,7 +61,7 @@ const ingredientMoreActions = [
   },
   {
     title: "Add to pantry",
-    icon: <List />,
+    icon: <ListChecks />,
     action: (id: string) => {},
   },
 ];
@@ -80,7 +88,6 @@ function IngredientItems({ ingredients, servings }: IngredientItemsProps) {
                   className="rounded-md"
                 />
               </ItemMedia>
-
               <ItemContent className="flex-col">
                 <ItemTitle>{name}</ItemTitle>
                 <ItemDescription>
@@ -89,12 +96,6 @@ function IngredientItems({ ingredients, servings }: IngredientItemsProps) {
                 </ItemDescription>
               </ItemContent>
               <ItemActions>
-                <Link href={`/recipe/switch-ingredient/${id}`}>
-                  <Button variant={"secondary"} size={"sm"}>
-                    <ArrowLeftRight />
-                  </Button>
-                </Link>
-
                 <Drawer>
                   <DrawerTrigger>
                     <MoreHorizontal />

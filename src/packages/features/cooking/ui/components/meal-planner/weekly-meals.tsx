@@ -1,3 +1,5 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,6 +14,14 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import { ItemGroup } from "@/components/ui/item";
 import { IngredientItems } from "@/packages/features/ingredients/ui/components/ingredient-items";
 import {
@@ -30,6 +40,9 @@ import {
   ChevronLeft,
   ChevronRight,
   Clock,
+  List,
+  ListCheck,
+  MoreHorizontal,
   Plus,
 } from "lucide-react";
 import Link from "next/link";
@@ -53,6 +66,48 @@ interface RecipePreviewCardProps {
   variant?: "detailed" | "simple";
 }
 
+interface RecipePreviewCardActionsProps {
+  id?: string;
+}
+
+const recipePreviewCardMoreActions = [
+  {
+    title: "View recipe",
+    icon: <ChevronRight />,
+    action: (id: string) => {},
+  },
+  {
+    title: "Switch meal",
+    icon: <ArrowLeftRight />,
+    action: (id: string) => {},
+  },
+  {
+    title: "Add to shopping list",
+    icon: <List />,
+    action: (id: string) => {},
+  },
+];
+
+export function RecipePreviewCardActions({
+  id,
+}: RecipePreviewCardActionsProps) {
+  return (
+    <DrawerContent>
+      <DrawerHeader>
+        <DrawerTitle>Recipe actions</DrawerTitle>
+      </DrawerHeader>
+      <DrawerFooter>
+        {recipePreviewCardMoreActions.map(({ title, icon, action }) => (
+          <Button key={title} variant="secondary" onClick={() => action(id!)}>
+            <span className="ml-2">{title}</span>
+            {icon}
+          </Button>
+        ))}
+      </DrawerFooter>
+    </DrawerContent>
+  );
+}
+
 // Todo rework fix for type conflicts
 export function RecipePreviewCard({
   meal,
@@ -70,39 +125,31 @@ export function RecipePreviewCard({
   return (
     <>
       <Card className={className}>
-        <CardHeader>
-          <div className="flex">
-            <div>
-              <p className="text-sm text-muted-foreground">{mealType}</p>
-              <CardTitle>{title}</CardTitle>
-              <CardDescription className="space-y-2">
-                <p>{description}</p>
-                <ul className="flex gap-2 items-center">
-                  {time && (
-                    <li className="flex gap-1 items-center">
-                      <Clock className="w-3 h-3" />
-                      <p>{time.total_minutes}</p>
-                    </li>
-                  )}
-                  <span className="w-1 h-1 rounded-full bg-gray-400" />
-                  {nutrition && <li>{nutrition.calories} kcal</li>}
-                  <span className="w-1 h-1 rounded-full bg-gray-400" />
-                  {difficulty && (
-                    <li>
-                      <Badge>{difficulty}</Badge>
-                    </li>
-                  )}
-                </ul>
-              </CardDescription>
-            </div>
-            <Link href={`/recipe/${id}`}>
-              <Button size={"lg"} variant={"secondary"}>
-                View
-                <ArrowRightCircle />
-              </Button>
-            </Link>
-          </div>
-        </CardHeader>
+        <Link href={`/recipe/${id}`}>
+          <CardHeader className="flex flex-col gap-1 items-baseline">
+            <p className="text-sm text-muted-foreground">{mealType}</p>
+            <CardTitle>{title}</CardTitle>
+            <CardDescription className="space-y-2">
+              <p>{description}</p>
+              <ul className="flex gap-2 items-center">
+                {time && (
+                  <li className="flex gap-1 items-center">
+                    <Clock className="w-3 h-3" />
+                    <p>{time.total_minutes} mins</p>
+                  </li>
+                )}
+                <span className="w-1 h-1 rounded-full bg-gray-400" />
+                {nutrition && <li>{nutrition.calories} kcal</li>}
+                <span className="w-1 h-1 rounded-full bg-gray-400" />
+                {difficulty && (
+                  <li>
+                    <Badge>{difficulty}</Badge>
+                  </li>
+                )}
+              </ul>
+            </CardDescription>
+          </CardHeader>
+        </Link>
         <CardContent>
           {ingredients?.length && (
             <Collapsible>
@@ -110,13 +157,19 @@ export function RecipePreviewCard({
                 {variant === "detailed" && ingredients.length > 0 && (
                   <CollapsibleTrigger asChild>
                     <Button size="sm" variant="secondary">
-                      Ingredients <ChevronDown className="ml-2 h-4 w-4" />
+                      Ingredients ({ingredients.length})
+                      <ChevronDown className="ml-2 h-4 w-4" />
                     </Button>
                   </CollapsibleTrigger>
                 )}
-                <Button size="sm" variant="secondary">
-                  Change recipe <ArrowLeftRight />
-                </Button>
+                <Drawer>
+                  <DrawerTrigger asChild>
+                    <Button size={"sm"} variant={"secondary"}>
+                      <MoreHorizontal />
+                      <RecipePreviewCardActions id={id} />
+                    </Button>
+                  </DrawerTrigger>
+                </Drawer>
               </div>
               <CollapsibleContent className="mt-4 space-y-2">
                 <IngredientsList ingredients={ingredients} />
