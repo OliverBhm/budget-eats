@@ -12,9 +12,15 @@ import { IngredientItems } from "@/packages/features/ingredients/ui/components/i
 import { mockFriedRiceRecipeResponse } from "@/packages/features/recipe/api/mocks/recipe";
 import {
   RecipeData,
-  RecipeIngredient
+  RecipeIngredient,
+  SupabaseResponse,
 } from "@/packages/features/recipe/api/model/recipe";
-import { ArrowLeftRight, ArrowRightCircle, ChevronDown, Plus } from "lucide-react";
+import {
+  ArrowLeftRight,
+  ArrowRightCircle,
+  ChevronDown,
+  Plus,
+} from "lucide-react";
 import Link from "next/link";
 
 function IngredientsList({ ingredients }: { ingredients: RecipeIngredient[] }) {
@@ -27,73 +33,79 @@ function IngredientsList({ ingredients }: { ingredients: RecipeIngredient[] }) {
   );
 }
 
+type MealType = "snack" | "breakfest" | "lunch" | "dinner";
+
 interface RecipePreviewCardProps {
-  meal?: RecipeData | null;
-  mealType: "breakfest" | "lunch" | "dinner" | "snack";
+  meal: Partial<RecipeData> | null;
+  mealType: MealType;
   className?: string;
   variant?: "detailed" | "simple";
 }
 
+// Todo rework fix for type conflicts 
 export function RecipePreviewCard({
   meal,
   mealType,
   className,
   variant = "detailed",
 }: RecipePreviewCardProps) {
-  if(!meal) {
+  if (!meal) {
     return null;
   }
-  const {id, title, description, ingredients } = meal; 
+
+  const { id, title, description, ingredients } = meal;
   const recipeLink = `/recipe/${id}`;
 
   return (
     <>
       <Card className={className}>
-          <CardHeader>
-            <div className="flex">
-              <div>
-                <p className="text-sm text-muted-foreground">{mealType}</p>
-                <CardTitle>{title}</CardTitle>
-                <CardDescription>{description}</CardDescription>
-              </div>
-              <Link href={recipeLink}>
-                <Button size={"lg"} variant={"secondary"}>
-                  View
-                  <ArrowRightCircle />
-                </Button>
-              </Link>
+        <CardHeader>
+          <div className="flex">
+            <div>
+              <p className="text-sm text-muted-foreground">{mealType}</p>
+              <CardTitle>{title}</CardTitle>
+              <CardDescription>{description}</CardDescription>
             </div>
-          </CardHeader>
-        <CardContent>
-          <Collapsible>
-            <div className="flex items-center text-md pb-2 gap-2">
-              {variant === "detailed" && ingredients.length > 0 && (
-                <CollapsibleTrigger asChild>
-                  <Button size="sm" variant="secondary">
-                    Ingredients <ChevronDown className="ml-2 h-4 w-4" />
-                  </Button>
-                </CollapsibleTrigger>
-              )}
-              <Button size="sm" variant="secondary">
-                Change recipe <ArrowLeftRight />
+            <Link href={recipeLink}>
+              <Button size={"lg"} variant={"secondary"}>
+                View
+                <ArrowRightCircle />
               </Button>
-            </div>
-            <CollapsibleContent className="mt-4 space-y-2">
-              <IngredientsList ingredients={ingredients} />
-            </CollapsibleContent>
-          </Collapsible>
+            </Link>
+          </div>
+        </CardHeader>
+        <CardContent>
+          {ingredients?.length && (
+            <Collapsible>
+              <div className="flex items-center text-md pb-2 gap-2">
+                {variant === "detailed" && ingredients.length > 0 && (
+                  <CollapsibleTrigger asChild>
+                    <Button size="sm" variant="secondary">
+                      Ingredients <ChevronDown className="ml-2 h-4 w-4" />
+                    </Button>
+                  </CollapsibleTrigger>
+                )}
+                <Button size="sm" variant="secondary">
+                  Change recipe <ArrowLeftRight />
+                </Button>
+              </div>
+              <CollapsibleContent className="mt-4 space-y-2">
+                <IngredientsList ingredients={ingredients} />
+              </CollapsibleContent>
+            </Collapsible>
+          )}
         </CardContent>
       </Card>
     </>
   );
 }
 
-const MEALS = [
+const MEALS: { id: string; mealType: MealType; recipe: RecipeData | null }[] = [
   {
     id: "dskaöd-12312-dad-42-123-dsf",
     mealType: "breakfest",
     recipe: {
-      ...mockFriedRiceRecipeResponse.data,
+      ...mockFriedRiceRecipeResponse.data!,
       title: "Overnight Oats",
       description: "Perfect for the healthy amout of energy in the morning.",
     },
@@ -101,15 +113,16 @@ const MEALS = [
   {
     id: "dskaöd-12312-dad-42-123-asd",
     mealType: "lunch",
-    recipe: mockFriedRiceRecipeResponse.data,
+    recipe: mockFriedRiceRecipeResponse.data!,
   },
   {
     id: "dskaöd-12312-dad-42-123-asdd",
     mealType: "dinner",
     recipe: {
-      ...mockFriedRiceRecipeResponse.data,
+      ...mockFriedRiceRecipeResponse.data!,
       title: "Toast",
-      description: 'Finish the day with a traditional toast and cheese sandwich.'
+      description:
+        "Finish the day with a traditional toast and cheese sandwich.",
     },
   },
 ];
@@ -132,7 +145,7 @@ export default function WeeklyMeals() {
         Todays menu - ${getTotalPriceFromIngredients().toFixed(2)}
       </h3>
 
-      {meals.map(({ id, recipe: meal, mealType }) => (
+      {meals?.map(({ id, recipe: meal, mealType }) => (
         <RecipePreviewCard
           key={id}
           {...{ mealType, meal }}
