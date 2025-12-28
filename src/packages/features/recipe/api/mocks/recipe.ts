@@ -7,7 +7,28 @@ export const mockFriedRiceRecipeResponse: SupabaseResponse<RecipeData> = {
         title: "Egg Fried Rice",
         description: "A classic, quick, and delicious meal perfect for leftover rice.",
         image_url: "/essen.jpeg",
-        default_servings: 4,
+        default_servings: 1,
+        time: {
+            prep_minutes: 10,
+            cook_minutes: 10,
+            total_minutes: 20,
+        },
+        nutrition: {
+            calories: 360,
+            protein: {
+                amount: 12,
+                unit: "g",
+            },
+            carbs: {
+                amount: 45,
+                unit: "g",
+            },
+            fat: {
+                amount: 12,
+                unit: "g",
+            },
+        },
+        difficulty: "easy",
         created_at: "2023-10-25T12:00:00Z",
         tags: [
             { id: "t1", label: "Fast & Cheap", variant: "secondary" },

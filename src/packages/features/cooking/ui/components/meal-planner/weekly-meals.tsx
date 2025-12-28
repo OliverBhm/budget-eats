@@ -1,13 +1,19 @@
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import {
-  ItemGroup
-} from "@/components/ui/item";
+import { ItemGroup } from "@/components/ui/item";
 import { IngredientItems } from "@/packages/features/ingredients/ui/components/ingredient-items";
 import { mockFriedRiceRecipeResponse } from "@/packages/features/recipe/api/mocks/recipe";
 import {
@@ -19,6 +25,7 @@ import {
   ArrowLeftRight,
   ArrowRightCircle,
   ChevronDown,
+  Clock,
   Plus,
 } from "lucide-react";
 import Link from "next/link";
@@ -42,7 +49,7 @@ interface RecipePreviewCardProps {
   variant?: "detailed" | "simple";
 }
 
-// Todo rework fix for type conflicts 
+// Todo rework fix for type conflicts
 export function RecipePreviewCard({
   meal,
   mealType,
@@ -53,7 +60,8 @@ export function RecipePreviewCard({
     return null;
   }
 
-  const { id, title, description, ingredients } = meal;
+  const { id, title, description, ingredients, time, nutrition, difficulty } =
+    meal;
 
   return (
     <>
@@ -63,7 +71,25 @@ export function RecipePreviewCard({
             <div>
               <p className="text-sm text-muted-foreground">{mealType}</p>
               <CardTitle>{title}</CardTitle>
-              <CardDescription>{description}</CardDescription>
+              <CardDescription className="space-y-2">
+                <p>{description}</p>
+                <ul className="flex gap-2 items-center">
+                  {time && (
+                    <li className="flex gap-1 items-center">
+                      <Clock className="w-3 h-3" />
+                      <p>{time.total_minutes}</p>
+                    </li>
+                  )}
+                  <span className="w-1 h-1 rounded-full bg-gray-400" />
+                  {nutrition && <li>{nutrition.calories} kcal</li>}
+                  <span className="w-1 h-1 rounded-full bg-gray-400" />
+                  {difficulty && (
+                    <li>
+                      <Badge>{difficulty}</Badge>
+                    </li>
+                  )}
+                </ul>
+              </CardDescription>
             </div>
             <Link href={`/recipe/${id}`}>
               <Button size={"lg"} variant={"secondary"}>
