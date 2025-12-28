@@ -54,7 +54,6 @@ export function RecipePreviewCard({
   }
 
   const { id, title, description, ingredients } = meal;
-  const recipeLink = `/recipe/${id}`;
 
   return (
     <>
@@ -66,7 +65,7 @@ export function RecipePreviewCard({
               <CardTitle>{title}</CardTitle>
               <CardDescription>{description}</CardDescription>
             </div>
-            <Link href={recipeLink}>
+            <Link href={`/recipe/${id}`}>
               <Button size={"lg"} variant={"secondary"}>
                 View
                 <ArrowRightCircle />
