@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 // Todo change this to the api user model once it exists
 interface UserAvatarProps {
-  imgUrl?: string;
+  imgUrl?: string | null;
   firstname: string;
   lastname: string;
   className?: string;
@@ -19,7 +19,7 @@ function UserAvatar({
 }: UserAvatarProps) {
   return (
     <Avatar style={style} className={cn(className)}>
-      <AvatarImage src={imgUrl}></AvatarImage>
+      <AvatarImage src={imgUrl || ""}></AvatarImage>
       <AvatarFallback>
         {firstname[0].toUpperCase()}
         {lastname[0].toUpperCase()}
