@@ -1,8 +1,9 @@
-'use client';
+"use client";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { SheetTrigger } from "@/components/ui/sheet";
+import { UserAvatar } from "@/packages/features/user/ui/components/user-avatar";
 import { AvatarImage } from "@radix-ui/react-avatar";
 import { BarChart, CookingPot, DollarSign, HomeIcon } from "lucide-react";
 import Link from "next/link";
@@ -21,15 +22,15 @@ function MobileNavItem({
   const pathname = usePathname();
   return (
     <Link
-    href={link}
-    className={`${
-      pathname === link && "bg-secondary/20"
-    } flex w-full justify-center`}
+      href={link}
+      className={`${
+        pathname === link && "bg-secondary/20"
+      } flex w-full justify-center`}
     >
       <Button
         variant="ghost"
         className="flex h-auto w-full flex-col gap-1 py-3"
-        >
+      >
         {icon}
         {name && <span className="text-xs">{name}</span>}
       </Button>
@@ -71,13 +72,11 @@ export default function BottomMobileHeader() {
           <MobileNavItem key={tab.link} {...tab} />
         ))}
         <SheetTrigger asChild>
-          <Button  variant={"ghost"}>
-            <Avatar className="h-8 w-8 border">
-              <AvatarImage src="" />
-              <AvatarFallback className="font-bold text-primary text-xs">
-                OB
-              </AvatarFallback>
-            </Avatar>
+          <Button variant={"ghost"}>
+            <UserAvatar
+              className="h-8 w-8"
+              {...{ imgUrl: "", firstname: "Oliver", lastname: "Boehm" }}
+            />
           </Button>
         </SheetTrigger>
       </div>

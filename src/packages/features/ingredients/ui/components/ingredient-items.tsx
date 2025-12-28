@@ -1,4 +1,15 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import {
   Item,
   ItemActions,
@@ -8,12 +19,19 @@ import {
   ItemSeparator,
   ItemTitle,
 } from "@/components/ui/item";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { RecipeIngredient } from "@/packages/features/recipe/api/model/recipe";
-import { ArrowLeftRight, ArrowRightCircle, List, ListCheck, ListChecks, MoreHorizontal } from "lucide-react";
+import {
+  ArrowLeftRight,
+  Info,
+  List,
+  ListCheck,
+  MoreHorizontal,
+} from "lucide-react";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Router } from "next/router";
 
 interface IngredientItemsProps {
   ingredients?: RecipeIngredient[];
@@ -21,8 +39,28 @@ interface IngredientItemsProps {
   switchButtonFn?: string;
 }
 
+const ingredientMoreActions = [
+  {
+    title: "Show details",
+    icon: <Info />,
+    action: (id: string, router: AppRouterInstance) =>
+      router.push("/ingredients/" + id),
+  },
+  {
+    title: "Add to shopping list",
+    icon: <ListCheck />,
+    action: (id: string) => {},
+  },
+  {
+    title: "Add to pantry",
+    icon: <List />,
+    action: (id: string) => {},
+  },
+];
+
 function IngredientItems({ ingredients, servings }: IngredientItemsProps) {
   servings ||= 1;
+  const router = useRouter();
 
   return (
     <>
@@ -31,7 +69,7 @@ function IngredientItems({ ingredients, servings }: IngredientItemsProps) {
           <div key={id}>
             <Item variant={i % 2 ? "default" : "muted"}>
               <ItemMedia className="relative">
-                <p className="absolute text-md bg-background/80 backdrop-blur-sm rounded-b-md 0 w-full text-center bottom-0 left-0 right-0">
+                <p className="absolute text-md bg-background/80 rounded-b-md 0 w-full text-center bottom-0 left-0 right-0">
                   ${(price_per_unit * base_amount * servings).toFixed(2)}
                 </p>
                 <Image
@@ -46,9 +84,8 @@ function IngredientItems({ ingredients, servings }: IngredientItemsProps) {
               <ItemContent className="flex-col">
                 <ItemTitle>{name}</ItemTitle>
                 <ItemDescription>
-                  
-                    {(base_amount * servings).toFixed(1).replace(/\.0$/, "")}{" "}
-                    {unit}
+                  {(base_amount * servings).toFixed(1).replace(/\.0$/, "")}{" "}
+                  {unit}
                 </ItemDescription>
               </ItemContent>
               <ItemActions>
@@ -58,22 +95,31 @@ function IngredientItems({ ingredients, servings }: IngredientItemsProps) {
                   </Button>
                 </Link>
 
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button variant={"secondary"} size={"sm"}>
-                      <MoreHorizontal />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent>
-                    <menu className="space-y-2 flex flex-col">
-                      <Button variant={"secondary"}>
-                        Add to shopping list <List />
-                      </Button>
-                      <Button variant={"secondary"}>Add to pantry <ListChecks /></Button>
-                      <Button variant={"secondary"}>Show details <ArrowRightCircle /></Button>
-                    </menu>
-                  </PopoverContent>
-                </Popover>
+                <Drawer>
+                  <DrawerTrigger>
+                    <MoreHorizontal />
+                  </DrawerTrigger>
+                  <DrawerContent>
+                    <DrawerHeader>
+                      <DrawerTitle>Ingredient actions</DrawerTitle>
+                      <DrawerDescription>
+                        What would you like to do with this ingredient?
+                      </DrawerDescription>
+                    </DrawerHeader>
+                    <DrawerFooter>
+                      {ingredientMoreActions.map(({ title, icon, action }) => (
+                        <Button
+                          key={title}
+                          variant="secondary"
+                          onClick={() => action(id, router)}
+                        >
+                          <span>{title}</span>
+                          {icon}
+                        </Button>
+                      ))}
+                    </DrawerFooter>
+                  </DrawerContent>
+                </Drawer>
               </ItemActions>
             </Item>
             {i < ingredients.length - 1 && <ItemSeparator />}
