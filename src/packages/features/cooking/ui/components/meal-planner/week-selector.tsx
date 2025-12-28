@@ -1,10 +1,19 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { ChevronLeft, ChevronRight, Circle, CircleCheck } from "lucide-react";
 import { useState } from "react";
 import { generateDatesOfOneWeek } from "../../util/dates";
+import { Progress } from "@/components/ui/progress";
+import { Badge } from "@/components/ui/badge";
 
 const mockLocal = "en-US";
 
@@ -30,9 +39,13 @@ function getDayStatusIcon(status: "unplanned" | "incomplete" | "complete") {
   }
 }
 
+const isActiveDay = (activeDay: Date, day: Date) =>
+  activeDay.getDate() === day.getDate();
+
 export default function WeekSelector() {
   const [week, setWeek] = useState(0);
   const weekdays = generateDatesOfOneWeek(week);
+  const [activeDay, setActiveDay] = useState(new Date());
 
   return (
     <Card>
@@ -59,7 +72,9 @@ export default function WeekSelector() {
             <Button
               size={"sm"}
               variant={"secondary"}
+              state={isActiveDay(activeDay, day) ? "active" : "inactive"}
               className="flex-col gap-0 py-6 font-normal"
+              onClick={() => setActiveDay(day)}
             >
               <p className="md:block">
                 {day.toLocaleDateString().split(".")[0]}
@@ -70,6 +85,13 @@ export default function WeekSelector() {
           </span>
         ))}
       </CardContent>
+      <CardFooter className="flex flex-col space-y-2">
+        <CardDescription className="flex justify-between w-full">
+          <Badge>On track</Badge>
+          <span>$35.40 / $50.00</span>
+        </CardDescription>
+        <Progress value={(100 / 50) * 35.4} />
+      </CardFooter>
     </Card>
   );
 }
