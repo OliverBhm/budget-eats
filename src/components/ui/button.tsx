@@ -28,35 +28,40 @@ const buttonVariants = cva(
         "icon-sm": "size-8",
         "icon-lg": "size-10",
       },
+      state: {
+        active: "border-2 border-double",
+        inactive: "border-none",
+      },
     },
     defaultVariants: {
       variant: "default",
       size: "default",
     },
   }
-)
+);
 
 function Button({
   className,
   variant = "default",
   size = "default",
+  state = "inactive",
   asChild = false,
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
-    asChild?: boolean
+    asChild?: boolean;
   }) {
-  const Comp = asChild ? Slot : "button"
+  const Comp = asChild ? Slot : "button";
 
   return (
     <Comp
       data-slot="button"
       data-variant={variant}
       data-size={size}
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={cn(buttonVariants({ variant, size, state, className }))}
       {...props}
     />
-  )
+  );
 }
 
 export { Button, buttonVariants }
