@@ -84,6 +84,7 @@ function Search() {
             </ItemContent>
           </Item>
         </ItemGroup>
+
       </div>
     </form>
   );
@@ -108,9 +109,9 @@ export default function TopMobileHeader() {
 
   return (
     <header className="w-full p-3 shadow-xs bg-accent sticky top-0 z-50">
-      <nav className="relative flex items-center gap-2">
+      <nav className="relative flex items-center gap-2 group/search">
         {isOnChildpage ? <BackNavigationButton /> : <DiscountsQuickLink />}
-        <div className="group/search relative flex-1">
+        <div className="relative flex-1">
           <div className={BACKDROP_STYLES} aria-hidden />
           <Search />
         </div>

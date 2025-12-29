@@ -12,11 +12,7 @@ const POINTER_EVENTS_ON_SEARCH =
 const COLLAPSE_ON_SEARCH =
   "group-focus-within/search:max-w-0 group-focus-within/search:opacity-0";
 
-const BUTTON_STYLES = cn(
-  TRANSITION,
-  "max-w-[50px] opacity-100",
-  COLLAPSE_ON_SEARCH
-);
+const BUTTON_STYLES = cn(TRANSITION, "max-w-5 opacity-100", COLLAPSE_ON_SEARCH);
 
 const POPOVER_STYLES = cn(
   TRANSITION,
