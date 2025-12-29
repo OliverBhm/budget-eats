@@ -7,7 +7,6 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import { ChevronLeft, ChevronRight, Circle, CircleCheck } from "lucide-react";
 import { useState } from "react";
@@ -87,9 +86,10 @@ export default function WeekSelector() {
       </CardContent>
       <CardFooter className="flex flex-col space-y-2">
         <CardDescription className="flex justify-between w-full">
-          <Badge>On track</Badge>
+          <Badge className="bg-chart-2 text-white">On track</Badge>
           <span>$35.40 / $50.00</span>
         </CardDescription>
+
         <Progress value={(100 / 50) * 35.4} />
       </CardFooter>
     </Card>
