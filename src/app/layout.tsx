@@ -1,33 +1,23 @@
-import TopMobileHeader from "@/packages/features/shared/ui/components/top-mobile-header/top-mobile-header";
+"use client";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetHeader } from "@/components/ui/sheet";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { GROUPS_MOCK } from "@/packages/features/api/groups/mocks/group.mock";
 import BottomMobileHeader from "@/packages/features/shared/ui/components/bottom-mobile-header";
-import "./globals.css";
+import NavSidebar from "@/packages/features/shared/ui/components/nav-sidebar";
+import TopMobileHeader from "@/packages/features/shared/ui/components/top-mobile-header/top-mobile-header";
+import { GroupsSwitcher } from "@/packages/features/ui/groups/components/group-switcher";
+import { Settings, Timer } from "lucide-react";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "sonner";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
-import { Settings, Timer } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cookies } from "next/headers";
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
-import NavSidebar from "@/packages/features/shared/ui/components/nav-sidebar";
+import "./globals.css";
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = await cookies();
-  const defaultOpen = cookieStore.get("sidebar_state")?.value === "true";
+  const defaultOpen = true; //cookieStore.get("sidebar-open")?.value === "true";
 
   return (
     <html lang="en">
@@ -44,36 +34,38 @@ export default async function RootLayout({
               <TopMobileHeader />
               <main className="flex-1 m-3 mt-6 pb-15">{children}</main>
             </SidebarInset>
-          </SidebarProvider>
-          <Toaster />
+            <Toaster />
 
-          <footer className="fixed bottom-0 right-0 left-0">
-            <Sheet>
-              <SheetContent>
-                <SheetHeader>Group Switcher</SheetHeader>
-                <nav>
-                  <ul className="">
-                    <li>
-                      <Button>
-                        <Settings /> Settings
-                      </Button>
-                    </li>
-                    <li>
-                      <Button>
-                        <Timer /> Timers
-                      </Button>
-                    </li>
-                    <li>
-                      <Button>
-                        <Timer /> Timers
-                      </Button>
-                    </li>
-                  </ul>
-                </nav>
-              </SheetContent>
-              <BottomMobileHeader />
-            </Sheet>
-          </footer>
+            <footer className="fixed bottom-0 right-0 left-0">
+              <Sheet>
+                <SheetContent>
+                  <SheetHeader>
+                    <GroupsSwitcher {...{ groups: GROUPS_MOCK }} />
+                  </SheetHeader>
+                  <nav>
+                    <ul className="">
+                      <li>
+                        <Button>
+                          <Settings /> Settings
+                        </Button>
+                      </li>
+                      <li>
+                        <Button>
+                          <Timer /> Timers
+                        </Button>
+                      </li>
+                      <li>
+                        <Button>
+                          <Timer /> Timers
+                        </Button>
+                      </li>
+                    </ul>
+                  </nav>
+                </SheetContent>
+                <BottomMobileHeader />
+              </Sheet>
+            </footer>
+          </SidebarProvider>
         </ThemeProvider>
       </body>
     </html>

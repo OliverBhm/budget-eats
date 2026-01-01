@@ -62,6 +62,7 @@ import {
 } from "@/components/ui/select";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
+import { GROUPS_MOCK } from "@/packages/features/api/groups/mocks/group.mock";
 import { UserAvatar } from "@/packages/features/user/ui/components/user-avatar";
 import {
   ArrowRight,
@@ -79,7 +80,6 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import { GROUPS_MOCK } from "../page";
 
 interface GroupeAddress {
   street: string;

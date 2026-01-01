@@ -4,17 +4,23 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { MAIN_NAV_ITEMS } from "../constants/nav-links";
+import { GroupsSwitcher } from "@/packages/features/ui/groups/components/group-switcher";
+import { GROUPS_MOCK } from "@/packages/features/api/groups/mocks/group.mock";
 
 export function NavSidebar() {
   const items = MAIN_NAV_ITEMS;
 
   return (
     <Sidebar>
+      <SidebarHeader>
+        <GroupsSwitcher {...{ groups: GROUPS_MOCK }} />
+      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Budget Eats</SidebarGroupLabel>
