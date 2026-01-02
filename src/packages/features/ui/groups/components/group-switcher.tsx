@@ -75,9 +75,9 @@ function GroupsSwitcher({
                 <div className="flex justify-between items-center flex-1">
                   {group.name}
                   <Link href={`./groups/${group.id}`}>
-                  <Button variant="link">
-                    <Settings />
-                  </Button>
+                    <Button variant="link">
+                      <Settings />
+                    </Button>
                   </Link>
                 </div>
               </DropdownMenuItem>
@@ -87,7 +87,12 @@ function GroupsSwitcher({
               <div className="flex size-6 items-center justify-center rounded-md border bg-transparent">
                 <Plus className="size-4" />
               </div>
-              <div className="text-muted-foreground font-medium">Add group</div>
+              <Link
+                href="./groups/new"
+                className="text-muted-foreground font-medium"
+              >
+                Create new
+              </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

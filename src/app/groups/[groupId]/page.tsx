@@ -63,6 +63,8 @@ import {
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { GROUPS_MOCK } from "@/packages/features/api/groups/mocks/group.mock";
+import { GroupMemberStatusSelect } from "@/packages/features/ui/groups/components/group-member-status-select";
+import { GroupMembers } from "@/packages/features/ui/groups/components/group-members";
 import { UserAvatar } from "@/packages/features/user/ui/components/user-avatar";
 import {
   ArrowRight,
@@ -89,69 +91,33 @@ interface GroupeAddress {
   city: string;
 }
 
-function GroupAddressForm({ address }: { address?: GroupeAddress }) {
+export function GroupAddressForm({ address }: { address?: GroupeAddress }) {
   return (
     <form className="space-y-4">
       <div className="grid grid-cols-4 gap-4">
         <Field className="col-span-3">
-          <FieldLabel>Street</FieldLabel>
-          <Input value={address?.street} />
+          <Input placeholder="Street" value={address?.street} />
         </Field>
         <Field>
-          <FieldLabel htmlFor="houseNo">House no.</FieldLabel>
-          <Input value={address?.houseNo} name="houseNo" />
+          <Input
+            placeholder="House no."
+            value={address?.houseNo}
+            name="houseNo"
+          />
         </Field>
       </div>
       <div className="grid grid-cols-3 gap-4">
         <Field>
-          <FieldLabel>Zip code</FieldLabel>
-          <Input value={address?.zipCode} />
+          <Input placeholder="Zip Code" value={address?.zipCode} />
         </Field>
         <Field className="col-span-2">
-          <FieldLabel htmlFor="city">City</FieldLabel>
-          <Input value={address?.city} name="city" />
+          <Input placeholder="City" value={address?.city} name="city" />
         </Field>
       </div>
       <Field>
-        <FieldLabel htmlFor="country">Country</FieldLabel>
-        <Input value={address?.country} name="country" />
+        <Input placeholder="country" value={address?.country} name="country" />
       </Field>
     </form>
-  );
-}
-
-function GroupMemberStatusSelect({ userId }: { userId?: string }) {
-  const [memberStatus, setMemberStatusType] = useState("member");
-  const memberStatusTypes = [
-    {
-      value: "admin",
-      text: "Admin",
-    },
-    {
-      value: "member",
-      text: "Member",
-    },
-    {
-      value: "viewer",
-      text: "viewer",
-    },
-  ];
-  return (
-    <Select value={memberStatus} onValueChange={setMemberStatusType}>
-      <SelectTrigger>
-        <SelectValue placeholder={memberStatus} />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          <SelectLabel>Member status</SelectLabel>
-          {memberStatusTypes.map(({ text, value }) => (
-            <SelectItem key={value} value={value}>
-              {text}
-            </SelectItem>
-          ))}
-        </SelectGroup>
-      </SelectContent>
-    </Select>
   );
 }
 
@@ -300,80 +266,7 @@ export default function MangeGroup() {
           <GroupAddress {...{ address }} />
         </PageHeaderDescription>
       </PageHeader>
-      <Card>
-        <Collapsible>
-          <CardHeader>
-            <div className="flex gap-2 item-baseline">
-              <CardTitle>Group Members</CardTitle>
-              <CollapsibleTrigger>
-                <ChevronsUpDown />
-              </CollapsibleTrigger>
-            </div>
-            <CardDescription>
-              Add, remove or change the roles of members
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <CollapsibleContent className="space-y-2">
-              <ItemGroup variant={"muted"}>
-                {members.map(({ userId, firstname, lastname, imgUrl }) => (
-                  <Item key={userId}>
-                    <ItemContent className="gap-2">
-                      <UserAvatar {...{ firstname, lastname, imgUrl }} />
-                      <div className="flex-col">
-                        <ItemTitle>
-                          {firstname} {lastname}
-                        </ItemTitle>
-                        <ItemDescription>
-                          Since: <strong>20.3.2025</strong>
-                        </ItemDescription>
-                      </div>
-                    </ItemContent>
-                    <ItemActions>
-                      <GroupMemberStatusSelect {...{ userId }} />
-                      <AlertDialog>
-                        <AlertDialogTrigger>
-                          <Button size={"sm"} variant={"outline"}>
-                            <Trash />
-                          </Button>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent>
-                          <AlertDialogHeader>
-                            <AlertDialogTitle>
-                              Remove {firstname}?
-                            </AlertDialogTitle>
-                            <AlertDialogDescription>
-                              After you've removed {firstname} they can no
-                              longer view meal plans, shared recipes and budget
-                              overviews.
-                            </AlertDialogDescription>
-                          </AlertDialogHeader>
-                          <AlertDialogFooter>
-                            <AlertDialogCancel className="mt-1 md:mt-0">
-                              Leave in group
-                            </AlertDialogCancel>
-                            <AlertDialogAction>
-                              <Button>
-                                I'm sure <Spinner />
-                              </Button>
-                            </AlertDialogAction>
-                          </AlertDialogFooter>
-                        </AlertDialogContent>
-                      </AlertDialog>
-                    </ItemActions>
-                    <ItemSeparator />
-                  </Item>
-                ))}
-              </ItemGroup>
-              <Link href={"./search"}>
-                <Button>
-                  Add new user <Plus />
-                </Button>
-              </Link>
-            </CollapsibleContent>
-          </CardContent>
-        </Collapsible>
-      </Card>
+      <GroupMembers members={members} />
       <Card>
         <CardHeader>
           <CardTitle>Share invite link</CardTitle>
