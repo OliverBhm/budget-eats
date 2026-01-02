@@ -35,13 +35,10 @@ import {
 } from "@/packages/features/recipe/api/model/recipe";
 import {
   ArrowLeftRight,
-  ArrowRightCircle,
   ChevronDown,
-  ChevronLeft,
   ChevronRight,
   Clock,
   List,
-  ListCheck,
   MoreHorizontal,
   Plus,
 } from "lucide-react";
