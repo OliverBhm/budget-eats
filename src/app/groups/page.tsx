@@ -63,18 +63,16 @@ export default function Groups() {
                 </CardContent>
                 <CardFooter>
                   <div className="flex">
-                    {members.map(
-                      ({ userId, firstname, lastname, imgUrl }, i) => (
-                        <UserAvatar
-                          key={userId + groupId}
-                          {...{ firstname, lastname, imgUrl }}
-                          style={{
-                            translate: 12 * i * -1,
-                            opacity: `${100 - (members.length - i) * 10}%`,
-                          }}
-                        ></UserAvatar>
-                      )
-                    )}
+                    {members.map(({ id, firstname, lastname, imgUrl }, i) => (
+                      <UserAvatar
+                        key={id + groupId}
+                        {...{ firstname, lastname, imgUrl }}
+                        style={{
+                          translate: 12 * i * -1,
+                          opacity: `${100 - (members.length - i) * 10}%`,
+                        }}
+                      ></UserAvatar>
+                    ))}
                   </div>
                 </CardFooter>
               </Card>
