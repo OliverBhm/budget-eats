@@ -27,7 +27,7 @@ const ingredientThumbailSize = 100;
 
 function DiscountsQuickLink() {
   return (
-    <Button className={BUTTON_STYLES} size="icon-sm" variant="ghost">
+    <Button className={BUTTON_STYLES} size="icon-lg" variant="ghost">
       <Newspaper />
     </Button>
   );
@@ -84,7 +84,6 @@ function Search() {
             </ItemContent>
           </Item>
         </ItemGroup>
-
       </div>
     </form>
   );
@@ -109,7 +108,7 @@ export default function TopMobileHeader() {
 
   return (
     <header className="w-full p-3 shadow-xs bg-accent sticky top-0 z-50">
-      <nav className="relative flex items-center gap-2 group/search">
+      <nav className="relative flex items-center gap-3 group/search px-2">
         {isOnChildpage ? <BackNavigationButton /> : <DiscountsQuickLink />}
         <div className="relative flex-1">
           <div className={BACKDROP_STYLES} aria-hidden />

@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/popover";
 import { Fragment } from "react/jsx-runtime";
 import { UserAvatar } from "@/packages/features/user/ui/components/user-avatar";
+import { cn } from "@/lib/utils";
 
 function NotificationsList({
   notifications,
@@ -78,7 +79,11 @@ function NotificationBell() {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button className={BUTTON_STYLES} size="icon-sm" variant="ghost">
+        <Button
+          className={cn(BUTTON_STYLES, "")}
+          size="icon-lg"
+          variant="ghost"
+        >
           <NotifictionIndicator unread={unread} />
         </Button>
       </PopoverTrigger>
