@@ -125,8 +125,8 @@ export function RecipePreviewCard({
     <>
       <Card className={className}>
         <Link href={`/recipe/${id}`}>
-          <CardHeader className="flex gap-1 items-baseline">
-            <span>
+          <CardHeader className="flex gap-1 items-baseline space-y-2">
+            <span className="space-y-1">
               <Paragraph variant="muted" size="xs">
                 {capitalize(mealType)}
               </Paragraph>
