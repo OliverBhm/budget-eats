@@ -195,7 +195,7 @@ export default function MangeGroup() {
         <CardContent>
           <div className="space-y-2 flex gap-2">
             <Input disabled value={"groups/invite/" + groupId} />
-            <menu className="w-full flex gap-2">
+            <ButtonGroup>
               <Button
                 onClick={() => {
                   toast("Copied to clipboard!");
@@ -206,7 +206,7 @@ export default function MangeGroup() {
                 <Copy />
               </Button>
               <GroupMemberStatusSelect />
-            </menu>
+            </ButtonGroup>
           </div>
           <CardFooter></CardFooter>
         </CardContent>
