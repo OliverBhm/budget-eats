@@ -20,23 +20,26 @@ export function GroupAddMembers({
     <>
       <GroupMemberSearch members={members} onAdd={addMember} />
       {otherMembers && (
-        <GroupMemberList
-          members={otherMembers}
-          actions={(id) => (
-            <>
-              <GroupMemberStatusSelect userId={id} />
-              <Button
-                size={"sm"}
-                variant={"ghost"}
-                onClick={() => {
-                  addMember({ id: id || "" });
-                }}
-              >
-                <UserPlus className="h-4 w-4 mr-2" />
-              </Button>
-            </>
-          )}
-        ></GroupMemberList>
+        <>
+          <h4 className="font-semibold">Members from other groups</h4>
+          <GroupMemberList
+            members={otherMembers}
+            actions={(id) => (
+              <>
+                <GroupMemberStatusSelect userId={id} />
+                <Button
+                  size={"sm"}
+                  variant={"ghost"}
+                  onClick={() => {
+                    addMember({ id: id || "" });
+                  }}
+                >
+                  <UserPlus className="h-4 w-4 mr-2" />
+                </Button>
+              </>
+            )}
+          ></GroupMemberList>
+        </>
       )}
     </>
   );

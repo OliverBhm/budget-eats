@@ -68,7 +68,7 @@ export default function CreateGroupPage() {
           <CardHeader>
             <CardTitle>Add members</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-2">
+          <CardContent className="space-y-4">
             <GroupAddMembers
               members={[...MOCK_USERS]}
               otherMembers={MOCK_OTHER_GROUP_MEMBERS}
