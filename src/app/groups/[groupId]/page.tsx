@@ -32,9 +32,23 @@ import {
   GroupAddressForm,
   GroupeAddress,
 } from "@/packages/features/ui/groups/components/group-address-form/group-address-form";
+import { GroupMemberSearch } from "@/packages/features/ui/groups/components/group-member-search";
 import { GroupMemberStatusSelect } from "@/packages/features/ui/groups/components/group-member-status-select";
-import { GroupMembers } from "@/packages/features/ui/groups/components/group-members";
-import { ArrowRight, Check, Copy, Edit2, MapPin, Save, X } from "lucide-react";
+import {
+  GroupMemberList,
+  GroupMembers,
+} from "@/packages/features/ui/groups/components/group-members";
+import {
+  ArrowRight,
+  Check,
+  Copy,
+  Edit2,
+  MapPin,
+  Save,
+  Trash,
+  Trash2,
+  X,
+} from "lucide-react";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -184,7 +198,30 @@ export default function MangeGroup() {
           <GroupAddress {...{ address }} />
         </PageHeaderDescription>
       </PageHeader>
-      <GroupMembers members={members} />
+      <Card>
+        <CardHeader>
+          <CardTitle>Group Members</CardTitle>
+          <CardDescription>
+            Add, remove or change the roles of members
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <GroupMemberList
+            members={members}
+            actions={(id) => (
+              <>
+                <GroupMemberStatusSelect userId={id} />
+                <Button size={"sm"} variant={"ghost"}>
+                  <Trash2 className="mr-2" />
+                </Button>
+              </>
+            )}
+          />
+        </CardContent>
+        <CardFooter>
+          <GroupMemberSearch {...{ members: members, onAdd: () => {} }} />
+        </CardFooter>
+      </Card>
       <Card>
         <CardHeader>
           <CardTitle>Share invite link</CardTitle>
@@ -192,23 +229,20 @@ export default function MangeGroup() {
             With the invite link other people can easily join your group.
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-2 flex gap-2">
-            <Input disabled value={"groups/invite/" + groupId} />
-            <ButtonGroup>
-              <Button
-                onClick={() => {
-                  toast("Copied to clipboard!");
-                }}
-                size={"sm"}
-              >
-                <span className="hidden md:block">Copy to clipboard</span>
-                <Copy />
-              </Button>
-              <GroupMemberStatusSelect />
-            </ButtonGroup>
-          </div>
-          <CardFooter></CardFooter>
+        <CardContent className="space-y-2 flex gap-2">
+          <Input disabled value={"groups/invite/" + groupId} />
+          <ButtonGroup>
+            <Button
+              onClick={() => {
+                toast("Copied to clipboard!");
+              }}
+              size={"sm"}
+            >
+              <span className="hidden md:block">Copy to clipboard</span>
+              <Copy />
+            </Button>
+            <GroupMemberStatusSelect />
+          </ButtonGroup>
         </CardContent>
       </Card>
       <Button variant={"destructive"} className="w-full">

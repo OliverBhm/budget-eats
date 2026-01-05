@@ -119,41 +119,4 @@ function GroupMemberList({
   );
 }
 
-interface GroupMembersProps {
-  members: GroupMember[];
-  className?: string;
-}
-
-function GroupMembers({ members, className }: GroupMembersProps) {
-  const addMember = ({ id }: Pick<GroupMember, "id">) => {
-    // noop
-  };
-  return (
-    <Card className={cn(className)}>
-      <CardHeader>
-        <CardTitle>Group Members</CardTitle>
-        <CardDescription>
-          Add, remove or change the roles of members
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <GroupMemberList
-          members={members}
-          actions={(id) => (
-            <>
-              <GroupMemberStatusSelect userId={id} />
-              <Button size={"sm"} variant={"ghost"}>
-                <Trash className="mr-2" />
-              </Button>
-            </>
-          )}
-        />
-      </CardContent>
-      <CardFooter>
-        <GroupMemberSearch {...{ members: members, onAdd: addMember }} />
-      </CardFooter>
-    </Card>
-  );
-}
-
-export { GroupMemberDeleteAlert, GroupMemberList, GroupMembers };
+export { GroupMemberDeleteAlert, GroupMemberList };
