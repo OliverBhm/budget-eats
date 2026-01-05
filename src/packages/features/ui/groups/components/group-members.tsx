@@ -14,6 +14,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -42,6 +43,10 @@ import {
 import { ChevronsUpDown, FrameIcon, Trash } from "lucide-react";
 import Link from "next/link";
 import { Fragment } from "react/jsx-runtime";
+import { GroupAddMembers } from "./group-add-members";
+import { MOCK_OTHER_GROUP_MEMBERS } from "@/packages/features/api/groups/mocks/group.mock";
+import { GroupMemberSearch } from "./group-member-search";
+import { GroupMemberStatusSelect } from "./group-member-status-select";
 
 interface GroupMemberDeleteAlertProps {
   firstname: string;
@@ -128,29 +133,33 @@ interface GroupMembersProps {
 }
 
 function GroupMembers({ members, className }: GroupMembersProps) {
+  const addMember = ({ id }: Pick<GroupMember, "id">) => {
+    // noop
+  };
   return (
     <Card className={cn(className)}>
-      <Collapsible>
-        <CardHeader>
-          <div className="flex gap-2 items-center">
-            <CardTitle>Group Members</CardTitle>
-            <CollapsibleTrigger>
-              <ChevronsUpDown />
-            </CollapsibleTrigger>
-          </div>
-          <CardDescription>
-            Add, remove or change the roles of members
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <CollapsibleContent className="space-y-2">
-            <GroupMemberList members={members} />
-            <Link href="./groups/search">
-              <Button variant="secondary">Add Member</Button>
-            </Link>
-          </CollapsibleContent>
-        </CardContent>
-      </Collapsible>
+      <CardHeader>
+        <CardTitle>Group Members</CardTitle>
+        <CardDescription>
+          Add, remove or change the roles of members
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <GroupMemberList
+          members={members}
+          actions={(id) => (
+            <>
+              <GroupMemberStatusSelect userId={id} />
+              <Button size={"sm"} variant={"ghost"}>
+                <Trash className="mr-2" />
+              </Button>
+            </>
+          )}
+        />
+      </CardContent>
+      <CardFooter>
+        <GroupMemberSearch {...{ members: members, onAdd: addMember }} />
+      </CardFooter>
     </Card>
   );
 }
