@@ -62,12 +62,11 @@ export function GroupMemberSearch({ members, onAdd }: MemberSearchProps) {
             <EmptyHeader>
               <EmptyTitle>No results found</EmptyTitle>
               <EmptyDescription>
-                Try a different user name, email, firt or lastname
+                Try a different user name, email, first or lastname
               </EmptyDescription>
             </EmptyHeader>
           </Empty>
         )}
-
         <GroupMemberList
           members={results}
           actions={(id) => (
