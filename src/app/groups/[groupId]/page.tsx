@@ -28,24 +28,29 @@ import {
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { GROUPS_MOCK } from "@/packages/features/api/groups/mocks/group.mock";
+import { Allergens } from "@/packages/features/recipe/ui/components/allergens";
+import { DietTypes } from "@/packages/features/recipe/ui/components/diet-types";
+import { Mealtypes } from "@/packages/features/recipe/ui/components/meal-types";
+import {
+  UnitOfMeasurement,
+  UnitOfMeasurmentToggle,
+} from "@/packages/features/recipe/ui/components/system-of-measurment";
 import {
   GroupAddressForm,
   GroupeAddress,
 } from "@/packages/features/ui/groups/components/group-address-form/group-address-form";
 import { GroupMemberSearch } from "@/packages/features/ui/groups/components/group-member-search";
 import { GroupMemberStatusSelect } from "@/packages/features/ui/groups/components/group-member-status-select";
-import {
-  GroupMemberList,
-  GroupMembers,
-} from "@/packages/features/ui/groups/components/group-members";
+import { GroupMemberList } from "@/packages/features/ui/groups/components/group-members";
 import {
   ArrowRight,
+  Calendar,
+  Carrot,
   Check,
   Copy,
   Edit2,
   MapPin,
   Save,
-  Trash,
   Trash2,
   X,
 } from "lucide-react";
@@ -109,7 +114,7 @@ function GroupAddress({ address }: { address: GroupeAddress | null }) {
         </>
       )}
       <Dialog>
-        <DialogTrigger>
+        <DialogTrigger asChild>
           <Button variant={"outline"}>
             {!address && "Add a group address"} <Edit2 />
           </Button>
@@ -221,6 +226,32 @@ export default function MangeGroup() {
         <CardFooter>
           <GroupMemberSearch {...{ members: members, onAdd: () => {} }} />
         </CardFooter>
+      </Card>
+      <UnitOfMeasurement>
+        <UnitOfMeasurmentToggle />
+      </UnitOfMeasurement>
+      <Card className="col-span-2">
+        <CardHeader>
+          <CardTitle className="flex gap-2 items-center">
+            <span>Meals to plan</span> <Calendar />
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Mealtypes className="flex-wrap" />
+        </CardContent>
+      </Card>
+      <Card className="col-span-3">
+        <CardHeader>
+          <CardTitle className="flex gap-2 items-center">
+            <span>Dietary resitrictions</span> <Carrot />
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <CardTitle>Diet Types</CardTitle>
+          <DietTypes className="flex-wrap" />
+          <CardTitle>Commong Allergens</CardTitle>
+          <Allergens className="flex-wrap" />
+        </CardContent>
       </Card>
       <Card>
         <CardHeader>

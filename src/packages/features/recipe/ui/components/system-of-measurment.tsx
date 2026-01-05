@@ -8,11 +8,11 @@ import {
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { cn } from "@/lib/utils";
 import { capitalize } from "@/packages/features/formatting/util/text";
-import { RulerDimensionLine } from "lucide-react";
+import { Check, RulerDimensionLine } from "lucide-react";
 
 interface UnitOfMeasurmentToggleProps {
   className?: string;
-  system: string;
+  system?: string;
   systemChange?: (value: string) => void;
 }
 
@@ -38,11 +38,9 @@ function UnitOfMeasurmentToggle({
         spacing={2}
       >
         {systems.map((system) => (
-          <ToggleGroupItem key={system} value={system}>
+          <ToggleGroupItem key={system} highlightSvg={true} value={system}>
             {capitalize(system)}
-            <p className="text-sm font-normal">
-              ({systemDescriptions[system]})
-            </p>
+            <Check />
           </ToggleGroupItem>
         ))}
       </ToggleGroup>
