@@ -23,6 +23,8 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { ItemGroup } from "@/components/ui/item";
+import { Paragraph } from "@/components/ui/paragraph";
+import { capitalize } from "@/packages/features/formatting/util/text";
 import { IngredientItems } from "@/packages/features/ingredients/ui/components/ingredient-items";
 import {
   mockApplePeanutButterSnackResponse,
@@ -123,51 +125,54 @@ export function RecipePreviewCard({
     <>
       <Card className={className}>
         <Link href={`/recipe/${id}`}>
-          <CardHeader className="flex flex-col gap-1 items-baseline">
-            <p className="text-sm text-muted-foreground">{mealType}</p>
-            <CardTitle>{title}</CardTitle>
-            <CardDescription className="space-y-2">
-              <p>{description}</p>
-              <ul className="flex gap-2 items-center">
-                {time && (
-                  <li className="flex gap-1 items-center">
-                    <Clock className="w-3 h-3" />
-                    <p>{time.total_minutes} mins</p>
-                  </li>
-                )}
-                <span className="w-1 h-1 rounded-full bg-gray-400" />
-                {nutrition && <li>{nutrition.calories} kcal</li>}
-                <span className="w-1 h-1 rounded-full bg-gray-400" />
-                {difficulty && (
-                  <li>
-                    <Badge>{difficulty}</Badge>
-                  </li>
-                )}
-              </ul>
-            </CardDescription>
+          <CardHeader className="flex gap-1 items-baseline">
+            <span>
+              <Paragraph variant="muted" size="xs">
+                {capitalize(mealType)}
+              </Paragraph>
+              <CardTitle className="flex">{title}</CardTitle>
+              <CardDescription className="space-y-2">
+                <p>{description}</p>
+                <ul className="flex gap-2 items-center">
+                  {time && (
+                    <li className="flex gap-1 items-center">
+                      <Clock className="w-3 h-3" />
+                      <p>{time.total_minutes} mins</p>
+                    </li>
+                  )}
+                  <span className="w-1 h-1 rounded-full bg-gray-400" />
+                  {nutrition && <li>{nutrition.calories} kcal</li>}
+                  <span className="w-1 h-1 rounded-full bg-gray-400" />
+                  {difficulty && (
+                    <li>
+                      <Badge>{difficulty}</Badge>
+                    </li>
+                  )}
+                </ul>
+              </CardDescription>
+            </span>
+            <Drawer>
+              <DrawerTrigger asChild>
+                <Button size={"sm"} variant={"secondary"}>
+                  <MoreHorizontal />
+                  <RecipePreviewCardActions id={id} />
+                </Button>
+              </DrawerTrigger>
+            </Drawer>
           </CardHeader>
         </Link>
         <CardContent>
           {ingredients?.length && (
             <Collapsible>
-              <div className="flex items-center text-md pb-2 gap-2">
-                {variant === "detailed" && ingredients.length > 0 && (
-                  <CollapsibleTrigger asChild>
-                    <Button size="sm" variant="secondary">
-                      Ingredients ({ingredients.length})
-                      <ChevronDown className="ml-2 h-4 w-4" />
-                    </Button>
-                  </CollapsibleTrigger>
-                )}
-                <Drawer>
-                  <DrawerTrigger asChild>
-                    <Button size={"sm"} variant={"secondary"}>
-                      <MoreHorizontal />
-                      <RecipePreviewCardActions id={id} />
-                    </Button>
-                  </DrawerTrigger>
-                </Drawer>
-              </div>
+              {variant === "detailed" && ingredients.length > 0 && (
+                <CollapsibleTrigger asChild>
+                  <Button size="sm" variant="secondary">
+                    Ingredients ({ingredients.length})
+                    <ChevronDown className="ml-2 h-4 w-4" />
+                  </Button>
+                </CollapsibleTrigger>
+              )}
+
               <CollapsibleContent className="mt-4 space-y-2">
                 <IngredientsList ingredients={ingredients} />
               </CollapsibleContent>
@@ -197,15 +202,17 @@ const MEALS: { id: string; mealType: MealType; recipe: RecipeData | null }[] = [
   },
 ];
 
-function getTotalPriceFromIngredients() {
+function getTotalPriceFromIngredients(meals = MEALS) {
   return (
     [
-      ...MEALS.map(
-        (meal) =>
-          meal.recipe?.ingredients?.map(
-            ({ price_per_unit }) => price_per_unit
-          ) ?? 0
-      ).flat(),
+      ...meals
+        .map(
+          (meal) =>
+            meal.recipe?.ingredients?.map(
+              ({ price_per_unit }) => price_per_unit
+            ) ?? 0
+        )
+        .flat(),
     ].reduce((acc, curr) => (curr += acc || 0), 0) * 4
   );
 }
