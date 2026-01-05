@@ -27,6 +27,8 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty";
 import { GroupMemberList } from "./group-members";
+import { addedUserMessage } from "../util/group-member-actions";
+import { toast } from "sonner";
 
 type MemberSearchProps = {
   members: Omit<GroupMember, "role">[];
@@ -46,6 +48,8 @@ export function GroupMemberSearch({ members, onAdd }: MemberSearchProps) {
       lastname.toLowerCase().includes(searchQuery)
     );
   });
+
+  const addedMessage = addedUserMessage(members);
 
   const content = (
     <>
@@ -75,7 +79,7 @@ export function GroupMemberSearch({ members, onAdd }: MemberSearchProps) {
               variant="ghost"
               onClick={() => {
                 onAdd({ id: id! });
-                setOpen(false);
+                toast(addedMessage(id!));
               }}
             >
               <UserPlus />

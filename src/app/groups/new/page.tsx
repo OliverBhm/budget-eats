@@ -1,7 +1,13 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   PageHeader,
   PageHeaderDescription,
@@ -20,13 +26,12 @@ import {
   UnitOfMeasurmentToggle,
 } from "@/packages/features/recipe/ui/components/system-of-measurment";
 import { GroupAddMembers } from "@/packages/features/ui/groups/components/group-add-members";
-import { GroupInformationForm } from "@/packages/features/ui/groups/components/group-information-form";
-import { GroupMemberStatusSelect } from "@/packages/features/ui/groups/components/group-member-status-select";
-import { GroupMemberList } from "@/packages/features/ui/groups/components/group-members";
-import { Calendar, Carrot, Trash } from "lucide-react";
-import { useState } from "react";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { GroupAddressForm } from "@/packages/features/ui/groups/components/group-address-form/group-address-form";
+import { GroupMemberList } from "@/packages/features/ui/groups/components/group-members";
+import { removedUserMessage } from "@/packages/features/ui/groups/util/group-member-actions";
+import { Calendar, Carrot, Trash2 } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
 
 export default function CreateGroupPage() {
   const [systemOfMeasurement, setSystemOfMeasurement] = useState("metric");
@@ -44,6 +49,8 @@ export default function CreateGroupPage() {
     setMembers(members.filter((m) => m.id !== id));
   };
 
+  const removeMessage = removedUserMessage(members);
+
   return (
     <>
       <PageHeader>
@@ -53,22 +60,27 @@ export default function CreateGroupPage() {
           recipes with others.
         </PageHeaderDescription>
       </PageHeader>
-      <div className="md:grid md:grid-cols-7 gap-4 space-y-4">
-        <Card className="col-span-4">
-          <CardContent className="space-y-4">
-            <GroupInformationForm />
-          </CardContent>
-        </Card>
-        <Card className="col-span-3">
-          <CardContent>
-            <GroupAddressForm />
-          </CardContent>
-        </Card>
+      <section className="md:grid grid-cols-8 gap-4 flex flex-col">
         <Card className="col-span-4">
           <CardHeader>
-            <CardTitle>Add members</CardTitle>
+            <CardTitle>Group Members</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-2">
+            <GroupMemberList
+              members={members}
+              actions={(id) => (
+                <Button
+                  size={"sm"}
+                  variant={"ghost"}
+                  onClick={() => {
+                    removeMember({ id: id || "" });
+                    toast(removeMessage(id || ""));
+                  }}
+                >
+                  <Trash2 className="mr-2" />
+                </Button>
+              )}
+            />
             <GroupAddMembers
               members={[...MOCK_USERS]}
               otherMembers={MOCK_OTHER_GROUP_MEMBERS}
@@ -76,65 +88,64 @@ export default function CreateGroupPage() {
             />
           </CardContent>
         </Card>
-        <Card className="col-span-3">
+        <Card className="col-span-4">
           <CardHeader>
-            <CardTitle>Selected members - {members.length}</CardTitle>
+            <CardTitle>Group Address</CardTitle>
+            <CardDescription>
+              Specify the address details for the group to get special offers
+              for your area.
+            </CardDescription>
           </CardHeader>
           <CardContent>
-            <ScrollArea className="md:h-60">
-              <GroupMemberList
-                members={members}
-                actions={(id) => (
-                  <>
-                    <GroupMemberStatusSelect userId={id} />
-                    <Button
-                      size={"sm"}
-                      variant={"ghost"}
-                      onClick={() => {
-                        removeMember({ id: id || "" });
-                      }}
-                    >
-                      <Trash className="h-4 w-4 mr-2" />
-                    </Button>
-                  </>
-                )}
-              />
-            </ScrollArea>
+            <GroupAddressForm />
           </CardContent>
         </Card>
-        <UnitOfMeasurement className="col-span-2">
-          <UnitOfMeasurmentToggle
-            system={systemOfMeasurement}
-            systemChange={setSystemOfMeasurement}
-          />
-        </UnitOfMeasurement>
-        <Card className="col-span-2">
-          <CardHeader>
-            <CardTitle className="flex gap-2 items-center">
-              <span>Meals to plan</span> <Calendar />
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Mealtypes className="flex-wrap" />
-          </CardContent>
-        </Card>
+
+        <span className="col-span-3 gap-4 flex flex-col">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex gap-2 items-center">
+                <span>Meals to plan</span> <Calendar />
+              </CardTitle>
+              <CardDescription>
+                Tells the meal planner which meals to include
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Mealtypes className="flex-wrap" />
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex gap-2 items-center">
+                <span>Dietary Types</span> <Carrot />
+              </CardTitle>
+              <CardDescription>
+                Specify dietary preferences for the group to get recipes that
+                fit everyone.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <DietTypes className="flex-wrap" />
+            </CardContent>
+          </Card>
+        </span>
         <Card className="col-span-3">
           <CardHeader>
-            <CardTitle className="flex gap-2 items-center">
-              <span>Dietary resitrictions</span> <Carrot />
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <CardTitle>Diet Types</CardTitle>
-            <DietTypes className="flex-wrap" />
             <CardTitle>Commong Allergens</CardTitle>
+            <CardDescription>
+              Specifiy additional allergens that should be avoided additionally
+              to the ones each member specified in their profile.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
             <Allergens className="flex-wrap" />
           </CardContent>
         </Card>
-        <div className="flex justify-start">
-          <Button>Create group</Button>
-        </div>
-      </div>
+        <UnitOfMeasurement className="col-span-2">
+          <UnitOfMeasurmentToggle className="flex-wrap" />
+        </UnitOfMeasurement>
+      </section>
     </>
   );
 }

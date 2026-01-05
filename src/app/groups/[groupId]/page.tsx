@@ -9,16 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Headline } from "@/components/ui/headline";
 import { Input } from "@/components/ui/input";
 import {
@@ -26,7 +16,6 @@ import {
   PageHeaderDescription,
   PageHeaderTitle,
 } from "@/components/ui/page-header";
-import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { GROUPS_MOCK } from "@/packages/features/api/groups/mocks/group.mock";
 import { Allergens } from "@/packages/features/recipe/ui/components/allergens";
@@ -37,8 +26,7 @@ import {
   UnitOfMeasurmentToggle,
 } from "@/packages/features/recipe/ui/components/system-of-measurment";
 import {
-  GroupAddressForm,
-  GroupeAddress,
+  GroupAddressForm
 } from "@/packages/features/ui/groups/components/group-address-form/group-address-form";
 import { GroupMemberSearch } from "@/packages/features/ui/groups/components/group-member-search";
 import { GroupMemberStatusSelect } from "@/packages/features/ui/groups/components/group-member-status-select";
@@ -46,15 +34,12 @@ import { GroupMemberList } from "@/packages/features/ui/groups/components/group-
 import {
   ArrowRight,
   Calendar,
-  Car,
   Carrot,
   Check,
   Copy,
   Edit2,
-  MapPin,
-  Save,
   Trash2,
-  X,
+  X
 } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useState } from "react";
@@ -102,45 +87,6 @@ function GroupName({ name }: { name: string }) {
         <Edit2 />
       </Button>
     </div>
-  );
-}
-
-function GroupAddress({ address }: { address: GroupeAddress | null }) {
-  return (
-    <span className="flex gap-1 items-center text-primary/70">
-      {address && (
-        <>
-          <MapPin />
-          {address.street} {address.houseNo}, {address.zipCode} {address.city},{" "}
-          {address.country}
-        </>
-      )}
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button variant={"outline"}>
-            {!address && "Add a group address"} <Edit2 />
-          </Button>
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Group Address</DialogTitle>
-            <DialogDescription>
-              Get up to date special offers and discounts from your area.
-            </DialogDescription>
-          </DialogHeader>
-          <GroupAddressForm address={address ?? undefined} />
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button variant={"secondary"}>Cancel</Button>
-            </DialogClose>
-            <Button>
-              {address ? "Update" : "Save"} <Save />
-              <Spinner />
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </span>
   );
 }
 

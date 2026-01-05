@@ -5,6 +5,8 @@ import { GroupMemberSearch } from "./group-member-search";
 import { GroupMemberStatusSelect } from "./group-member-status-select";
 import { GroupMemberList } from "./group-members";
 import { Headline } from "@/components/ui/headline";
+import { toast } from "sonner";
+import { addedUserMessage } from "../util/group-member-actions";
 
 interface GroupAddMembersProps {
   members: GroupMember[];
@@ -33,6 +35,9 @@ export function GroupAddMembers({
                   variant={"ghost"}
                   onClick={() => {
                     addMember({ id: id || "" });
+                    toast(
+                      addedUserMessage([...members, ...otherMembers])(id || "")
+                    );
                   }}
                 >
                   <UserPlus className="h-4 w-4 mr-2" />
