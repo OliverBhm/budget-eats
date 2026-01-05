@@ -17,7 +17,7 @@ import {
   DrawerTitle,
   DrawerFooter,
 } from "@/components/ui/drawer";
-import { UserPlus } from "lucide-react";
+import { User, UserPlus } from "lucide-react";
 import { GroupMember } from "@/packages/features/api/groups/model/group";
 import { useIsMobile } from "@/hooks/use-mobile";
 import {
@@ -86,14 +86,14 @@ export function GroupMemberSearch({ members, onAdd }: MemberSearchProps) {
     </>
   );
 
-  const addButtonText = "Add members…";
+  const addButtonText = "Add members";
 
   if (isDesktop) {
     return (
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button variant="outline" className="w-full justify-start">
-            {addButtonText}
+            {addButtonText} <UserPlus />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[420px] p-4 space-y-2" align="start">
@@ -107,7 +107,7 @@ export function GroupMemberSearch({ members, onAdd }: MemberSearchProps) {
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <Button variant="outline" className="w-full justify-start">
-          {addButtonText}
+          {addButtonText} <UserPlus />
         </Button>
       </DrawerTrigger>
       <DrawerContent className="p-4">

@@ -45,6 +45,7 @@ import { GroupMemberList } from "@/packages/features/ui/groups/components/group-
 import {
   ArrowRight,
   Calendar,
+  Car,
   Carrot,
   Check,
   Copy,
@@ -200,85 +201,119 @@ export default function MangeGroup() {
         </PageHeaderTitle>
         <PageHeaderDescription className="space-y-1">
           <GroupDescription {...{ description }} />
-          <GroupAddress {...{ address }} />
         </PageHeaderDescription>
       </PageHeader>
-      <Card>
-        <CardHeader>
-          <CardTitle>Group Members</CardTitle>
-          <CardDescription>
-            Add, remove or change the roles of members
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <GroupMemberList
-            members={members}
-            actions={(id) => (
-              <>
-                <GroupMemberStatusSelect userId={id} />
-                <Button size={"sm"} variant={"ghost"}>
-                  <Trash2 className="mr-2" />
+      <section className="md:grid grid-cols-8 gap-4 flex flex-col">
+        <Card className="col-span-4">
+          <CardHeader>
+            <CardTitle>Group Members</CardTitle>
+            <CardDescription>
+              Add, remove or change the roles of members
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <GroupMemberList
+              members={members}
+              actions={(id) => (
+                <>
+                  <GroupMemberStatusSelect userId={id} />
+                  <Button size={"sm"} variant={"ghost"}>
+                    <Trash2 className="mr-2" />
+                  </Button>
+                </>
+              )}
+            />
+          </CardContent>
+          <CardFooter>
+            <GroupMemberSearch {...{ members: members, onAdd: () => {} }} />
+          </CardFooter>
+        </Card>
+        <Card className="col-span-4">
+          <CardHeader>
+            <CardTitle>Group Address</CardTitle>
+            <CardDescription>
+              Specify the address details for the group to get special offers
+              for your area.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <GroupAddressForm />
+          </CardContent>
+        </Card>
+        <span className="col-span-4 gap-4 flex flex-col">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex gap-2 items-center">
+                <span>Dietary Types</span> <Carrot />
+              </CardTitle>
+              <CardDescription>
+                Specify dietary preferences for the group to get recipes that
+                fit everyone.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <DietTypes className="flex-wrap" />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex gap-2 items-center">
+                <span>Meals to plan</span> <Calendar />
+              </CardTitle>
+              <CardDescription>
+                Tells the meal planner which meals to include
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Mealtypes className="flex-wrap" />
+            </CardContent>
+          </Card>
+        </span>
+        <Card className="col-span-4">
+          <CardHeader>
+            <CardTitle>Commong Allergens</CardTitle>
+            <CardDescription>
+              Specifiy additional allergens that should be avoided additionally
+              to the ones each member specified in their profile.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Allergens className="flex-wrap" />
+          </CardContent>
+        </Card>
+        <UnitOfMeasurement className="col-span-1">
+          <UnitOfMeasurmentToggle className="flex-wrap" />
+        </UnitOfMeasurement>
+        <span className="col-span-3 flex flex-col gap-2">
+          <Card>
+            <CardHeader>
+              <CardTitle>Share invite link</CardTitle>
+              <CardDescription>
+                With the invite link other people can easily join your group.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-2 flex gap-2 md:block">
+              <Input disabled value={"groups/invite/" + groupId} />
+              <ButtonGroup>
+                <Button
+                  onClick={() => {
+                    toast("Copied to clipboard!");
+                  }}
+                  size={"sm"}
+                >
+                  <span className="hidden md:block">Copy to clipboard</span>
+                  <Copy />
                 </Button>
-              </>
-            )}
-          />
-        </CardContent>
-        <CardFooter>
-          <GroupMemberSearch {...{ members: members, onAdd: () => {} }} />
-        </CardFooter>
-      </Card>
-      <UnitOfMeasurement>
-        <UnitOfMeasurmentToggle />
-      </UnitOfMeasurement>
-      <Card className="col-span-2">
-        <CardHeader>
-          <CardTitle className="flex gap-2 items-center">
-            <span>Meals to plan</span> <Calendar />
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Mealtypes className="flex-wrap" />
-        </CardContent>
-      </Card>
-      <Card className="col-span-3">
-        <CardHeader>
-          <CardTitle className="flex gap-2 items-center">
-            <span>Dietary resitrictions</span> <Carrot />
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <CardTitle>Diet Types</CardTitle>
-          <DietTypes className="flex-wrap" />
-          <CardTitle>Commong Allergens</CardTitle>
-          <Allergens className="flex-wrap" />
-        </CardContent>
-      </Card>
-      <Card>
-        <CardHeader>
-          <CardTitle>Share invite link</CardTitle>
-          <CardDescription>
-            With the invite link other people can easily join your group.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-2 flex gap-2">
-          <Input disabled value={"groups/invite/" + groupId} />
-          <ButtonGroup>
-            <Button
-              onClick={() => {
-                toast("Copied to clipboard!");
-              }}
-              size={"sm"}
-            >
-              <span className="hidden md:block">Copy to clipboard</span>
-              <Copy />
-            </Button>
-            <GroupMemberStatusSelect />
-          </ButtonGroup>
-        </CardContent>
-      </Card>
-      <Button variant={"destructive"} className="w-full">
-        Leave Group <ArrowRight />
-      </Button>
+                <GroupMemberStatusSelect />
+              </ButtonGroup>
+            </CardContent>
+          </Card>
+          <Button variant={"destructive"} className="w-full">
+            Leave Group <ArrowRight />
+          </Button>
+        </span>
+      </section>
     </section>
   );
 }
