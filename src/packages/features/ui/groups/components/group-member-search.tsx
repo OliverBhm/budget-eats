@@ -29,6 +29,7 @@ import {
 import { GroupMemberList } from "./group-members/group-members";
 import { addedUserMessage } from "../util/group-member-actions";
 import { toast } from "sonner";
+import { useState } from "react";
 
 type MemberSearchProps = {
   members: Omit<GroupMember, "role">[];
@@ -36,8 +37,8 @@ type MemberSearchProps = {
 };
 
 export function GroupMemberSearch({ members, onAdd }: MemberSearchProps) {
-  const [open, setOpen] = React.useState(false);
-  const [search, setSearch] = React.useState("");
+  const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState("");
   const isDesktop = useIsMobile() === false;
 
   const results = members.filter(({ email, firstname, lastname }) => {

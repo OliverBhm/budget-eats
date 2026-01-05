@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import { Paragraph } from "@/components/ui/paragraph";
+import { useState } from "react";
 
 function GroupsSwitcher({
   groups,
@@ -31,7 +32,7 @@ function GroupsSwitcher({
   }[];
 }) {
   const { isMobile } = useSidebar();
-  const [activeGroup, setActiveGroup] = React.useState(groups[0]);
+  const [activeGroup, setActiveGroup] = useState(groups[0]);
 
   if (!activeGroup) {
     return null;
@@ -75,7 +76,7 @@ function GroupsSwitcher({
                 </div>
                 <div className="flex justify-between items-center flex-1">
                   <Paragraph>{group.name}</Paragraph>
-                  <Link href={`./groups/${group.id}`}>
+                  <Link href={`/groups/${group.id}`}>
                     <Button variant="link">
                       <Settings />
                     </Button>
@@ -85,14 +86,11 @@ function GroupsSwitcher({
             ))}
             <DropdownMenuSeparator />
             <DropdownMenuItem className="gap-2 p-2">
-              <div className="flex size-6 items-center justify-center rounded-md border bg-transparent">
-                <Plus className="size-4" />
-              </div>
-              <Link
-                href="./groups/new"
-                className="text-muted-foreground font-medium"
-              >
-                Create new
+              <Link href="/groups/new" className="flex items-center">
+                <Button variant="link">
+                  <Plus className="size-4" />
+                </Button>
+                <Paragraph variant="muted">Create new</Paragraph>
               </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>

@@ -12,12 +12,13 @@ import {
 import { MAIN_NAV_ITEMS } from "../constants/nav-links";
 import { GroupsSwitcher } from "@/packages/features/ui/groups/components/group-switcher";
 import { GROUPS_MOCK } from "@/packages/features/api/groups/mocks/group.mock";
+import { useState } from "react";
 
 export function NavSidebar() {
   const items = MAIN_NAV_ITEMS;
 
   return (
-    <Sidebar>
+    <Sidebar side="left">
       <SidebarHeader>
         <GroupsSwitcher {...{ groups: GROUPS_MOCK }} />
       </SidebarHeader>
