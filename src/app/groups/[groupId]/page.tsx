@@ -25,12 +25,10 @@ import {
   UnitOfMeasurement,
   UnitOfMeasurmentToggle,
 } from "@/packages/features/recipe/ui/components/system-of-measurment";
-import {
-  GroupAddressForm
-} from "@/packages/features/ui/groups/components/group-address-form/group-address-form";
+import { GroupAddressForm } from "@/packages/features/ui/groups/components/group-address-form/group-address-form";
 import { GroupMemberSearch } from "@/packages/features/ui/groups/components/group-member-search";
 import { GroupMemberStatusSelect } from "@/packages/features/ui/groups/components/group-member-status-select";
-import { GroupMemberList } from "@/packages/features/ui/groups/components/group-members";
+import { GroupMemberList } from "@/packages/features/ui/groups/components/group-members/group-members";
 import {
   ArrowRight,
   Calendar,
@@ -39,7 +37,7 @@ import {
   Copy,
   Edit2,
   Trash2,
-  X
+  X,
 } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useState } from "react";

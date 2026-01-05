@@ -3,7 +3,7 @@ import { GroupMember } from "@/packages/features/api/groups/model/group";
 import { UserPlus } from "lucide-react";
 import { GroupMemberSearch } from "./group-member-search";
 import { GroupMemberStatusSelect } from "./group-member-status-select";
-import { GroupMemberList } from "./group-members";
+import { GroupMemberList } from "./group-members/group-members";
 import { Headline } from "@/components/ui/headline";
 import { toast } from "sonner";
 import { addedUserMessage } from "../util/group-member-actions";

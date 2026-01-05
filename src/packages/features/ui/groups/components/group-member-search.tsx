@@ -26,7 +26,7 @@ import {
   EmptyHeader,
   EmptyTitle,
 } from "@/components/ui/empty";
-import { GroupMemberList } from "./group-members";
+import { GroupMemberList } from "./group-members/group-members";
 import { addedUserMessage } from "../util/group-member-actions";
 import { toast } from "sonner";
 

@@ -27,7 +27,7 @@ import {
 } from "@/packages/features/recipe/ui/components/system-of-measurment";
 import { GroupAddMembers } from "@/packages/features/ui/groups/components/group-add-members";
 import { GroupAddressForm } from "@/packages/features/ui/groups/components/group-address-form/group-address-form";
-import { GroupMemberList } from "@/packages/features/ui/groups/components/group-members";
+import { GroupMemberList } from "@/packages/features/ui/groups/components/group-members/group-members";
 import { removedUserMessage } from "@/packages/features/ui/groups/util/group-member-actions";
 import { Calendar, Carrot, Trash2 } from "lucide-react";
 import { useState } from "react";
