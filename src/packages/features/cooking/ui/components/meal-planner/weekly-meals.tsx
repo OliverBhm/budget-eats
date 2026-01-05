@@ -137,7 +137,7 @@ export function RecipePreviewCard({
                   {time && (
                     <li className="flex gap-1 items-center">
                       <Clock className="w-3 h-3" />
-                      <p>{time.total_minutes} mins</p>
+                      <Paragraph>{time.total_minutes} mins</Paragraph>
                     </li>
                   )}
                   <span className="w-1 h-1 rounded-full bg-gray-400" />

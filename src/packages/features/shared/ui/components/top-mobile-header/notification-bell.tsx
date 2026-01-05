@@ -22,6 +22,7 @@ import {
 import { Fragment } from "react/jsx-runtime";
 import { UserAvatar } from "@/packages/features/user/ui/components/user-avatar";
 import { cn } from "@/lib/utils";
+import { Headline } from "@/components/ui/headline";
 
 function NotificationsList({
   notifications,
@@ -57,7 +58,7 @@ function NotificationsList({
 function NotificationListHeader({ unread }: { unread: number }) {
   return (
     <div className="flex items-center justify-between pb-2 border-b">
-      <h3 className="text-sm font-bold">Notifications</h3>
+      <Headline level="h6">Notifications</Headline>
       <span className="text-xs text-muted-foreground">{unread} unread</span>
     </div>
   );

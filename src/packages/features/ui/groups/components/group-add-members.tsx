@@ -4,6 +4,7 @@ import { UserPlus } from "lucide-react";
 import { GroupMemberSearch } from "./group-member-search";
 import { GroupMemberStatusSelect } from "./group-member-status-select";
 import { GroupMemberList } from "./group-members";
+import { Headline } from "@/components/ui/headline";
 
 interface GroupAddMembersProps {
   members: GroupMember[];
@@ -21,7 +22,7 @@ export function GroupAddMembers({
       <GroupMemberSearch members={members} onAdd={addMember} />
       {otherMembers && (
         <>
-          <h4 className="font-semibold">Members from other groups</h4>
+          <Headline level="h6">Members from other groups</Headline>
           <GroupMemberList
             members={otherMembers}
             actions={(id) => (

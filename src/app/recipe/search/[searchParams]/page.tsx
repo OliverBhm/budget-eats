@@ -1,3 +1,5 @@
+import { Headline } from "@/components/ui/headline";
+
 export default function RecipeSearch() {
-    return <h1>Search Results</h1>
+  return <Headline level="h1">Search Results</Headline>;
 }

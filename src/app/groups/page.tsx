@@ -12,6 +12,7 @@ import {
   PageHeaderDescription,
   PageHeaderTitle,
 } from "@/components/ui/page-header";
+import { Paragraph } from "@/components/ui/paragraph";
 import { GROUPS_MOCK } from "@/packages/features/api/groups/mocks/group.mock";
 import { UserAvatar } from "@/packages/features/user/ui/components/user-avatar";
 import {} from "@radix-ui/react-avatar";
@@ -36,14 +37,16 @@ export default function Groups() {
             <li key={groupId}>
               <Card>
                 <CardContent className="space-y-2">
-                  <div className=" grid grid-cols-2 ">
+                  <div className="grid grid-cols-2 ">
                     {isActive && (
-                      <p className="flex shrink-0 items-center text-sm text-muted-foreground">
-                        <span className="bg-chart-2 h-2 w-2 shrink-0 rounded-[100%]">
+                      <div className="flex shrink-0 items-center">
+                        <Paragraph className="bg-chart-2 h-2 w-2 shrink-0 rounded-[100%]">
                           &nbsp;
-                        </span>
-                        &nbsp;Active
-                      </p>
+                        </Paragraph>
+                        <Paragraph variant="muted" size="xs">
+                          &nbsp;Active
+                        </Paragraph>
+                      </div>
                     )}
                     <CardTitle>{name}</CardTitle>
                     <CardAction>

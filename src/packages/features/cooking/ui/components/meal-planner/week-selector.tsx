@@ -13,6 +13,7 @@ import { useState } from "react";
 import { generateDatesOfOneWeek } from "../../util/dates";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
+import { Paragraph } from "@/components/ui/paragraph";
 
 const mockLocal = "en-US";
 
@@ -75,10 +76,12 @@ export default function WeekSelector() {
               className="flex-col gap-0 py-6 font-normal"
               onClick={() => setActiveDay(day)}
             >
-              <p className="md:block">
+              <Paragraph className="md:block">
                 {day.toLocaleDateString().split(".")[0]}
-              </p>
-              <p>{day.toLocaleDateString(mockLocal, { weekday: "short" })}</p>
+              </Paragraph>
+              <Paragraph>
+                {day.toLocaleDateString(mockLocal, { weekday: "short" })}
+              </Paragraph>
             </Button>
             {getDayStatusIcon("unplanned")}
           </span>
@@ -86,8 +89,12 @@ export default function WeekSelector() {
       </CardContent>
       <CardFooter className="flex flex-col space-y-2">
         <CardDescription className="flex justify-between w-full">
-          <Badge className="bg-chart-2 text-white">On track</Badge>
-          <span>$35.40 / $50.00</span>
+          <Badge className="bg-chart-2">
+            <Paragraph>On track</Paragraph>
+          </Badge>
+          <Paragraph variant="muted" weight="medium">
+            $35.40 / $50.00
+          </Paragraph>
         </CardDescription>
 
         <Progress value={(100 / 50) * 35.4} />

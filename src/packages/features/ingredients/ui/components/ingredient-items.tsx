@@ -21,6 +21,7 @@ import {
   ItemSeparator,
   ItemTitle,
 } from "@/components/ui/item";
+import { Paragraph } from "@/components/ui/paragraph";
 import { RecipeIngredient } from "@/packages/features/recipe/api/model/recipe";
 import {
   ArrowLeftRight,
@@ -77,9 +78,13 @@ function IngredientItems({ ingredients, servings }: IngredientItemsProps) {
           <div key={id}>
             <Item variant={i % 2 ? "default" : "muted"}>
               <ItemMedia className="relative">
-                <p className="absolute text-md bg-background/80 rounded-b-md 0 w-full text-center bottom-0 left-0 right-0">
+                <Paragraph
+                  size="md"
+                  variant="muted"
+                  className="absolute rounded-b-md 0 w-full text-center bottom-0 left-0 right-0"
+                >
                   ${(price_per_unit * base_amount * servings).toFixed(2)}
-                </p>
+                </Paragraph>
                 <Image
                   src={image_url}
                   alt={name}

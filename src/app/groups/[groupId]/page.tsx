@@ -19,6 +19,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Headline } from "@/components/ui/headline";
 import { Input } from "@/components/ui/input";
 import {
   PageHeader,
@@ -96,7 +97,7 @@ function GroupName({ name }: { name: string }) {
 
   return (
     <div className="flex gap-1 items-center">
-      <h3>{groupName}</h3>
+      <Headline level="h3">{groupName}</Headline>
       <Button onClick={() => setIsEditing(true)} variant={"outline"}>
         <Edit2 />
       </Button>

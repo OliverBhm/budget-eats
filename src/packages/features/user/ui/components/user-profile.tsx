@@ -1,3 +1,4 @@
+import { Paragraph } from "@/components/ui/paragraph";
 import { cn } from "@/lib/utils";
 
 interface UserProfileProps {
@@ -31,7 +32,11 @@ function Username({ firstname, lastname, username, className }: UsernameProps) {
   const usernameDisplay = username
     ? `@${username}`
     : `${firstname} ${lastname}`;
-  return <p className={cn(className, "font-medium")}>{usernameDisplay}</p>;
+  return (
+    <Paragraph weight="medium" className={cn(className)}>
+      {usernameDisplay}
+    </Paragraph>
+  );
 }
 
 interface UserEmailProps {
@@ -41,7 +46,9 @@ interface UserEmailProps {
 
 function UserEmail({ email, className }: UserEmailProps) {
   return (
-    <p className={cn(className, "text-sm text-muted-foreground")}>{email}</p>
+    <Paragraph size="xs" variant="muted" className={cn(className)}>
+      {email}
+    </Paragraph>
   );
 }
 

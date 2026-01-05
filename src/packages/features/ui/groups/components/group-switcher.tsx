@@ -5,20 +5,21 @@ import * as React from "react";
 
 import { Button } from "@/components/ui/button";
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
-    SidebarMenu,
-    SidebarMenuButton,
-    SidebarMenuItem,
-    useSidebar,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
+import { Paragraph } from "@/components/ui/paragraph";
 
 function GroupsSwitcher({
   groups,
@@ -73,7 +74,7 @@ function GroupsSwitcher({
                   <group.logo className="size-3.5 shrink-0" />
                 </div>
                 <div className="flex justify-between items-center flex-1">
-                  {group.name}
+                  <Paragraph>{group.name}</Paragraph>
                   <Link href={`./groups/${group.id}`}>
                     <Button variant="link">
                       <Settings />
@@ -100,6 +101,5 @@ function GroupsSwitcher({
     </SidebarMenu>
   );
 }
-
 
 export { GroupsSwitcher };
