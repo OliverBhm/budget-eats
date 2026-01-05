@@ -19,11 +19,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import {
   Item,
   ItemActions,
   ItemContent,
@@ -40,11 +35,8 @@ import {
   UserProfile,
   UserProfileInfo,
 } from "@/packages/features/user/ui/components/user-profile";
-import { ChevronsUpDown, FrameIcon, Trash } from "lucide-react";
-import Link from "next/link";
+import { Trash } from "lucide-react";
 import { Fragment } from "react/jsx-runtime";
-import { GroupAddMembers } from "./group-add-members";
-import { MOCK_OTHER_GROUP_MEMBERS } from "@/packages/features/api/groups/mocks/group.mock";
 import { GroupMemberSearch } from "./group-member-search";
 import { GroupMemberStatusSelect } from "./group-member-status-select";
 
