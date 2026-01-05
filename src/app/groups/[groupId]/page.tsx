@@ -1,15 +1,4 @@
 "use client";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import {
@@ -21,11 +10,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import {
   Dialog,
   DialogClose,
   DialogContent,
@@ -35,91 +19,25 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import {
-  Item,
-  ItemActions,
-  ItemContent,
-  ItemDescription,
-  ItemGroup,
-  ItemSeparator,
-  ItemTitle,
-} from "@/components/ui/item";
 import {
   PageHeader,
   PageHeaderDescription,
   PageHeaderTitle,
 } from "@/components/ui/page-header";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { GROUPS_MOCK } from "@/packages/features/api/groups/mocks/group.mock";
+import {
+  GroupAddressForm,
+  GroupeAddress,
+} from "@/packages/features/ui/groups/components/group-address-form/group-address-form";
 import { GroupMemberStatusSelect } from "@/packages/features/ui/groups/components/group-member-status-select";
 import { GroupMembers } from "@/packages/features/ui/groups/components/group-members";
-import { UserAvatar } from "@/packages/features/user/ui/components/user-avatar";
-import {
-  ArrowRight,
-  Check,
-  ChevronsUpDown,
-  Copy,
-  Edit2,
-  MapPin,
-  Plus,
-  Save,
-  Trash,
-  X,
-} from "lucide-react";
-import Link from "next/link";
+import { ArrowRight, Check, Copy, Edit2, MapPin, Save, X } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-
-interface GroupeAddress {
-  street: string;
-  country: string;
-  houseNo: string;
-  zipCode: string;
-  city: string;
-}
-
-export function GroupAddressForm({ address }: { address?: GroupeAddress }) {
-  return (
-    <form className="space-y-4">
-      <div className="grid grid-cols-4 gap-4">
-        <Field className="col-span-3">
-          <Input placeholder="Street" value={address?.street} />
-        </Field>
-        <Field>
-          <Input
-            placeholder="House no."
-            value={address?.houseNo}
-            name="houseNo"
-          />
-        </Field>
-      </div>
-      <div className="grid grid-cols-3 gap-4">
-        <Field>
-          <Input placeholder="Zip Code" value={address?.zipCode} />
-        </Field>
-        <Field className="col-span-2">
-          <Input placeholder="City" value={address?.city} name="city" />
-        </Field>
-      </div>
-      <Field>
-        <Input placeholder="country" value={address?.country} name="country" />
-      </Field>
-    </form>
-  );
-}
 
 function GroupName({ name }: { name: string }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -166,7 +84,7 @@ function GroupName({ name }: { name: string }) {
   );
 }
 
-function GroupAddress({ address }: { address: GroupeAddress }) {
+function GroupAddress({ address }: { address: GroupeAddress | null }) {
   return (
     <span className="flex gap-1 items-center text-primary/70">
       {address && (
@@ -189,7 +107,7 @@ function GroupAddress({ address }: { address: GroupeAddress }) {
               Get up to date special offers and discounts from your area.
             </DialogDescription>
           </DialogHeader>
-          <GroupAddressForm {...{ address }}></GroupAddressForm>
+          <GroupAddressForm address={address ?? undefined} />
           <DialogFooter>
             <DialogClose asChild>
               <Button variant={"secondary"}>Cancel</Button>

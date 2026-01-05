@@ -1,164 +1,140 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-    MOCK_OTHER_GROUP_MEMBERS,
-    MOCK_USERS,
+  PageHeader,
+  PageHeaderDescription,
+  PageHeaderTitle,
+} from "@/components/ui/page-header";
+import {
+  MOCK_OTHER_GROUP_MEMBERS,
+  MOCK_USERS,
 } from "@/packages/features/api/groups/mocks/group.mock";
 import { GroupMember } from "@/packages/features/api/groups/model/group";
-import { GroupMemberSearch } from "@/packages/features/ui/groups/components/group-member-search";
-import { GroupMemberList } from "@/packages/features/ui/groups/components/group-members";
-import { Calendar, Carrot, Plus, RulerDimensionLine } from "lucide-react";
-import { useState } from "react";
-import { GroupAddressForm } from "../[groupId]/page";
+import { Allergens } from "@/packages/features/recipe/ui/components/allergens";
+import { DietTypes } from "@/packages/features/recipe/ui/components/diet-types";
+import { Mealtypes } from "@/packages/features/recipe/ui/components/meal-types";
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectTrigger,
-  SelectItem,
-  SelectLabel,
-} from "@/components/ui/select";
-import { SelectValue } from "@radix-ui/react-select";
+  UnitOfMeasurement,
+  UnitOfMeasurmentToggle,
+} from "@/packages/features/recipe/ui/components/system-of-measurment";
+import { GroupAddMembers } from "@/packages/features/ui/groups/components/group-add-members";
+import { GroupInformationForm } from "@/packages/features/ui/groups/components/group-information-form";
+import { GroupMemberStatusSelect } from "@/packages/features/ui/groups/components/group-member-status-select";
+import { GroupMemberList } from "@/packages/features/ui/groups/components/group-members";
+import { Calendar, Carrot, Trash } from "lucide-react";
+import { useState } from "react";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { GroupAddressForm } from "@/packages/features/ui/groups/components/group-address-form/group-address-form";
 
 export default function CreateGroupPage() {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const [systemOfMeasurement, setSystemOfMeasurement] = useState("metric");
   const [members, setMembers] = useState<GroupMember[]>([]);
 
   const addMember = ({ id }: Pick<GroupMember, "id">) => {
     if (members.find((m) => m.id === id)) return;
-    const member = [...MOCK_USERS, ...MOCK_OTHER_GROUP_MEMBERS].find((u) => u.id === id) ?? MOCK_USERS[0];
+    const member =
+      [...MOCK_USERS, ...MOCK_OTHER_GROUP_MEMBERS].find((u) => u.id === id) ??
+      MOCK_USERS[0];
     setMembers([...members, { ...member, role: "member" }]);
   };
 
-  return (
-    <div className="md:grid md:grid-cols-7 gap-4 space-y-4">
-      {/* Basics */}
-      <Card className="col-span-4">
-        <CardHeader>
-          <CardTitle>Basics</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <Input
-            placeholder="Group name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <Textarea
-            placeholder="Description (optional)"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </CardContent>
-      </Card>
-      <Card className="col-span-3">
-        <CardHeader>
-          <CardTitle>Address</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <GroupAddressForm />
-        </CardContent>
-      </Card>
-      <Card className="col-span-2">
-        <CardHeader>
-          <CardTitle className="flex gap-2 items-center">
-            <span>Unit of Measurment</span> <RulerDimensionLine />
-          </CardTitle>
-          <CardDescription>Select your preferred unit system</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ToggleGroup type="single" variant={"outline"} spacing={2}>
-            <ToggleGroupItem value={"metric"}>Metric</ToggleGroupItem>
-            <ToggleGroupItem value={"imperial"}>Imperial</ToggleGroupItem>
-          </ToggleGroup>
-        </CardContent>
-      </Card>
-      <Card className="col-span-2">
-        <CardHeader>
-          <CardTitle className="flex gap-2 items-center">
-            <span>Meals to plan</span> <Calendar />
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Select>
-            <SelectTrigger>Meals</SelectTrigger>
-            <SelectValue />
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Meals</SelectLabel>
-                <SelectItem value="breakfest">Breakfast</SelectItem>
-                <SelectItem value="lunch">Lunch</SelectItem>
-                <SelectItem value="dinner">Dinner</SelectItem>
-                <SelectItem value="snack">Snacks</SelectItem>
-                <SelectItem value="tea">Afternoon Tea</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </CardContent>
-      </Card>
-      <Card className="col-span-3">
-        <CardHeader>
-          <CardTitle className="flex gap-2 items-center">
-            <span>Dietary resitrictions</span> <Carrot />
-          </CardTitle>
-        </CardHeader>
-        <CardContent></CardContent>
-      </Card>
-      <Card className="col-span-4">
-        <CardHeader>
-          <CardTitle>Add group members</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <GroupMemberSearch users={MOCK_USERS} onAdd={addMember} />
+  const removeMember = ({ id }: Pick<GroupMember, "id">) => {
+    setMembers(members.filter((m) => m.id !== id));
+  };
 
-          <div className="space-y-2">
-            <div className="text-sm font-medium">
-              Members from your other groups
-            </div>
-            <div className="border rounded-lg divide-y">
-              {MOCK_OTHER_GROUP_MEMBERS.map(
-                ({ id, firstname, lastname, email }) => (
-                  <div
-                    key={id}
-                    className="flex items-center justify-between p-2"
-                  >
-                    <div className="text-sm">
-                      <div className="font-medium">
-                        {firstname} {lastname}
-                      </div>
-                      <div className="text-muted-foreground">{email}</div>
-                    </div>
+  return (
+    <>
+      <PageHeader>
+        <PageHeaderTitle>Create New Group</PageHeaderTitle>
+        <PageHeaderDescription>
+          Set up a new group to start sharing meal plans, shopping lists and
+          recipes with others.
+        </PageHeaderDescription>
+      </PageHeader>
+      <div className="md:grid md:grid-cols-7 gap-4 space-y-4">
+        <Card className="col-span-4">
+          <CardContent className="space-y-4">
+            <GroupInformationForm />
+          </CardContent>
+        </Card>
+        <Card className="col-span-3">
+          <CardContent>
+            <GroupAddressForm />
+          </CardContent>
+        </Card>
+        <Card className="col-span-4">
+          <CardHeader>
+            <CardTitle>Add members</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2">
+            <GroupAddMembers
+              members={[...MOCK_USERS]}
+              otherMembers={MOCK_OTHER_GROUP_MEMBERS}
+              addMember={addMember}
+            />
+          </CardContent>
+        </Card>
+        <Card className="col-span-3">
+          <CardHeader>
+            <CardTitle>Selected members - {members.length}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ScrollArea className="md:h-60">
+              <GroupMemberList
+                members={members}
+                actions={(id) => (
+                  <>
+                    <GroupMemberStatusSelect userId={id} />
                     <Button
-                      size="sm"
-                      variant="ghost"
-                      onClick={() => addMember({ id })}
+                      size={"sm"}
+                      variant={"ghost"}
+                      onClick={() => {
+                        removeMember({ id: id || "" });
+                      }}
                     >
-                      <Plus className="h-4 w-4" />
+                      <Trash className="h-4 w-4 mr-2" />
                     </Button>
-                  </div>
-                )
-              )}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-      <Card className="col-span-3">
-        <CardHeader>
-          <CardTitle>Selected members</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <GroupMemberList members={members} />
-        </CardContent>
-      </Card>
-      {/* Actions */}
-      <div className="flex justify-start">
-        <Button disabled={!name}>Create group {name && `"${name}"`}</Button>
+                  </>
+                )}
+              />
+            </ScrollArea>
+          </CardContent>
+        </Card>
+        <UnitOfMeasurement className="col-span-2">
+          <UnitOfMeasurmentToggle
+            system={systemOfMeasurement}
+            systemChange={setSystemOfMeasurement}
+          />
+        </UnitOfMeasurement>
+        <Card className="col-span-2">
+          <CardHeader>
+            <CardTitle className="flex gap-2 items-center">
+              <span>Meals to plan</span> <Calendar />
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Mealtypes className="flex-wrap" />
+          </CardContent>
+        </Card>
+        <Card className="col-span-3">
+          <CardHeader>
+            <CardTitle className="flex gap-2 items-center">
+              <span>Dietary resitrictions</span> <Carrot />
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <CardTitle>Diet Types</CardTitle>
+            <DietTypes className="flex-wrap" />
+            <CardTitle>Commong Allergens</CardTitle>
+            <Allergens className="flex-wrap" />
+          </CardContent>
+        </Card>
+        <div className="flex justify-start">
+          <Button>Create group</Button>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

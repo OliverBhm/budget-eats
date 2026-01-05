@@ -8,27 +8,41 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from "@/components/ui/popover";
-import { Drawer, DrawerTrigger, DrawerContent, DrawerClose, DrawerHeader, DrawerTitle, DrawerFooter } from "@/components/ui/drawer";
+import {
+  Drawer,
+  DrawerTrigger,
+  DrawerContent,
+  DrawerClose,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerFooter,
+} from "@/components/ui/drawer";
 import { UserPlus } from "lucide-react";
 import { GroupMember } from "@/packages/features/api/groups/model/group";
 import { useIsMobile } from "@/hooks/use-mobile";
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyTitle,
+} from "@/components/ui/empty";
 
 type MemberSearchProps = {
-  users: Omit<GroupMember, "role"> [];
+  members: Omit<GroupMember, "role">[];
   onAdd: (user: Pick<GroupMember, "id">) => void;
 };
 
-export function GroupMemberSearch({ users, onAdd }: MemberSearchProps) {
+export function GroupMemberSearch({ members, onAdd }: MemberSearchProps) {
   const [open, setOpen] = React.useState(false);
   const [search, setSearch] = React.useState("");
   const isDesktop = useIsMobile() === false;
 
-  const results = users.filter((user) => {
+  const results = members.filter(({ email, firstname, lastname }) => {
     const searchQuery = search.toLowerCase();
     return (
-      user.email.toLowerCase().includes(searchQuery) ||
-      user.firstname.toLowerCase().includes(searchQuery) ||
-      user.lastname.toLowerCase().includes(searchQuery)
+      email.toLowerCase().includes(searchQuery) ||
+      firstname.toLowerCase().includes(searchQuery) ||
+      lastname.toLowerCase().includes(searchQuery)
     );
   });
 
@@ -41,11 +55,16 @@ export function GroupMemberSearch({ users, onAdd }: MemberSearchProps) {
         onChange={(e) => setSearch(e.target.value)}
       />
 
-      <div className="max-h-64 overflow-y-auto divide-y">
+      <div>
         {results.length === 0 && (
-          <div className="p-3 text-sm text-muted-foreground">
-            No results found
-          </div>
+          <Empty>
+            <EmptyHeader>
+              <EmptyTitle>No results found</EmptyTitle>
+              <EmptyDescription>
+                Try a different user name, email, firt or lastname
+              </EmptyDescription>
+            </EmptyHeader>
+          </Empty>
         )}
 
         {results.map(({ id, firstname, lastname, email }) => (
@@ -72,7 +91,7 @@ export function GroupMemberSearch({ users, onAdd }: MemberSearchProps) {
     </>
   );
 
-  const addButtonText = 'Add members…';
+  const addButtonText = "Add members…";
 
   if (isDesktop) {
     return (
