@@ -26,6 +26,7 @@ import {
   EmptyHeader,
   EmptyTitle,
 } from "@/components/ui/empty";
+import { GroupMemberList } from "./group-members";
 
 type MemberSearchProps = {
   members: Omit<GroupMember, "role">[];
@@ -67,26 +68,21 @@ export function GroupMemberSearch({ members, onAdd }: MemberSearchProps) {
           </Empty>
         )}
 
-        {results.map(({ id, firstname, lastname, email }) => (
-          <div key={id} className="flex items-center justify-between p-2">
-            <div className="text-sm">
-              <div className="font-medium">
-                {firstname} {lastname}
-              </div>
-              <div className="text-muted-foreground">{email}</div>
-            </div>
+        <GroupMemberList
+          members={results}
+          actions={(id) => (
             <Button
               size="sm"
               variant="ghost"
               onClick={() => {
-                onAdd({ id });
+                onAdd({ id: id! });
                 setOpen(false);
               }}
             >
-              <UserPlus className="h-4 w-4" />
+              <UserPlus />
             </Button>
-          </div>
-        ))}
+          )}
+        />
       </div>
     </>
   );
