@@ -240,7 +240,21 @@ export default function MangeGroup() {
             <GroupAddressForm />
           </CardContent>
         </Card>
-        <span className="col-span-4 gap-4 flex flex-col">
+
+        <span className="col-span-3 gap-4 flex flex-col">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex gap-2 items-center">
+                <span>Meals to plan</span> <Calendar />
+              </CardTitle>
+              <CardDescription>
+                Tells the meal planner which meals to include
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Mealtypes className="flex-wrap" />
+            </CardContent>
+          </Card>
           <Card>
             <CardHeader>
               <CardTitle className="flex gap-2 items-center">
@@ -255,22 +269,8 @@ export default function MangeGroup() {
               <DietTypes className="flex-wrap" />
             </CardContent>
           </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex gap-2 items-center">
-                <span>Meals to plan</span> <Calendar />
-              </CardTitle>
-              <CardDescription>
-                Tells the meal planner which meals to include
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Mealtypes className="flex-wrap" />
-            </CardContent>
-          </Card>
         </span>
-        <Card className="col-span-4">
+        <Card className="col-span-3">
           <CardHeader>
             <CardTitle>Commong Allergens</CardTitle>
             <CardDescription>
@@ -282,7 +282,7 @@ export default function MangeGroup() {
             <Allergens className="flex-wrap" />
           </CardContent>
         </Card>
-        <UnitOfMeasurement className="col-span-1">
+        <UnitOfMeasurement className="col-span-2">
           <UnitOfMeasurmentToggle className="flex-wrap" />
         </UnitOfMeasurement>
         <span className="col-span-3 flex flex-col gap-2">
@@ -293,7 +293,7 @@ export default function MangeGroup() {
                 With the invite link other people can easily join your group.
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-2 flex gap-2 md:block">
+            <CardContent className="space-y-2 flex gap-2 items-center">
               <Input disabled value={"groups/invite/" + groupId} />
               <ButtonGroup>
                 <Button
