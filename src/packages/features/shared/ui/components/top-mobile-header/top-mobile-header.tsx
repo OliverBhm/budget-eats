@@ -91,14 +91,17 @@ function Search() {
 
 function BackNavigationButton() {
   const pathname = usePathname();
-  const backLink = pathname.split("/").slice(0, -1).join("/") || "/discover";
+  const navigateBack = window.history.back;
 
   return (
-    <Link href={backLink}>
-      <Button className={BUTTON_STYLES} size="icon-sm" variant="ghost">
-        <ChevronLeftCircle />
-      </Button>
-    </Link>
+    <Button
+      onClick={() => navigateBack()}
+      className={BUTTON_STYLES}
+      size="icon-sm"
+      variant="ghost"
+    >
+      <ChevronLeftCircle />
+    </Button>
   );
 }
 
