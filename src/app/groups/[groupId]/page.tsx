@@ -18,13 +18,13 @@ import {
 } from "@/components/ui/page-header";
 import { Textarea } from "@/components/ui/textarea";
 import { GROUPS_MOCK } from "@/packages/features/api/groups/mocks/group.mock";
-import { Allergens } from "@/packages/features/recipe/ui/components/allergens";
-import { DietTypes } from "@/packages/features/recipe/ui/components/diet-types";
-import { Mealtypes } from "@/packages/features/recipe/ui/components/meal-types";
+import { Allergens } from "@/packages/features/ui/recipe/components/allergens";
+import { DietTypes } from "@/packages/features/ui/recipe/components/diet-types";
+import { Mealtypes } from "@/packages/features/ui/recipe/components/meal-types";
 import {
   UnitOfMeasurement,
   UnitOfMeasurmentToggle,
-} from "@/packages/features/recipe/ui/components/system-of-measurment";
+} from "@/packages/features/ui/recipe/components/system-of-measurment";
 import { GroupAddressForm } from "@/packages/features/ui/groups/components/group-address-form/group-address-form";
 import { GroupMemberSearch } from "@/packages/features/ui/groups/components/group-member-search";
 import { GroupMemberStatusSelect } from "@/packages/features/ui/groups/components/group-member-status-select";

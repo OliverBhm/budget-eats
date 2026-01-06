@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/page-header";
 import { Paragraph } from "@/components/ui/paragraph";
 import { GROUPS_MOCK } from "@/packages/features/api/groups/mocks/group.mock";
-import { UserAvatar } from "@/packages/features/user/ui/components/user-avatar";
+import { UserAvatar } from "@/packages/features/ui/user/components/user-avatar";
 import {} from "@radix-ui/react-avatar";
 import { MapPin, Settings } from "lucide-react";
 import Link from "next/link";

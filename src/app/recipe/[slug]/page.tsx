@@ -21,7 +21,7 @@ import {
   ItemTitle,
 } from "@/components/ui/item";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { IngredientItems } from "@/packages/features/ingredients/ui/components/ingredient-items";
+import { IngredientItems } from "@/packages/features/ui/ingredient/components/ingredient-items";
 import { mockFriedRiceRecipeResponse } from "@/packages/features/recipe/api/mocks/recipe";
 import {
   RecipeIngredient,

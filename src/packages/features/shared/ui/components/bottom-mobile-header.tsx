@@ -3,7 +3,7 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { SheetTrigger } from "@/components/ui/sheet";
-import { UserAvatar } from "@/packages/features/user/ui/components/user-avatar";
+import { UserAvatar } from "@/packages/features/ui/user/components/user-avatar";
 import { AvatarImage } from "@radix-ui/react-avatar";
 import { BarChart, CookingPot, DollarSign, HomeIcon } from "lucide-react";
 import Link from "next/link";

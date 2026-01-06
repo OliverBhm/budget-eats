@@ -24,17 +24,17 @@ import {
 } from "@/components/ui/drawer";
 import { ItemGroup } from "@/components/ui/item";
 import { Paragraph } from "@/components/ui/paragraph";
-import { capitalize } from "@/packages/features/formatting/util/text";
-import { IngredientItems } from "@/packages/features/ingredients/ui/components/ingredient-items";
 import {
   mockApplePeanutButterSnackResponse,
   mockFriedRiceRecipeResponse,
   mockOvernightOatsRecipeResponse,
-} from "@/packages/features/recipe/api/mocks/recipe";
+} from "@/packages/features/api/recipe/mocks/recipe";
 import {
   RecipeData,
   RecipeIngredient,
-} from "@/packages/features/recipe/api/model/recipe";
+} from "@/packages/features/api/recipe/model/recipe";
+import { capitalize } from "@/packages/features/formatting/util/text";
+import { IngredientItems } from "@/packages/features/ui/ingredient/components/ingredient-items";
 import {
   ArrowLeftRight,
   ChevronDown,

@@ -20,7 +20,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Fragment } from "react/jsx-runtime";
-import { UserAvatar } from "@/packages/features/user/ui/components/user-avatar";
+import { UserAvatar } from "@/packages/features/ui/user/components/user-avatar";
 import { cn } from "@/lib/utils";
 import { Headline } from "@/components/ui/headline";
 

@@ -18,17 +18,17 @@ import {
   MOCK_USERS,
 } from "@/packages/features/api/groups/mocks/group.mock";
 import { GroupMember } from "@/packages/features/api/groups/model/group";
-import { Allergens } from "@/packages/features/recipe/ui/components/allergens";
-import { DietTypes } from "@/packages/features/recipe/ui/components/diet-types";
-import { Mealtypes } from "@/packages/features/recipe/ui/components/meal-types";
-import {
-  UnitOfMeasurement,
-  UnitOfMeasurmentToggle,
-} from "@/packages/features/recipe/ui/components/system-of-measurment";
 import { GroupAddMembers } from "@/packages/features/ui/groups/components/group-add-members";
 import { GroupAddressForm } from "@/packages/features/ui/groups/components/group-address-form/group-address-form";
 import { GroupMemberList } from "@/packages/features/ui/groups/components/group-members/group-members";
 import { removedUserMessage } from "@/packages/features/ui/groups/util/group-member-actions";
+import { Allergens } from "@/packages/features/ui/recipe/components/allergens";
+import { DietTypes } from "@/packages/features/ui/recipe/components/diet-types";
+import { Mealtypes } from "@/packages/features/ui/recipe/components/meal-types";
+import {
+  UnitOfMeasurement,
+  UnitOfMeasurmentToggle,
+} from "@/packages/features/ui/recipe/components/system-of-measurment";
 import { Calendar, Carrot, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -143,7 +143,11 @@ export default function CreateGroupPage() {
           </CardContent>
         </Card>
         <UnitOfMeasurement className="col-span-2">
-          <UnitOfMeasurmentToggle className="flex-wrap" />
+          <UnitOfMeasurmentToggle
+            system={systemOfMeasurement}
+            systemChange={setSystemOfMeasurement}
+            className="flex-wrap"
+          />
         </UnitOfMeasurement>
       </section>
     </>
