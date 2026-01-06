@@ -20,9 +20,11 @@ const toggleVariants = cva(
         sm: "h-8 px-1.5 min-w-8",
         lg: "h-10 px-2.5 min-w-10",
       },
-      highlightSvg: {
-        true: "data-[state=on]:*:[svg]:stroke-green-500 data-[state=on]:*:[svg]:transition-colors data-[state=on]:*:[svg]:duration-200",
-        false: "",
+      iconSVG: {
+        highlight:
+          "data-[state=on]:*:[svg]:stroke-green-500 data-[state=on]:*:[svg]:transition-colors data-[state=on]:*:[svg]:duration-200",
+        grayscale:
+          "[&_[data-icon]]:grayscale data-[state=on]:[&_[data-icon]]:grayscale-0",
       },
     },
     defaultVariants: {

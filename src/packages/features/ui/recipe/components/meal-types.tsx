@@ -19,7 +19,7 @@ function Mealtypes({ selectedMealTypes, onChange, className }: MealTypesProps) {
       spacing={2}
     >
       {mealTypes.map((mealType) => (
-        <ToggleGroupItem key={mealType} value={mealType} highlightSvg={true}>
+        <ToggleGroupItem key={mealType} value={mealType} iconSVG="highlight">
           {capitalize(mealType)} <Check />
         </ToggleGroupItem>
       ))}

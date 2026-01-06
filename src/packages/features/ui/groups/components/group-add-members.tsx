@@ -26,6 +26,7 @@ export function GroupAddMembers({
         <>
           <Headline level="h6">Members from other groups</Headline>
           <GroupMemberList
+            emptyMessage="No other users available to add."
             members={otherMembers}
             actions={(id) => (
               <>

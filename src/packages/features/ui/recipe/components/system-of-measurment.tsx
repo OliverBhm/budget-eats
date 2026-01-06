@@ -38,7 +38,7 @@ function UnitOfMeasurmentToggle({
         spacing={2}
       >
         {systems.map((system) => (
-          <ToggleGroupItem key={system} highlightSvg={true} value={system}>
+          <ToggleGroupItem key={system} iconSVG="highlight" value={system}>
             {capitalize(system)}
             <Check />
           </ToggleGroupItem>

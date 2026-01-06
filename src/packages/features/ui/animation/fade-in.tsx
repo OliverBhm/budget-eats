@@ -5,6 +5,7 @@ interface AnimateFadeInProps {
   side?: "left" | "right" | "top" | "bottom";
   duration?: number;
   className?: string;
+  viewportThreshold?: number;
   children: React.ReactNode;
 }
 
@@ -16,9 +17,10 @@ const offsetMap = {
 };
 
 function AnimateFadeIn({
-  side = "top",
+  side = "left",
   duration = 0.25,
   className,
+  viewportThreshold = 0.1,
   children,
 }: AnimateFadeInProps) {
   const offset = offsetMap[side];
@@ -26,13 +28,14 @@ function AnimateFadeIn({
   return (
     <motion.div
       initial="hidden"
-      animate="visible"
+      whileInView="visible"
       exit="hidden"
       variants={{
         hidden: { opacity: 0, ...offset },
         visible: { opacity: 1, x: 0, y: 0 },
       }}
       transition={{ duration, ease: "easeOut" }}
+      viewport={{ once: true, amount: viewportThreshold }}
       className={cn(className)}
     >
       {children}

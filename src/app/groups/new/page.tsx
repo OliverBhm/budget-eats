@@ -18,6 +18,7 @@ import {
   MOCK_USERS,
 } from "@/packages/features/api/groups/mocks/group.mock";
 import { GroupMember } from "@/packages/features/api/groups/model/group";
+import { AnimateFadeIn } from "@/packages/features/ui/animation/fade-in";
 import { GroupAddMembers } from "@/packages/features/ui/groups/components/group-add-members";
 import { GroupAddressForm } from "@/packages/features/ui/groups/components/group-address-form/group-address-form";
 import { GroupMemberList } from "@/packages/features/ui/groups/components/group-members/group-members";
@@ -30,12 +31,15 @@ import {
   UnitOfMeasurmentToggle,
 } from "@/packages/features/ui/recipe/components/system-of-measurment";
 import { Calendar, Carrot, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export default function CreateGroupPage() {
   const [systemOfMeasurement, setSystemOfMeasurement] = useState("metric");
   const [members, setMembers] = useState<GroupMember[]>([]);
+  const [otherMembers, setOtherMembers] = useState<Omit<GroupMember, "role">[]>(
+    MOCK_OTHER_GROUP_MEMBERS
+  );
 
   const addMember = ({ id }: Pick<GroupMember, "id">) => {
     if (members.find((m) => m.id === id)) return;
@@ -44,6 +48,14 @@ export default function CreateGroupPage() {
       MOCK_USERS[0];
     setMembers([...members, { ...member, role: "member" }]);
   };
+
+  useEffect(() => {
+    setOtherMembers(
+      MOCK_OTHER_GROUP_MEMBERS.filter(
+        (m) => !members.find((mem) => mem.id === m.id)
+      )
+    );
+  }, [members]);
 
   const removeMember = ({ id }: Pick<GroupMember, "id">) => {
     setMembers(members.filter((m) => m.id !== id));
@@ -61,94 +73,108 @@ export default function CreateGroupPage() {
         </PageHeaderDescription>
       </PageHeader>
       <section className="md:grid grid-cols-8 gap-4 flex flex-col">
-        <Card className="col-span-4">
-          <CardHeader>
-            <CardTitle>Group Members</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <GroupMemberList
-              members={members}
-              actions={(id) => (
-                <Button
-                  size={"sm"}
-                  variant={"ghost"}
-                  onClick={() => {
-                    removeMember({ id: id || "" });
-                    toast(removeMessage(id || ""));
-                  }}
-                >
-                  <Trash2 className="mr-2" />
-                </Button>
-              )}
-            />
-            <GroupAddMembers
-              members={[...MOCK_USERS]}
-              otherMembers={MOCK_OTHER_GROUP_MEMBERS}
-              addMember={addMember}
-            />
-          </CardContent>
-        </Card>
-        <Card className="col-span-4">
-          <CardHeader>
-            <CardTitle>Group Address</CardTitle>
-            <CardDescription>
-              Specify the address details for the group to get special offers
-              for your area.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <GroupAddressForm />
-          </CardContent>
-        </Card>
-
-        <span className="col-span-3 gap-4 flex flex-col">
+        <AnimateFadeIn side="left" className="col-span-4">
           <Card>
             <CardHeader>
-              <CardTitle className="flex gap-2 items-center">
-                <span>Meals to plan</span> <Calendar />
-              </CardTitle>
-              <CardDescription>
-                Tells the meal planner which meals to include
-              </CardDescription>
+              <CardTitle>Group Members</CardTitle>
             </CardHeader>
-            <CardContent>
-              <Mealtypes className="flex-wrap" />
+            <CardContent className="space-y-2">
+              <GroupMemberList
+                members={members}
+                emptyMessage="No members added yet, use the search above to add members to the group."
+                actions={(id) => (
+                  <Button
+                    size={"sm"}
+                    variant={"ghost"}
+                    onClick={() => {
+                      removeMember({ id: id || "" });
+                      toast(removeMessage(id || ""));
+                    }}
+                  >
+                    <Trash2 className="mr-2" />
+                  </Button>
+                )}
+              />
+              <GroupAddMembers
+                members={MOCK_USERS}
+                otherMembers={otherMembers}
+                addMember={addMember}
+              />
             </CardContent>
           </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex gap-2 items-center">
-                <span>Dietary Types</span> <Carrot />
-              </CardTitle>
-              <CardDescription>
-                Specify dietary preferences for the group to get recipes that
-                fit everyone.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <DietTypes className="flex-wrap" />
-            </CardContent>
-          </Card>
+        </AnimateFadeIn>
+        <span className="col-span-4 gap-4 flex flex-col">
+          <AnimateFadeIn className="col-span-4" side="right">
+            <Card>
+              <CardHeader>
+                <CardTitle>Group Address</CardTitle>
+                <CardDescription>
+                  Specify the address details for the group to get special
+                  offers for your area.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <GroupAddressForm />
+              </CardContent>
+            </Card>
+          </AnimateFadeIn>
+          <AnimateFadeIn className="md:h-full" side="left">
+            <UnitOfMeasurement className="md:h-full">
+              <UnitOfMeasurmentToggle
+                system={systemOfMeasurement}
+                systemChange={setSystemOfMeasurement}
+                className="flex-wrap"
+              />
+            </UnitOfMeasurement>
+          </AnimateFadeIn>
         </span>
-        <Card className="col-span-3">
-          <CardHeader>
-            <CardTitle>Commong Allergens</CardTitle>
-            <CardDescription>
-              Specifiy additional allergens that should be avoided additionally
-              to the ones each member specified in their profile.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Allergens className="flex-wrap" />
-          </CardContent>
-        </Card>
-        <UnitOfMeasurement className="col-span-2">
-          <UnitOfMeasurmentToggle
-            system={systemOfMeasurement}
-            systemChange={setSystemOfMeasurement}
-            className="flex-wrap"
-          />
-        </UnitOfMeasurement>
+        <span className="col-span-4 gap-4 flex flex-col">
+          <AnimateFadeIn side="left">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex gap-2 items-center">
+                  <span>Meals to plan</span> <Calendar />
+                </CardTitle>
+                <CardDescription>
+                  Tells the meal planner which meals to include
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Mealtypes className="flex-wrap" />
+              </CardContent>
+            </Card>
+          </AnimateFadeIn>
+          <AnimateFadeIn side="right">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex gap-2 items-center">
+                  <span>Dietary Types</span> <Carrot />
+                </CardTitle>
+                <CardDescription>
+                  Specify dietary preferences for the group to get recipes that
+                  fit everyone.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <DietTypes className="flex-wrap" />
+              </CardContent>
+            </Card>
+          </AnimateFadeIn>
+        </span>
+        <AnimateFadeIn className="col-span-4" side="left">
+          <Card className="md:h-full">
+            <CardHeader>
+              <CardTitle>Commong Allergens</CardTitle>
+              <CardDescription>
+                Specifiy additional allergens that should be avoided
+                additionally to the ones each member specified in their profile.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Allergens className="flex-wrap" />
+            </CardContent>
+          </Card>
+        </AnimateFadeIn>
       </section>
     </>
   );

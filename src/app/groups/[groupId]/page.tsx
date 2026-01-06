@@ -137,7 +137,7 @@ export default function MangeGroup() {
     return null;
   }
 
-  const { id: groupId, name, members, description, address } = group;
+  const { id: groupId, name, members, description } = group;
   return (
     <section className="space-y-4">
       <PageHeader>
@@ -170,7 +170,7 @@ export default function MangeGroup() {
             />
           </CardContent>
           <CardFooter>
-            <GroupMemberSearch {...{ members: members, onAdd: () => {} }} />
+            <GroupMemberSearch {...{ members, onAdd: () => {} }} />
           </CardFooter>
         </Card>
         <Card className="col-span-4">

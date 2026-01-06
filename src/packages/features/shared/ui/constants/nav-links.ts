@@ -1,13 +1,24 @@
 import { Avatar } from "@radix-ui/react-avatar";
-import { BarChart, CookingPot, DollarSign, HomeIcon } from "lucide-react";
+import {
+  BarChart,
+  Clock,
+  CookingPot,
+  DollarSign,
+  HomeIcon,
+  Settings,
+  Settings2,
+  User,
+  UserPlus,
+} from "lucide-react";
 
-export type NavItem = {
+type NavItem = {
   name: string;
   href: string;
   icon: any;
+  children?: NavItem[];
 };
 
-export const MAIN_NAV_ITEMS: NavItem[] = [
+const MAIN_NAV_ITEMS: NavItem[] = [
   {
     name: "Discover",
     icon: HomeIcon,
@@ -29,3 +40,18 @@ export const MAIN_NAV_ITEMS: NavItem[] = [
     href: "/nutrition-tracking",
   },
 ];
+
+const ADDITIONAL_NAV_ITEMS: NavItem[] = [
+  {
+    name: "Settings",
+    icon: Settings,
+    href: "/settings",
+  },
+  {
+    name: "Timers",
+    icon: Clock,
+    href: "/timers",
+  },
+];
+
+export { MAIN_NAV_ITEMS, ADDITIONAL_NAV_ITEMS };

@@ -1,35 +1,28 @@
 "use client";
 
-import * as React from "react";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-} from "@/components/ui/popover";
-import {
   Drawer,
-  DrawerTrigger,
-  DrawerContent,
   DrawerClose,
+  DrawerContent,
+  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-  DrawerFooter,
+  DrawerTrigger,
 } from "@/components/ui/drawer";
-import { User, UserPlus } from "lucide-react";
-import { GroupMember } from "@/packages/features/api/groups/model/group";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { Input } from "@/components/ui/input";
 import {
-  Empty,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyTitle,
-} from "@/components/ui/empty";
-import { GroupMemberList } from "./group-members/group-members";
-import { addedUserMessage } from "../util/group-member-actions";
-import { toast } from "sonner";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { GroupMember } from "@/packages/features/api/groups/model/group";
+import { UserPlus } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
+import { addedUserMessage } from "../util/group-member-actions";
+import { GroupMemberList } from "./group-members/group-members";
 
 type MemberSearchProps = {
   members: Omit<GroupMember, "role">[];
@@ -62,16 +55,6 @@ export function GroupMemberSearch({ members, onAdd }: MemberSearchProps) {
       />
 
       <div>
-        {results.length === 0 && (
-          <Empty>
-            <EmptyHeader>
-              <EmptyTitle>No results found</EmptyTitle>
-              <EmptyDescription>
-                Try a different user name, email, first or lastname
-              </EmptyDescription>
-            </EmptyHeader>
-          </Empty>
-        )}
         <GroupMemberList
           members={results}
           actions={(id) => (

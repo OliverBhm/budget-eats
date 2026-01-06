@@ -1,13 +1,6 @@
-import { AnimatePresence, motion } from "framer-motion";
-import { Fragment, useEffect, useRef } from "react";
+import { Fragment } from "react";
 
-import {
-  ITEM_TRANSITION,
-  ITEM_VARIANTS,
-  LIST_TRANSITION,
-  LIST_VARIANTS,
-} from "./group-members.animate";
-
+import { Empty, EmptyDescription, EmptyHeader } from "@/components/ui/empty";
 import {
   Item,
   ItemActions,
@@ -17,17 +10,17 @@ import {
 } from "@/components/ui/item";
 import { cn } from "@/lib/utils";
 import { GroupMember } from "@/packages/features/api/groups/model/group";
-import { AnimateFadeIn } from "../../../animation/fade-in";
+import { UserAvatar } from "../../../user/components/user-avatar";
 import {
   UserEmail,
   Username,
   UserProfile,
   UserProfileInfo,
 } from "../../../user/components/user-profile";
-import { UserAvatar } from "../../../user/components/user-avatar";
 
 interface GroupMemberListProps {
   members: Omit<GroupMember, "role">[];
+  emptyMessage?: string;
   actions?: (id?: string, index?: number) => React.ReactNode;
   children?: React.ReactNode;
   className?: string;
@@ -35,12 +28,13 @@ interface GroupMemberListProps {
 
 function GroupMemberList({
   members,
+  emptyMessage = "Search by username, email, first or lastname.",
   actions,
   className,
 }: GroupMemberListProps) {
   return (
     <>
-      {members.length > 0 && (
+      {members.length ? (
         <ItemGroup variant="muted" className={cn(className)}>
           {members.map(({ id, firstname, lastname, imgUrl, email }, i) => {
             return (
@@ -66,6 +60,12 @@ function GroupMemberList({
             );
           })}
         </ItemGroup>
+      ) : (
+        <Empty className="bg-muted">
+          <EmptyHeader>
+            <EmptyDescription>{emptyMessage}</EmptyDescription>
+          </EmptyHeader>
+        </Empty>
       )}
     </>
   );

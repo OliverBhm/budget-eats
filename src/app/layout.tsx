@@ -42,25 +42,6 @@ export default function RootLayout({
                   <SheetHeader>
                     <GroupsSwitcher {...{ groups: GROUPS_MOCK }} />
                   </SheetHeader>
-                  <nav>
-                    <ul className="">
-                      <li>
-                        <Button>
-                          <Settings /> Settings
-                        </Button>
-                      </li>
-                      <li>
-                        <Button>
-                          <Timer /> Timers
-                        </Button>
-                      </li>
-                      <li>
-                        <Button>
-                          <Timer /> Timers
-                        </Button>
-                      </li>
-                    </ul>
-                  </nav>
                 </SheetContent>
                 <BottomMobileHeader />
               </Sheet>
