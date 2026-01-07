@@ -26,6 +26,7 @@ import {
   RadialBar,
   RadialBarChart,
 } from "recharts";
+import { useTimer } from "../hooks/use-timer";
 
 interface TimerProps {
   timer: TimerData;
@@ -44,45 +45,15 @@ export function Timer({
   removeTimer,
   className,
 }: TimerProps) {
-  const [elapsed, setElapsed] = useState(0);
-  const [total, setTotal] = useState(duration);
-  const [remainingTime, setRemainingTime] = useState(remaining);
-  const [isRunning, setIsRunning] = useState(true);
-
-  const addMinute = () => {
-    setTotal((t) => t + 60);
-    setRemainingTime((r) => r + 60);
-  };
-
-  const resetTimer = () => {
-    setRemainingTime(duration);
-    setElapsed(0);
-  };
-
-  const stopTimer = () => {
-    setIsRunning((isRunning) => !isRunning);
-  };
-
-  useEffect(() => {
-    setElapsed(0);
-  }, [remaining]);
-
-  useEffect(() => {
-    if (elapsed >= remainingTime || !isRunning) return;
-
-    const id = setInterval(() => {
-      setElapsed((e) => e + 1);
-    }, 1000);
-
-    return () => clearInterval(id);
-  }, [isRunning]);
-
-  const current = Math.max(remainingTime - elapsed, 0);
+  const { current, progress, addMinute, resetTimer, toggleTimer } = useTimer({
+    duration,
+    remaining,
+  });
 
   const chartData = [
     {
       name: "progress",
-      value: Math.round((current / total) * 100),
+      value: progress,
       fill: "var(--chart-1)",
     },
   ];
@@ -159,7 +130,7 @@ export function Timer({
             <TimerReset />
           </Button>
           <ButtonGroupSeparator />
-          <Button size={"lg"} onClick={stopTimer} variant="secondary">
+          <Button size={"lg"} onClick={toggleTimer} variant="secondary">
             <TimerOff />
           </Button>
         </ButtonGroup>
