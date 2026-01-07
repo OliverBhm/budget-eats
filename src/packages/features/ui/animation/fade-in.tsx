@@ -20,7 +20,7 @@ function AnimateFadeIn({
   side = "left",
   duration = 0.25,
   className,
-  viewportThreshold = 0.1,
+  viewportThreshold = 0.3,
   children,
 }: AnimateFadeInProps) {
   const offset = offsetMap[side];
