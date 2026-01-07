@@ -29,7 +29,7 @@ import {
 
 interface TimerProps {
   timer: TimerData;
-  removeTimer: (id: number) => void;
+  removeTimer: (id: string) => void;
   className?: string;
 }
 
