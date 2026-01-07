@@ -8,15 +8,15 @@ import { Paragraph } from "@/components/ui/paragraph";
 import { Dispatch, SetStateAction } from "react";
 
 interface SetTimeProps {
-  time: string;
-  setTime: Dispatch<SetStateAction<string>>;
+  timerDuration: string;
+  setTimerDuration: Dispatch<SetStateAction<string>>;
 }
 
-function SetTime({ time, setTime }: SetTimeProps) {
+function SetTime({ timerDuration, setTimerDuration }: SetTimeProps) {
   const inputs = ["h", "m", "s"];
 
   return (
-    <InputOTP value={time} onChange={setTime} maxLength={6}>
+    <InputOTP value={timerDuration} onChange={setTimerDuration} maxLength={6}>
       {inputs.map((label, i) => (
         <>
           <InputOTPGroup key={label}>

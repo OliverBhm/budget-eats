@@ -40,17 +40,12 @@ const createTimer = (
 export default function TimersPage() {
   const [timers, setTimers] = useState(MOCK_TIMERS);
 
-  const {
-    timerName,
-    setTimerName,
-    customTimerDuration,
-    setCustomTimerDuration,
-    addTimer,
-  } = useAddTimer({
-    timers,
-    setTimers,
-    createTimer,
-  });
+  const { timerName, setTimerName, timerDuration, setTimerDuration, addTimer } =
+    useAddTimer({
+      timers,
+      setTimers,
+      createTimer,
+    });
 
   const removeTimer = (id: string) => {
     setTimers((prevTimers) => prevTimers.filter((timer) => timer.id !== id));
@@ -75,14 +70,14 @@ export default function TimersPage() {
             />
             <SetTime
               {...{
-                time: customTimerDuration,
-                setTime: setCustomTimerDuration,
+                timerDuration,
+                setTimerDuration,
               }}
             />
           </CardContent>
           <CardFooter>
             <Button
-              disabled={!customTimerDuration}
+              disabled={!timerDuration}
               className="w-full"
               onClick={() => addTimer()}
             >

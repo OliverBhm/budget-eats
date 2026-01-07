@@ -12,11 +12,11 @@ export function useAddTimer({
   setTimers,
   createTimer,
 }: UseAddTimerProps) {
-  const [customTimerDuration, setCustomTimerDuration] = useState("");
+  const [timerDuration, setTimerDuration] = useState("");
   const [timerName, setTimerName] = useState("");
 
   const addTimer = () => {
-    const duration = customTimerDuration
+    const duration = timerDuration
       .padEnd(6, "0")
       .match(/\d{2}/gi)
       ?.map(Number) ?? [0, 0, 0];
@@ -26,15 +26,15 @@ export function useAddTimer({
       ...prevTimers,
     ]);
 
-    setCustomTimerDuration("");
+    setTimerDuration("");
     setTimerName("");
   };
 
   return {
     timerName,
     setTimerName,
-    customTimerDuration,
-    setCustomTimerDuration,
+    timerDuration,
+    setTimerDuration,
     addTimer,
   };
 }
