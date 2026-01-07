@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/page-header";
 import { SetTime } from "@/packages/features/ui/timers/components/set-time";
 import { Timer } from "@/packages/features/ui/timers/components/timer";
+import { useAddTimer } from "@/packages/features/ui/timers/hooks/use-add-timer";
 import { useState } from "react";
 
 export interface TimerData {
@@ -39,23 +40,17 @@ const createTimer = (
 export default function TimersPage() {
   const [timers, setTimers] = useState(MOCK_TIMERS);
 
-  const [customTimerDuration, setCustomTimerDuration] = useState("");
-  const [timerName, setTimerName] = useState("");
-
-  const addTimer = () => {
-    setTimers((prevTimers) => [
-      createTimer(
-        `i${timers.length + 1}`,
-        timerName,
-        customTimerDuration.padEnd(6, "0").match(/\d{2}/gi)?.map(Number) || [
-          0, 0, 0,
-        ]
-      ),
-      ...prevTimers,
-    ]);
-    setCustomTimerDuration("");
-    setTimerName("");
-  };
+  const {
+    timerName,
+    setTimerName,
+    customTimerDuration,
+    setCustomTimerDuration,
+    addTimer,
+  } = useAddTimer({
+    timers,
+    setTimers,
+    createTimer,
+  });
 
   const removeTimer = (id: string) => {
     setTimers((prevTimers) => prevTimers.filter((timer) => timer.id !== id));
