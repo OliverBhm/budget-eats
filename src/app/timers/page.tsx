@@ -1,35 +1,15 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  ButtonGroup,
-  ButtonGroupSeparator,
-} from "@/components/ui/button-group";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
   PageHeader,
   PageHeaderDescription,
   PageHeaderTitle,
 } from "@/components/ui/page-header";
-import { AnimateFadeIn } from "@/packages/features/ui/animation/fade-in";
 import { SetTime } from "@/packages/features/ui/timers/components/set-time";
 import { Timer } from "@/packages/features/ui/timers/components/timer";
-import { set } from "date-fns";
-import {
-  ListRestart,
-  RefreshCw,
-  StopCircle,
-  TimerOff,
-  TimerReset,
-  XCircle,
-} from "lucide-react";
 import { useState } from "react";
 
 export interface TimerData {
@@ -46,10 +26,10 @@ const MOCK_TIMERS: TimerData[] = [
 ];
 
 const createTimer = (
-  id: number,
+  id: string,
   name: string,
   [hours, minutes, seconds]: number[]
-) => ({
+): TimerData => ({
   id,
   name: name || "Custom Timer",
   duration: hours * 3600 + minutes * 60 + seconds,
@@ -74,6 +54,7 @@ export default function TimersPage() {
       ...prevTimers,
     ]);
     setCustomTimerDuration("");
+    setTimerName("");
   };
 
   const removeTimer = (id: string) => {
