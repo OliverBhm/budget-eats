@@ -48,9 +48,9 @@ const editorialIntroTitleVariants = cva(
   {
     variants: {
       scale: {
-        hero: "type-display-lg",
-        display: "type-display-sm",
-        headline: "type-headline-md",
+        hero: "text-5xl leading-none md:text-7xl",
+        display: "text-4xl leading-none md:text-5xl",
+        headline: "text-3xl leading-[1.02] md:text-4xl",
       },
     },
     defaultVariants: {

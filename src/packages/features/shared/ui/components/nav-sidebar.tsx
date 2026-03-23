@@ -70,7 +70,7 @@ function SidebarNavSection({
               <SidebarMenuButton
                 asChild
                 isActive={pathname === item.href}
-                className="h-11 rounded-2xl px-3 text-[0.95rem] data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground hover:bg-sidebar-accent/80"
+                className="h-11 rounded-2xl px-3 data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground hover:bg-sidebar-accent/80"
               >
                 <Link href={item.href}>
                   <item.icon />

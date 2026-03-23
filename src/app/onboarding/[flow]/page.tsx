@@ -105,7 +105,7 @@ export default function Onboarding() {
         </EditorialIntro>
         <Stepper {...{ activeStep, setActiveStep }} />
       </EditorialSection>
-      <div className="grid grid-cols-2 gap-6 px-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 px-6">
         {activeStep === 0 && (
           <Card variant={"nested"}>
             <CardHeader className="justify-center items-center flex flex-col">
@@ -137,12 +137,12 @@ export default function Onboarding() {
         )}
         <div className="space-y-10">
           <div>
-            <EditorialIntroTitle scale={"display"} >{step.title}</EditorialIntroTitle>
-            <Paragraph className="mt-6">
+            <EditorialIntroTitle scale={"headline"} >{step.title}</EditorialIntroTitle>
+            <EditorialIntroDescription className="mt-6">
               {step.description}
-            </Paragraph>
+            </EditorialIntroDescription>
           </div>
-          <CardFooter className="gap-2">
+          <div className="flex gap-2">
             {activeStep > 0 && <Button variant={"secondary"} onClick={() => setActiveStep(activeStep - 1)}>
               <ArrowLeft />
               Back
@@ -151,7 +151,7 @@ export default function Onboarding() {
               {activeStep !== STEPS.length - 1 ? "Continue" : "Let's start"}
               <ArrowRight />
             </Button>
-          </CardFooter>
+          </div>
         </div>
       </div>
     </>
