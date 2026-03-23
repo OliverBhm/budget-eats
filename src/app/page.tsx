@@ -72,7 +72,7 @@ function FeaturedRecipeCard({ recipe }: { recipe: RecipeData }) {
 						<Paragraph size="label-sm" variant="muted">
 							Featured tonight
 						</Paragraph>
-						<Headline as="h2" level="h4" className="type-headline-md mt-2 text-foreground">
+						<Headline as="h2" level="h4" className="mt-2 text-foreground">
 							{recipe.title}
 						</Headline>
 					</div>

@@ -60,7 +60,7 @@ function SidebarNavSection({
 }) {
   return (
     <SidebarGroup>
-      <SidebarGroupLabel className="type-label-sm px-3 text-sidebar-foreground/55">
+      <SidebarGroupLabel className="px-3 text-xs font-semibold leading-[1.2] tracking-[0.18em] text-sidebar-foreground/55 uppercase">
         {title}
       </SidebarGroupLabel>
       <SidebarGroupContent>

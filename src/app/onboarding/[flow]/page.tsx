@@ -5,9 +5,7 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import {
   EditorialEyebrow,
@@ -16,11 +14,9 @@ import {
   EditorialIntroTitle,
   EditorialSection,
 } from "@/components/ui/editorial-layout";
-import { Headline } from "@/components/ui/headline";
 import { Input } from "@/components/ui/input";
 import { Item, ItemContent, ItemMedia } from "@/components/ui/item";
 import { Label } from "@/components/ui/label";
-import { Paragraph } from "@/components/ui/paragraph";
 import {
   UnitOfMeasurement,
   UnitOfMeasurmentToggle,
@@ -32,25 +28,50 @@ const STEPS = [
   {
     title: "We'd like to get to know you.",
     description:
-      "Let's start by telling us what to call you, this also makes it easier for your friends to find you",
+      `Let's start by telling us what to call you, this also makes it easier for your friends to find you. 
+      Don't worry, you can always change this later in the settings.`,
   },
   {
     title: "Please tells us where you are from",
-    description: "This way we can show you localized offers and deals",
+    description: `This way we can show you localized offers and deals, display prices in your
+    currency and show deals near you.
+    `
   },
   {
     title: "Measurement System",
-    description: "Make life easier by using a measurment system you know. You can always change this later in the settings.",
+    description:
+      `Make life easier by using a measurment system you know. 
+      You can always change this later in the settings.`,
   },
 ];
 
 function Stepper({ activeStep, setActiveStep }: any) {
   const padIndex = (index: number) => index.toString().padStart(2, "0");
+    const nextButtonText = activeStep !== STEPS.length - 1 ? "Next" : "Let's start";
+
   return (
     <div className="space-y-2">
-      <EditorialEyebrow>
-        Step {padIndex(activeStep + 1)} of {padIndex(STEPS.length)}
-      </EditorialEyebrow>
+      <div className="flex justify-between items-center">
+        <EditorialEyebrow>
+          Step {padIndex(activeStep + 1)} of {padIndex(STEPS.length)}
+        </EditorialEyebrow>
+        <div className="flex gap-2">
+          {activeStep > 0 && (
+            <Button
+            size={"sm"}
+              variant={"secondary"}
+              onClick={() => setActiveStep(activeStep - 1)}
+            >
+              <ArrowLeft />
+              <span className="hidden md:block">Back</span>
+            </Button>
+          )}
+          <Button size={"sm"} onClick={() => setActiveStep(activeStep + 1)}>
+            <span className="hidden md:block">{nextButtonText}</span>
+            <ArrowRight />
+          </Button>
+        </div>
+      </div>
       <div
         style={{ gridTemplateColumns: `repeat(${STEPS.length}, 1fr)` }}
         className="gap-2 grid"
@@ -109,7 +130,10 @@ export default function Onboarding() {
         {activeStep === 0 && (
           <Card variant={"nested"}>
             <CardHeader className="justify-center items-center flex flex-col">
-              <UserPlus className="bg-accent/30 shadow-xs p-2 rounded-full" size={"4rem"} />
+              <UserPlus
+                className="bg-accent/30 shadow-xs p-2 rounded-full"
+                size={"4rem"}
+              />
               <CardDescription>
                 Upload a photo so your friends immediatly know who you are.
               </CardDescription>
@@ -137,20 +161,12 @@ export default function Onboarding() {
         )}
         <div className="space-y-10">
           <div>
-            <EditorialIntroTitle scale={"headline"} >{step.title}</EditorialIntroTitle>
+            <EditorialIntroTitle scale={"headline"}>
+              {step.title}
+            </EditorialIntroTitle>
             <EditorialIntroDescription className="mt-6">
               {step.description}
             </EditorialIntroDescription>
-          </div>
-          <div className="flex gap-2">
-            {activeStep > 0 && <Button variant={"secondary"} onClick={() => setActiveStep(activeStep - 1)}>
-              <ArrowLeft />
-              Back
-            </Button>}
-            <Button onClick={() => setActiveStep(activeStep + 1)}>
-              {activeStep !== STEPS.length - 1 ? "Continue" : "Let's start"}
-              <ArrowRight />
-            </Button>
           </div>
         </div>
       </div>

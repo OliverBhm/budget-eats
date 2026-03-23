@@ -40,7 +40,15 @@ function EditorialEyebrow({
   className,
   ...props
 }: React.ComponentProps<"p">) {
-  return <p className={cn("type-label-md text-muted-foreground", className)} {...props} />;
+  return (
+    <p
+      className={cn(
+        "font-sans text-xs font-semibold leading-[1.2] tracking-[0.22em] text-muted-foreground uppercase",
+        className
+      )}
+      {...props}
+    />
+  );
 }
 
 const editorialIntroTitleVariants = cva(
@@ -144,7 +152,7 @@ function EditorialStatLabel({
   return (
     <p
       className={cn(
-        "type-label-sm",
+        "font-sans text-xs font-semibold leading-[1.2] tracking-[0.18em] uppercase",
         tone === "accent"
           ? "text-primary-foreground/70"
           : tone === "spotlight"

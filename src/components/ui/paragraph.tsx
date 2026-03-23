@@ -14,8 +14,8 @@ const paragraphVariants = cva("font-sans leading-relaxed tracking-[0.01em]", {
       sm: "text-sm",
       md: "text-sm md:text-base",
       lg: "text-base md:text-lg",
-      "label-sm": "type-label-sm leading-[1.2]",
-      "label-md": "type-label-md leading-[1.2]",
+      "label-sm": "text-xs font-semibold leading-[1.2] tracking-[0.18em] uppercase",
+      "label-md": "text-xs font-semibold leading-[1.2] tracking-[0.22em] uppercase",
     },
     weight: {
       normal: "font-normal",

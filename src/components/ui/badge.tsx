@@ -5,16 +5,16 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const badgeVariants = cva(
-  "type-label-sm inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full px-2.5 py-1 whitespace-nowrap [&>svg]:size-3 [&>svg]:pointer-events-none transition-[background-color,box-shadow] focus-visible:ring-4 focus-visible:ring-ring",
+  "inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full px-2.5 py-1 text-xs font-semibold leading-[1.2] tracking-[0.18em] uppercase whitespace-nowrap [&>svg]:size-3 [&>svg]:pointer-events-none transition-[background-color,box-shadow] focus-visible:ring-4 focus-visible:ring-ring",
   {
     variants: {
       variant: {
         default:
-          "bg-primary-fixed text-on-primary-fixed [a&]:hover:bg-[#c3f5d9]",
+          "bg-primary-fixed text-on-primary-fixed [a&]:hover:bg-primary-fixed/85",
         secondary:
-          "bg-secondary-container text-[color:var(--on-secondary-container)] [a&]:hover:bg-[#ffa654]",
+          "bg-secondary-container text-[color:var(--on-secondary-container)] [a&]:hover:bg-secondary-container/85",
         destructive:
-          "bg-destructive text-primary-foreground [a&]:hover:bg-[#c45b49] focus-visible:ring-destructive/20",
+          "bg-destructive text-primary-foreground [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20",
         outline:
           "bg-surface-container-low text-foreground ring-1 ring-border/60 [a&]:hover:bg-surface-container-highest",
       },

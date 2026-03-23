@@ -27,14 +27,19 @@ function MobileNavItem({
     >
       <Button
         variant="ghost"
-        className={`flex h-auto w-full flex-col gap-1 rounded-[1.25rem] px-2 py-3 ${
+        size={"sm"}
+        className={`flex h-auto w-full flex-col gap-1 rounded-md px-2 py-3 ${
           isActive
             ? "bg-primary text-primary-foreground shadow-[0_24px_48px_-30px_rgba(15,82,56,0.4)]"
             : "text-foreground"
         }`}
       >
         {icon}
-        {name && <span className="type-label-sm tracking-[0.12em]">{name}</span>}
+        {name && (
+          <span className="text-xs font-semibold leading-[1.2] tracking-[0.12em] uppercase">
+            {name}
+          </span>
+        )}
       </Button>
     </Link>
   );
@@ -67,7 +72,7 @@ export default function BottomMobileHeader() {
   return (
     <nav
       id="bottom-mobile-nav"
-      className="mx-4 mb-3 rounded-[1.75rem] bg-[rgba(252,249,242,0.84)] px-2 py-2 shadow-[0_24px_48px_-30px_rgba(28,28,24,0.2)] backdrop-blur-xl md:hidden"
+      className="mx-4 rounded-tr-lg bg-accent px-2 py-2 shadow-[0_24px_48px_-30px_rgba(28,28,24,0.2)] md:hidden"
     >
       <div className="grid grid-cols-5 items-end">
         {tabs.map((tab) => (
