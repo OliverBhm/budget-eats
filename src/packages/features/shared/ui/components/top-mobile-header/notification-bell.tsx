@@ -13,6 +13,7 @@ import { Fragment } from "react/jsx-runtime";
 import { UserAvatar } from "@/packages/features/ui/user/components/user-avatar";
 import { cn } from "@/lib/utils";
 import { Headline } from "@/components/ui/headline";
+import { Paragraph } from "@/components/ui/paragraph";
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemSeparator, ItemTitle } from "@/components/ui/item";
 
 function NotificationsList({
@@ -35,9 +36,9 @@ function NotificationsList({
                 <ItemDescription className="text-pretty">
                   {message}
                 </ItemDescription>
-                <p className="type-label-sm pt-1 text-muted-foreground/90">
+                <Paragraph size="label-sm" variant="muted" className="pt-1 text-muted-foreground/90">
                   {new Date(created_at).toLocaleDateString()}
-                </p>
+                </Paragraph>
               </ItemContent>
             </Item>
             <ItemSeparator />
@@ -52,7 +53,9 @@ function NotificationListHeader({ unread }: { unread: number }) {
   return (
     <div className="flex items-end justify-between pb-2">
       <Headline level="h6">Notifications</Headline>
-      <span className="type-label-sm text-muted-foreground">{unread} unread</span>
+      <Paragraph as="span" size="label-sm" variant="muted">
+        {unread} unread
+      </Paragraph>
     </div>
   );
 }

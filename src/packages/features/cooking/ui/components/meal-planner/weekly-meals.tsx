@@ -22,6 +22,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import { Headline } from "@/components/ui/headline";
 import { ItemGroup } from "@/components/ui/item";
 import { Paragraph } from "@/components/ui/paragraph";
 import {
@@ -221,9 +222,9 @@ export default function WeeklyMeals() {
   const meals = MEALS;
   return (
     <div className="flex flex-col gap-4 mt-6">
-      <h3 className="text-2xl font-bold">
+      <Headline as="h3" level="h4">
         Todays menu - ${getTotalPriceFromIngredients().toFixed(2)}
-      </h3>
+      </Headline>
       {meals?.map(({ id, recipe: meal, mealType }) => (
         <RecipePreviewCard
           key={id}

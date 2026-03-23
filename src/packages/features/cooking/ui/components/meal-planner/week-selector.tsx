@@ -8,6 +8,7 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
+import { Headline } from "@/components/ui/headline";
 import { ChevronLeft, ChevronRight, Circle, CircleCheck } from "lucide-react";
 import { useState } from "react";
 import { generateDatesOfOneWeek } from "../../util/dates";
@@ -53,11 +54,11 @@ export default function WeekSelector() {
         <Button onClick={() => setWeek(week - 1)} variant="outline">
           <ChevronLeft />
         </Button>
-        <h3 className="space-x-2">
+        <Headline as="h3" level="h6" className="space-x-2 text-center">
           <span>{formatDate(weekdays[0])}</span>
           <span>-</span>
           <span>{formatDate(weekdays[6])}</span>
-        </h3>
+        </Headline>
         <Button onClick={() => setWeek(week + 1)} variant="outline">
           <ChevronRight />
         </Button>

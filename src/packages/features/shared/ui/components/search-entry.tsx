@@ -12,33 +12,37 @@ import {
   ItemTitle,
 } from "@/components/ui/item";
 import { Paragraph } from "@/components/ui/paragraph";
-import { ChevronLeftCircle, Newspaper, SearchIcon, X } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { SearchIcon, X } from "lucide-react";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
+
 import {
   BACKDROP_STYLES,
   BUTTON_STYLES,
   POPOVER_STYLES,
-} from "./styles/search";
-import { NotificationBell } from "./notification-bell";
+} from "./top-mobile-header/styles/search";
 
 const mockImg = "/essen.jpeg";
-const ingredientThumbailSize = 100;
+const ingredientThumbnailSize = 100;
 
-function DiscountsQuickLink() {
-  return (
-    <Button className={BUTTON_STYLES} size="icon-lg" variant="ghost">
-      <Newspaper />
-    </Button>
-  );
-}
+type SearchEntryProps = {
+  className?: string;
+  inputClassName?: string;
+  popoverClassName?: string;
+  showBackdrop?: boolean;
+};
 
-function Search() {
+function SearchEntry({
+  className,
+  inputClassName,
+  popoverClassName,
+  showBackdrop = true,
+}: SearchEntryProps) {
   const [query, setQuery] = useState("");
 
   return (
-    <form className="relative flex flex-1 items-center">
+    <form className={cn("relative flex items-center", className)}>
       {query.length > 0 ? (
         <Button
           type="button"
@@ -64,10 +68,16 @@ function Search() {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Find recipes, products or discounts"
-        className="relative z-50 w-full rounded-full bg-surface-container-lowest pr-12"
+        aria-label="Search recipes, products or discounts"
+        className={cn(
+          "relative z-50 w-full rounded-full bg-surface-container-lowest pr-12",
+          inputClassName
+        )}
       />
 
-      <div className={POPOVER_STYLES}>
+      {showBackdrop ? <div className={BACKDROP_STYLES} aria-hidden /> : null}
+
+      <div className={cn(POPOVER_STYLES, popoverClassName)}>
         <Paragraph size="label-sm" variant="muted">
           4 Search results
         </Paragraph>
@@ -80,8 +90,8 @@ function Search() {
               <Image
                 src={mockImg}
                 alt="Food"
-                width={ingredientThumbailSize}
-                height={ingredientThumbailSize}
+                width={ingredientThumbnailSize}
+                height={ingredientThumbnailSize}
               />
             </ItemMedia>
             <ItemContent>
@@ -102,35 +112,4 @@ function Search() {
   );
 }
 
-function BackNavigationButton() {
-  const router = useRouter();
-
-  return (
-    <Button
-      onClick={() => router.back()}
-      className={BUTTON_STYLES}
-      size="icon-sm"
-      variant="ghost"
-    >
-      <ChevronLeftCircle />
-    </Button>
-  );
-}
-
-export default function TopMobileHeader() {
-  const pathname = usePathname();
-  const isOnChildpage = pathname.split("/").filter(Boolean).length > 1;
-
-  return (
-    <header className="sticky top-0 z-50 px-4 pt-4 md:hidden">
-      <nav className="agrarian-glass group/search relative flex items-center gap-3 rounded-[1.75rem] px-3 py-3 shadow-[0_24px_48px_-30px_rgba(28,28,24,0.18)]">
-        {isOnChildpage ? <BackNavigationButton /> : <DiscountsQuickLink />}
-        <div className="relative flex-1">
-          <div className={BACKDROP_STYLES} aria-hidden />
-          <Search />
-        </div>
-        <NotificationBell />
-      </nav>
-    </header>
-  );
-}
+export { BUTTON_STYLES, SearchEntry };
