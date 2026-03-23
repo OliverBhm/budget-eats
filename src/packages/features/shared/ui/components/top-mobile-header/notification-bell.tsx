@@ -1,19 +1,9 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { mockNotificationsResponse } from "../../../api/mocks/messages";
-import {
-  Item,
-  ItemContent,
-  ItemDescription,
-  ItemGroup,
-  ItemMedia,
-  ItemSeparator,
-  ItemTitle,
-} from "@/components/ui/item";
 import { NotificationMessage } from "../../../api/model/messages";
 import { Button } from "@/components/ui/button";
 import { BUTTON_STYLES } from "./styles/search";
-import { Bell, Check } from "lucide-react";
+import { Bell } from "lucide-react";
 import {
   Popover,
   PopoverContent,
@@ -23,6 +13,7 @@ import { Fragment } from "react/jsx-runtime";
 import { UserAvatar } from "@/packages/features/ui/user/components/user-avatar";
 import { cn } from "@/lib/utils";
 import { Headline } from "@/components/ui/headline";
+import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemSeparator, ItemTitle } from "@/components/ui/item";
 
 function NotificationsList({
   notifications,
@@ -31,10 +22,10 @@ function NotificationsList({
 }) {
   return (
     <ScrollArea className="h-[300px]">
-      <ItemGroup variant={"muted"}>
+      <ItemGroup variant={"muted"} className="gap-3">
         {notifications.map(({ id, actor, title, message, created_at }) => (
           <Fragment key={id}>
-            <Item>
+            <Item variant="muted" className="rounded-[1.25rem] px-3 py-3">
               <ItemMedia>
                 <UserAvatar {...actor} />
               </ItemMedia>
@@ -44,7 +35,9 @@ function NotificationsList({
                 <ItemDescription className="text-pretty">
                   {message}
                 </ItemDescription>
-                <p>{new Date(created_at).toLocaleDateString()}</p>
+                <p className="type-label-sm pt-1 text-muted-foreground/90">
+                  {new Date(created_at).toLocaleDateString()}
+                </p>
               </ItemContent>
             </Item>
             <ItemSeparator />
@@ -57,9 +50,9 @@ function NotificationsList({
 
 function NotificationListHeader({ unread }: { unread: number }) {
   return (
-    <div className="flex items-center justify-between pb-2 border-b">
+    <div className="flex items-end justify-between pb-2">
       <Headline level="h6">Notifications</Headline>
-      <span className="text-xs text-muted-foreground">{unread} unread</span>
+      <span className="type-label-sm text-muted-foreground">{unread} unread</span>
     </div>
   );
 }
@@ -68,9 +61,11 @@ function NotifictionIndicator({ unread }: { unread: number }) {
   return (
     <div className="relative">
       {unread > 0 && (
-        <div className="absolute -right-1 -top-1 bg-destructive rounded-full text-xs h-3 w-3 flex items-center justify-center text-white"></div>
+        <div className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-secondary-container px-1 text-[0.625rem] font-semibold text-[color:var(--on-secondary-container)]">
+          {unread}
+        </div>
       )}
-      <Bell size={64} />
+      <Bell className="size-5" />
     </div>
   );
 }
@@ -88,7 +83,7 @@ function NotificationBell() {
           <NotifictionIndicator unread={unread} />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="space-y-2">
+      <PopoverContent className="w-[22rem] space-y-3 rounded-[1.5rem] p-4">
         <NotificationListHeader unread={unread} />
         <NotificationsList notifications={data} />
         <Button variant="secondary" className="w-full">

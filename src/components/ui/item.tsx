@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
@@ -5,9 +7,12 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 
-const itemGroupVariants = cva("group/item-group flex flex-col", {
+const itemGroupVariants = cva("group/item-group flex flex-col gap-2", {
   variants: {
-    variant: { default: "bg-transparent", muted: "bg-muted/50 rounded-md" },
+    variant: {
+      default: "bg-transparent",
+      muted: "rounded-[1.5rem] bg-surface-container-low p-2",
+    },
   },
 });
 
@@ -35,24 +40,24 @@ function ItemSeparator({
     <Separator
       data-slot="item-separator"
       orientation="horizontal"
-      className={cn("my-0", className)}
+      className={cn("my-0 h-3 bg-transparent", className)}
       {...props}
     />
   );
 }
 
 const itemVariants = cva(
-  "group/item flex items-center border border-transparent text-sm rounded-md transition-colors [a]:hover:bg-accent/50 [a]:transition-colors duration-100 flex-wrap outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
+  "group/item flex flex-wrap items-center rounded-[1.25rem] border border-transparent text-sm transition-[background-color,box-shadow] duration-150 outline-none focus-visible:ring-4 focus-visible:ring-ring [a]:transition-colors",
   {
     variants: {
       variant: {
         default: "bg-transparent",
-        outline: "border-border",
-        muted: "bg-muted/50",
+        outline: "bg-surface-container-lowest ring-1 ring-border/60",
+        muted: "bg-surface-container-lowest shadow-[0_18px_36px_-28px_rgba(28,28,24,0.12)]",
       },
       size: {
-        default: "p-4 gap-4 ",
-        sm: "py-3 px-4 gap-2.5",
+        default: "gap-4 p-4",
+        sm: "gap-2.5 px-4 py-3",
       },
     },
     defaultVariants: {
@@ -88,9 +93,10 @@ const itemMediaVariants = cva(
     variants: {
       variant: {
         default: "bg-transparent",
-        icon: "size-8 border rounded-sm bg-muted [&_svg:not([class*='size-'])]:size-4",
+        icon:
+          "size-8 rounded-xl bg-surface-container-low [&_svg:not([class*='size-'])]:size-4",
         image:
-          "size-10 rounded-sm overflow-hidden [&_img]:size-full [&_img]:object-cover",
+          "size-12 overflow-hidden rounded-[1rem] [&_img]:size-full [&_img]:object-cover",
       },
     },
     defaultVariants: {
@@ -132,7 +138,7 @@ function ItemTitle({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="item-title"
       className={cn(
-        "flex w-fit items-center gap-2 text-sm leading-snug font-medium",
+        "flex w-fit items-center gap-2 font-medium leading-snug text-sm",
         className
       )}
       {...props}

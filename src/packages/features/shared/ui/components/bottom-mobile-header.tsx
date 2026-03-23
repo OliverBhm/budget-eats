@@ -1,10 +1,8 @@
 "use client";
 
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { SheetTrigger } from "@/components/ui/sheet";
 import { UserAvatar } from "@/packages/features/ui/user/components/user-avatar";
-import { AvatarImage } from "@radix-ui/react-avatar";
 import { BarChart, CookingPot, DollarSign, HomeIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -20,19 +18,23 @@ function MobileNavItem({
   link: string;
 }) {
   const pathname = usePathname();
+  const isActive = pathname === link;
+
   return (
     <Link
       href={link}
-      className={`${
-        pathname === link && "bg-secondary/20"
-      } flex w-full justify-center`}
+      className="flex w-full justify-center"
     >
       <Button
         variant="ghost"
-        className="flex h-auto w-full flex-col gap-1 py-3"
+        className={`flex h-auto w-full flex-col gap-1 rounded-[1.25rem] px-2 py-3 ${
+          isActive
+            ? "bg-primary text-primary-foreground shadow-[0_24px_48px_-30px_rgba(15,82,56,0.4)]"
+            : "text-foreground"
+        }`}
       >
         {icon}
-        {name && <span className="text-xs">{name}</span>}
+        {name && <span className="type-label-sm tracking-[0.12em]">{name}</span>}
       </Button>
     </Link>
   );
@@ -43,7 +45,7 @@ export default function BottomMobileHeader() {
     {
       name: "Discover",
       icon: <HomeIcon />,
-      link: "/discover",
+      link: "/",
     },
     {
       name: "Cooking",
@@ -65,14 +67,14 @@ export default function BottomMobileHeader() {
   return (
     <nav
       id="bottom-mobile-nav"
-      className="w-full rounded-t-xl bg-primary shadow-lg md:hidden text-secondary"
+      className="mx-4 mb-3 rounded-[1.75rem] bg-[rgba(252,249,242,0.84)] px-2 py-2 shadow-[0_24px_48px_-30px_rgba(28,28,24,0.2)] backdrop-blur-xl md:hidden"
     >
       <div className="grid grid-cols-5 items-end">
         {tabs.map((tab) => (
           <MobileNavItem key={tab.link} {...tab} />
         ))}
         <SheetTrigger asChild>
-          <Button variant={"ghost"}>
+          <Button variant={"ghost"} className="h-auto rounded-[1.25rem] py-3">
             <UserAvatar
               className="h-8 w-8"
               {...{ imgUrl: "", firstname: "Oliver", lastname: "Boehm" }}

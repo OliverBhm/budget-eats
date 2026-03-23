@@ -1,4 +1,3 @@
-import { Avatar } from "@radix-ui/react-avatar";
 import {
   BarChart,
   Clock,
@@ -6,15 +5,13 @@ import {
   DollarSign,
   HomeIcon,
   Settings,
-  Settings2,
-  User,
-  UserPlus,
+  type LucideIcon,
 } from "lucide-react";
 
 type NavItem = {
   name: string;
   href: string;
-  icon: any;
+  icon: LucideIcon;
   children?: NavItem[];
 };
 

@@ -12,8 +12,7 @@ import {
 } from "@/components/ui/item";
 import { ChevronLeftCircle, Newspaper, SearchIcon, X } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import {
   BACKDROP_STYLES,
@@ -37,11 +36,11 @@ function Search() {
   const [query, setQuery] = useState("");
 
   return (
-    <form className="relative flex items-center flex-1">
+    <form className="relative flex flex-1 items-center">
       {query.length > 0 ? (
         <Button
           type="button"
-          className="absolute right-0 mr-3 z-50"
+          className="absolute right-1 z-50"
           onClick={() => setQuery("")}
           variant="ghost"
           size="sm"
@@ -51,7 +50,7 @@ function Search() {
       ) : (
         <Button
           type="submit"
-          className="absolute right-0 mr-3 z-50"
+          className="absolute right-1 z-50"
           variant="ghost"
           size="sm"
         >
@@ -63,13 +62,16 @@ function Search() {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Find recipes, products or discounts"
-        className="w-full bg-background relative z-50"
+        className="relative z-50 w-full rounded-full bg-surface-container-lowest pr-12"
       />
 
       <div className={POPOVER_STYLES}>
-        <h4 className="font-bold text-xl mb-2">4 Search results</h4>
-        <ItemGroup>
-          <Item>
+        <p className="type-label-sm text-muted-foreground">4 Search results</p>
+        <h4 className="mt-2 font-display text-2xl tracking-[-0.05em]">
+          Tonight&apos;s best shortcuts
+        </h4>
+        <ItemGroup className="mt-4 gap-3">
+          <Item variant="muted" className="rounded-[1.25rem] px-3 py-3">
             <ItemMedia variant="image">
               <Image
                 src={mockImg}
@@ -79,8 +81,15 @@ function Search() {
               />
             </ItemMedia>
             <ItemContent>
-              <ItemTitle>Pasta Alfredo</ItemTitle>
-              <ItemDescription>$7.99</ItemDescription>
+              <div>
+                <ItemTitle className="font-display text-lg tracking-[-0.04em]">
+                  Pasta Alfredo
+                </ItemTitle>
+                <ItemDescription>Weeknight pantry favorite</ItemDescription>
+              </div>
+              <ItemDescription className="font-display text-xl text-tertiary">
+                $7.99
+              </ItemDescription>
             </ItemContent>
           </Item>
         </ItemGroup>
@@ -90,12 +99,11 @@ function Search() {
 }
 
 function BackNavigationButton() {
-  const pathname = usePathname();
-  const navigateBack = window.history.back;
+  const router = useRouter();
 
   return (
     <Button
-      onClick={() => navigateBack()}
+      onClick={() => router.back()}
       className={BUTTON_STYLES}
       size="icon-sm"
       variant="ghost"
@@ -107,11 +115,11 @@ function BackNavigationButton() {
 
 export default function TopMobileHeader() {
   const pathname = usePathname();
-  const isOnChildpage = pathname.split("/").length > 2;
+  const isOnChildpage = pathname.split("/").filter(Boolean).length > 1;
 
   return (
-    <header className="w-full p-3 shadow-xs bg-accent sticky top-0 z-50">
-      <nav className="relative flex items-center gap-3 group/search px-2">
+    <header className="sticky top-0 z-50 px-4 pt-4 md:hidden">
+      <nav className="agrarian-glass group/search relative flex items-center gap-3 rounded-[1.75rem] px-3 py-3 shadow-[0_24px_48px_-30px_rgba(28,28,24,0.18)]">
         {isOnChildpage ? <BackNavigationButton /> : <DiscountsQuickLink />}
         <div className="relative flex-1">
           <div className={BACKDROP_STYLES} aria-hidden />
