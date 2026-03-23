@@ -1,7 +1,7 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
-const paragraphVariants = cva("font-sans leading-relaxed", {
+const paragraphVariants = cva("font-sans leading-relaxed tracking-[0.01em]", {
   variants: {
     variant: {
       default: "text-foreground",
@@ -9,7 +9,7 @@ const paragraphVariants = cva("font-sans leading-relaxed", {
     },
     size: {
       xs: "text-xs",
-      md: "text-md md:text-base",
+      md: "text-sm md:text-base",
       lg: "text-base md:text-lg",
     },
     weight: {

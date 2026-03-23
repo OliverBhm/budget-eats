@@ -4,15 +4,15 @@ import { cn } from "@/lib/utils";
 
 // Headline styles are decoupled from the semantic HTML tag.
 // You can render an h1 with the visual style of an h4, etc.
-const headlineVariants = cva("font-sans font-semibold tracking-tight", {
+const headlineVariants = cva("font-display font-semibold text-foreground tracking-[-0.05em]", {
   variants: {
     level: {
-      h1: "text-4xl md:text-5xl",
-      h2: "text-3xl md:text-4xl",
-      h3: "text-2xl md:text-3xl",
-      h4: "text-xl md:text-2xl",
-      h5: "text-lg md:text-xl",
-      h6: "text-base md:text-lg",
+      h1: "text-5xl leading-none md:text-7xl",
+      h2: "text-4xl leading-none md:text-5xl",
+      h3: "text-3xl leading-[1.02] md:text-4xl",
+      h4: "text-2xl leading-[1.05] md:text-3xl",
+      h5: "text-xl leading-[1.1] md:text-2xl",
+      h6: "text-lg leading-[1.15] md:text-xl",
     },
     tone: {
       default: "text-foreground",

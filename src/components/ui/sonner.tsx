@@ -11,12 +11,20 @@ import { useTheme } from "next-themes"
 import { Toaster as Sonner, type ToasterProps } from "sonner"
 
 const Toaster = ({ ...props }: ToasterProps) => {
-  const { theme = "system" } = useTheme()
+  const { theme = "light" } = useTheme()
 
   return (
     <Sonner
       theme={theme as ToasterProps["theme"]}
       className="toaster group"
+      toastOptions={{
+        classNames: {
+          toast:
+            "rounded-[1.25rem] border border-border/50 bg-popover text-popover-foreground shadow-[0_40px_80px_-36px_rgba(28,28,24,0.14)] backdrop-blur-xl",
+          title: "font-display tracking-[-0.03em]",
+          description: "text-muted-foreground",
+        },
+      }}
       icons={{
         success: <CircleCheckIcon className="size-4" />,
         info: <InfoIcon className="size-4" />,
