@@ -1,14 +1,51 @@
 import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
-function Card({ className, ...props }: React.ComponentProps<"div">) {
+const cardVariants = cva(
+  "text-card-foreground flex flex-col rounded-[1.5rem] border border-transparent",
+  {
+    variants: {
+      variant: {
+        default:
+          "bg-card shadow-[0_32px_64px_-36px_rgba(28,28,24,0.12)]",
+        surface: "bg-surface-container shadow-none",
+        nested: "bg-surface-container-low shadow-none",
+        lifted:
+          "bg-surface-container-lowest shadow-[0_32px_64px_-36px_rgba(28,28,24,0.12)]",
+        accent:
+          "bg-primary text-primary-foreground shadow-[0_32px_64px_-36px_rgba(15,82,56,0.34)]",
+        spotlight:
+          "bg-secondary-container text-[color:var(--on-secondary-container)] shadow-[0_24px_48px_-30px_rgba(102,49,0,0.28)]",
+        glass: "agrarian-panel bg-popover",
+      },
+      spacing: {
+        default: "gap-6 py-6",
+        compact: "gap-4 py-4",
+        roomy: "gap-8 py-8",
+        flush: "gap-0 py-0",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      spacing: "default",
+    },
+  }
+)
+
+function Card({
+  className,
+  variant,
+  spacing,
+  ...props
+}: React.ComponentProps<"div"> & VariantProps<typeof cardVariants>) {
   return (
     <div
       data-slot="card"
       className={cn(
-        "bg-card text-card-foreground flex flex-col gap-6 rounded-[1.5rem] py-6 shadow-[0_32px_64px_-36px_rgba(28,28,24,0.12)]",
-        className
+        cardVariants({ variant, spacing }),
+        className,
       )}
       {...props}
     />
@@ -89,4 +126,5 @@ export {
   CardAction,
   CardDescription,
   CardContent,
+  cardVariants,
 }

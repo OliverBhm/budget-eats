@@ -43,7 +43,7 @@ function SidebarSearch() {
         value={query}
         onChange={(event) => setQuery(event.target.value)}
         placeholder="Search recipes or ingredients"
-        className="h-12 rounded-2xl border-0 bg-sidebar-accent pl-10 text-sidebar-foreground placeholder:text-sidebar-foreground/55 focus-visible:bg-sidebar-accent focus-visible:ring-sidebar-ring/40"
+        className="pl-10"
       />
     </form>
   );
