@@ -23,12 +23,12 @@ function MobileNavItem({
   return (
     <Link
       href={link}
-      className="flex w-full justify-center"
+      className="flex min-w-0 w-full justify-center"
     >
       <Button
         variant="ghost"
-        size={"sm"}
-        className={`flex h-auto w-full flex-col gap-1 rounded-md px-2 py-3 ${
+        size="sm"
+        className={`flex h-auto min-w-0 w-full flex-col gap-1 rounded-t-xl px-1.5 py-3 ${
           isActive
             ? "bg-primary text-primary-foreground shadow-[0_24px_48px_-30px_rgba(15,82,56,0.4)]"
             : "text-foreground"
@@ -72,14 +72,14 @@ export default function BottomMobileHeader() {
   return (
     <nav
       id="bottom-mobile-nav"
-      className="mx-4 rounded-tr-lg bg-accent px-2 py-2 shadow-[0_24px_48px_-30px_rgba(28,28,24,0.2)] md:hidden"
+      className="rounded-t-lg bg-muted mx-2 py-2 shadow-[0_24px_48px_-30px_rgba(28,28,24,0.2)] md:hidden"
     >
-      <div className="grid grid-cols-5 items-end">
+      <div className="grid grid-cols-5 gap-1 items-end">
         {tabs.map((tab) => (
           <MobileNavItem key={tab.link} {...tab} />
         ))}
         <SheetTrigger asChild>
-          <Button variant={"ghost"} className="h-auto rounded-[1.25rem] py-3">
+          <Button variant={"ghost"} className="h-auto rounded-[1.25rem] px-1.5 py-3">
             <UserAvatar
               className="h-8 w-8"
               {...{ imgUrl: "", firstname: "Oliver", lastname: "Boehm" }}

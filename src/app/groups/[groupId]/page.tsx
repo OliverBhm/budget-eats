@@ -42,6 +42,7 @@ import {
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
+import { EditorialIntroDescription, EditorialIntroTitle, EditorialSection } from "@/components/ui/editorial-layout";
 
 function GroupName({ name }: { name: string }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -140,14 +141,16 @@ export default function MangeGroup() {
   const { id: groupId, name, members, description } = group;
   return (
     <section className="space-y-4">
-      <PageHeader>
-        <PageHeaderTitle>
+      <EditorialSection>
+        <EditorialIntroTitle>
+        <EditorialIntroTitle>
           <GroupName name={name} />
-        </PageHeaderTitle>
-        <PageHeaderDescription className="space-y-1">
+        </EditorialIntroTitle>
+        <EditorialIntroDescription className="space-y-1">
           <GroupDescription {...{ description }} />
-        </PageHeaderDescription>
-      </PageHeader>
+        </EditorialIntroDescription>
+        </EditorialIntroTitle>
+      </EditorialSection>
       <section className="md:grid grid-cols-8 gap-4 flex flex-col">
         <Card className="col-span-4">
           <CardHeader>

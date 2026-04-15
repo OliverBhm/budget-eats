@@ -64,7 +64,7 @@ function Search() {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Find recipes, products or discounts"
-        className="relative z-50 w-full rounded-full bg-surface-container-lowest pr-12"
+        className="relative z-50 w-full rounded-full pr-12"
       />
 
       <div className={POPOVER_STYLES}>
@@ -122,8 +122,8 @@ export default function TopMobileHeader() {
   const isOnChildpage = pathname.split("/").filter(Boolean).length > 1;
 
   return (
-    <header className="sticky top-0 z-50 px-4 pt-4 md:hidden">
-      <nav className="agrarian-glass group/search relative flex items-center gap-3 rounded-[1.75rem] px-3 py-3 shadow-[0_24px_48px_-30px_rgba(28,28,24,0.18)]">
+    <header className="sticky top-0 z-50 md:hidden">
+      <nav className="bg-muted group/search relative flex items-center gap-3 rounded-lg px-3 py-3 shadow-[0_24px_48px_-30px_rgba(28,28,24,0.18)]">
         {isOnChildpage ? <BackNavigationButton /> : <DiscountsQuickLink />}
         <div className="relative flex-1">
           <div className={BACKDROP_STYLES} aria-hidden />

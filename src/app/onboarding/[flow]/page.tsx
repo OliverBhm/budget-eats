@@ -7,6 +7,7 @@ import {
   CardDescription,
   CardHeader,
 } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   EditorialEyebrow,
   EditorialIntro,
@@ -15,8 +16,17 @@ import {
   EditorialSection,
 } from "@/components/ui/editorial-layout";
 import { Input } from "@/components/ui/input";
-import { Item, ItemContent, ItemMedia } from "@/components/ui/item";
+import {
+  Item,
+  ItemContent,
+  ItemDescription,
+  ItemGroup,
+  ItemHeader,
+  ItemMedia,
+  ItemTitle,
+} from "@/components/ui/item";
 import { Label } from "@/components/ui/label";
+import { Paragraph } from "@/components/ui/paragraph";
 import {
   UnitOfMeasurement,
   UnitOfMeasurmentToggle,
@@ -24,30 +34,29 @@ import {
 import { ArrowLeft, ArrowRight, UserPlus } from "lucide-react";
 import { useState } from "react";
 
+const COUNTRIES = ['Deutschland', 'USA']
+
 const STEPS = [
   {
     title: "We'd like to get to know you.",
-    description:
-      `Let's start by telling us what to call you, this also makes it easier for your friends to find you. 
+    description: `Let's start by telling us what to call you, this also makes it easier for your friends to find you. 
       Don't worry, you can always change this later in the settings.`,
   },
   {
     title: "Please tells us where you are from",
     description: `This way we can show you localized offers and deals, display prices in your
     currency and show deals near you.
-    `
+    `,
   },
   {
     title: "Measurement System",
-    description:
-      `Make life easier by using a measurment system you know. 
+    description: `Make life easier by using a measurment system you know. 
       You can always change this later in the settings.`,
   },
 ];
 
 function Stepper({ activeStep, setActiveStep }: any) {
   const padIndex = (index: number) => index.toString().padStart(2, "0");
-    const nextButtonText = activeStep !== STEPS.length - 1 ? "Next" : "Let's start";
 
   return (
     <div className="space-y-2">
@@ -56,18 +65,28 @@ function Stepper({ activeStep, setActiveStep }: any) {
           Step {padIndex(activeStep + 1)} of {padIndex(STEPS.length)}
         </EditorialEyebrow>
         <div className="flex gap-2">
-          {activeStep > 0 && (
-            <Button
+          <Button
             size={"sm"}
-              variant={"secondary"}
-              onClick={() => setActiveStep(activeStep - 1)}
-            >
-              <ArrowLeft />
-              <span className="hidden md:block">Back</span>
-            </Button>
-          )}
-          <Button size={"sm"} onClick={() => setActiveStep(activeStep + 1)}>
-            <span className="hidden md:block">{nextButtonText}</span>
+            variant={"secondary"}
+            onClick={() =>
+              setActiveStep(
+                activeStep === 0 ? STEPS.length - 1 : activeStep - 1,
+              )
+            }
+          >
+            <ArrowLeft />
+            <span className="hidden md:block">Back</span>
+          </Button>
+
+          <Button
+            size={"sm"}
+            onClick={() =>
+              setActiveStep(
+                activeStep === STEPS.length - 1 ? 0 : activeStep + 1,
+              )
+            }
+          >
+            <span className="hidden md:block">Next</span>
             <ArrowRight />
           </Button>
         </div>
@@ -146,11 +165,9 @@ export default function Onboarding() {
         {activeStep === 1 && (
           <Card>
             <CardContent>
-              <Item>
-                <ItemContent>
-                  <ItemMedia />
-                </ItemContent>
-              </Item>
+              <ItemGroup >
+              {COUNTRIES.map(country => <Item key={country}><ItemMedia /><Checkbox />{country}</Item>)}
+              </ItemGroup>
             </CardContent>
           </Card>
         )}

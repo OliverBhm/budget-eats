@@ -1,5 +1,3 @@
-import { eachMonthOfInterval } from "date-fns";
-import { ro } from "date-fns/locale";
 import { Home, User } from "lucide-react";
 import { GroupMember } from "../model/group";
 
@@ -84,4 +82,4 @@ const GROUPS_MOCK = [
   },
 ];
 
-export { GROUPS_MOCK, MOCK_USERS, MOCK_OTHER_GROUP_MEMBERS };
+export { GROUPS_MOCK, MOCK_OTHER_GROUP_MEMBERS, MOCK_USERS };

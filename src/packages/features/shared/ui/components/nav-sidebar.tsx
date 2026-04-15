@@ -19,6 +19,7 @@ import { SearchIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
+import { createToggleFolders, FEATURE_TOOGGLES } from "@/packages/features/formatting/feature-toggles";
 
 function SidebarSearch() {
   const router = useRouter();
@@ -87,14 +88,14 @@ function SidebarNavSection({
 
 export function NavSidebar() {
   const pathname = usePathname();
-
+  console.log('createToggleFolders',createToggleFolders(FEATURE_TOOGGLES))
   return (
     <Sidebar side="left" variant="floating" className="border-0">
-      <SidebarHeader className="gap-4 p-4 pt-5">
+      <SidebarHeader>
         <GroupsSwitcher {...{ groups: GROUPS_MOCK }} />
         <SidebarSearch />
       </SidebarHeader>
-      <SidebarContent className="gap-4 px-2 pb-3">
+      <SidebarContent>
         <SidebarNavSection title="Navigate" items={MAIN_NAV_ITEMS} pathname={pathname} />
         <SidebarNavSection title="Helpful" items={ADDITIONAL_NAV_ITEMS} pathname={pathname} />
       </SidebarContent>
